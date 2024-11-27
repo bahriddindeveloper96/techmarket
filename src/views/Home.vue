@@ -1,181 +1,214 @@
 <template>
-  <div class="w-full">
+  <main class="flex-grow flex justify-center items-start py-8">
+    <div class="container mx-auto px-4 max-w-7xl w-full">
     <!-- Banner Section -->
-    <div class="mb-12">
-      <Banner />
-    </div>
+      <div class="mb-12">
+        <Banner />
+      </div>
+      <!-- Popular Products -->
+      <div class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold">Ommabop mahsulotlar</h2>
+          <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <ProductCard 
+            v-for="product in popularProducts" 
+            :key="product.id"
+            :product="product"
+          />
+        </div>
+      </div>
 
-    <!-- Categories Section -->
-    <div class="mb-12">
-      <h2 class="text-2xl font-bold mb-6">Kategoriyalar</h2>
-      <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 lg:grid-cols-6 gap-4">
-        <CategoryCard 
-          v-for="category in categories" 
-          :key="category.id"
-          :category="category"
-        />
+      <!-- New Products -->
+      <div class="mb-12">
+        <div class="flex justify-between items-center mb-6">
+          <h2 class="text-2xl font-bold">Yangi mahsulotlar</h2>
+          <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+          <ProductCard 
+            v-for="product in newProducts" 
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
-    </div>
-
-    <!-- Popular Products -->
-    <div class="mb-12">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Ommabop mahsulotlar</h2>
-        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <ProductCard 
-          v-for="product in popularProducts" 
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-    </div>
-
-    <!-- New Products -->
-    <div class="mb-12">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Yangi mahsulotlar</h2>
-        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-        <ProductCard 
-          v-for="product in newProducts" 
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-    </div>
   </div>
+  </main>
+  
 </template>
 
 <script setup>
-import Banner from '../components/Banner.vue'
-import CategoryCard from '../components/CategoryCard.vue'
-import ProductCard from '../components/ProductCard.vue'
+import { ref } from 'vue'
+import Banner from './../components/Banner.vue'
+import CategoryCard from './../components/CategoryCard.vue'
+import ProductCard from './../components/ProductCard.vue'
 
-const categories = [
+// Sample data
+const categories = ref([
   {
     id: 1,
     name: 'Elektronika',
-    image: 'electronics.jpg',
-    productCount: 1200
+    image: 'https://picsum.photos/200?random=1'
   },
   {
     id: 2,
-    name: 'Kiyimlar',
-    image: 'fashion.jpg',
-    productCount: 2500
+    name: 'Maishiy texnika',
+    image: 'https://picsum.photos/200?random=2'
   },
   {
     id: 3,
-    name: 'Poyabzallar',
-    image: 'shoes.jpg',
-    productCount: 800
+    name: 'Kiyimlar',
+    image: 'https://picsum.photos/200?random=3'
   },
   {
     id: 4,
-    name: 'Go\'zallik',
-    image: 'beauty.jpg',
-    productCount: 1500
+    name: 'Poyabzallar',
+    image: 'https://picsum.photos/200?random=4'
   },
   {
     id: 5,
-    name: 'Sport',
-    image: 'sports.jpg',
-    productCount: 600
+    name: 'Aksessuarlar',
+    image: 'https://picsum.photos/200?random=5'
   },
   {
     id: 6,
-    name: 'Uy-ro\'zg\'or',
-    image: 'home.jpg',
-    productCount: 1800
+    name: 'Go\'zallik',
+    image: 'https://picsum.photos/200?random=6'
   }
-]
+])
 
-const popularProducts = [
+const popularProducts = ref([
   {
     id: 1,
-    name: 'iPhone 13 Pro',
-    price: 12000000,
-    monthlyPayment: 1200000,
-    image: 'iphone.jpg',
-    discount: 10
+    name: 'Apple iPhone 14 Pro 256GB Space Black',
+    price: 15_000_000,
+    oldPrice: 16_500_000,
+    image: 'https://picsum.photos/400?random=1',
+    rating: 4.8,
+    reviews: 245,
+    isFavorite: false
   },
   {
     id: 2,
-    name: 'Samsung TV',
-    price: 8000000,
-    monthlyPayment: 800000,
-    image: 'tv.jpg',
-    discount: 15
+    name: 'Samsung Galaxy S23 Ultra 512GB Black',
+    price: 13_500_000,
+    oldPrice: 14_800_000,
+    image: 'https://picsum.photos/400?random=2',
+    rating: 4.7,
+    reviews: 189,
+    isFavorite: false
   },
   {
     id: 3,
-    name: 'MacBook Pro',
-    price: 15000000,
-    monthlyPayment: 1500000,
-    image: 'macbook.jpg',
-    discount: 5
+    name: 'MacBook Pro 14" M2 Pro 512GB Space Gray',
+    price: 25_000_000,
+    oldPrice: 27_000_000,
+    image: 'https://picsum.photos/400?random=3',
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false
   },
   {
     id: 4,
-    name: 'AirPods Pro',
-    price: 2500000,
-    monthlyPayment: 250000,
-    image: 'airpods.jpg',
-    discount: 0
+    name: 'Sony PlayStation 5 Digital Edition',
+    price: 7_500_000,
+    oldPrice: 8_200_000,
+    image: 'https://picsum.photos/400?random=4',
+    rating: 4.8,
+    reviews: 312,
+    isFavorite: false
   },
   {
     id: 5,
-    name: 'PlayStation 5',
-    price: 7000000,
-    monthlyPayment: 700000,
-    image: 'ps5.jpg',
-    discount: 8
+    name: 'Apple Watch Series 8 45mm',
+    price: 5_800_000,
+    oldPrice: 6_500_000,
+    image: 'https://picsum.photos/400?random=5',
+    rating: 4.7,
+    reviews: 178,
+    isFavorite: false
   }
-]
+])
 
-const newProducts = [
+const newProducts = ref([
   {
     id: 6,
-    name: 'iPad Air',
-    price: 9000000,
-    monthlyPayment: 900000,
-    image: 'ipad.jpg',
-    discount: 0
+    name: 'Apple AirPods Pro 2nd Generation',
+    price: 3_200_000,
+    oldPrice: 3_500_000,
+    image: 'https://picsum.photos/400?random=6',
+    rating: 4.8,
+    reviews: 134,
+    isFavorite: false
   },
   {
     id: 7,
-    name: 'Galaxy Watch',
-    price: 3000000,
-    monthlyPayment: 300000,
-    image: 'watch.jpg',
-    discount: 12
+    name: 'Samsung Galaxy Tab S9 Ultra 256GB',
+    price: 12_500_000,
+    oldPrice: 13_800_000,
+    image: 'https://picsum.photos/400?random=7',
+    rating: 4.6,
+    reviews: 89,
+    isFavorite: false
   },
   {
     id: 8,
-    name: 'Xiaomi Robot Vacuum',
-    price: 4000000,
-    monthlyPayment: 400000,
-    image: 'vacuum.jpg',
-    discount: 20
+    name: 'DJI Mini 3 Pro Drone',
+    price: 8_900_000,
+    oldPrice: 9_500_000,
+    image: 'https://picsum.photos/400?random=8',
+    rating: 4.7,
+    reviews: 67,
+    isFavorite: false
   },
   {
     id: 9,
-    name: 'Dell XPS 13',
-    price: 13000000,
-    monthlyPayment: 1300000,
-    image: 'dell.jpg',
-    discount: 7
+    name: 'Sony WH-1000XM5 Wireless Headphones',
+    price: 4_800_000,
+    oldPrice: 5_200_000,
+    image: 'https://picsum.photos/400?random=9',
+    rating: 4.8,
+    reviews: 145,
+    isFavorite: false
   },
   {
     id: 10,
-    name: 'Canon EOS R5',
-    price: 18000000,
-    monthlyPayment: 1800000,
-    image: 'camera.jpg',
-    discount: 5
+    name: 'GoPro HERO11 Black',
+    price: 6_300_000,
+    oldPrice: 6_800_000,
+    image: 'https://picsum.photos/400?random=10',
+    rating: 4.7,
+    reviews: 92,
+    isFavorite: false
   }
-]
+])
+
+// Methods
+const addToCart = (product) => {
+  console.log('Adding to cart:', product)
+  // Add cart logic here
+}
+
+const toggleFavorite = (product) => {
+  product.isFavorite = !product.isFavorite
+}
 </script>
+
+<style>
+@import '@/assets/main.css';
+
+/* Global styles */
+body {
+  margin: 0;
+  padding: 0;
+  min-height: 100vh;
+  background-color: rgb(249, 250, 251);
+}
+
+.container {
+  max-width: 1280px;
+  margin: 0 auto;
+}
+</style>

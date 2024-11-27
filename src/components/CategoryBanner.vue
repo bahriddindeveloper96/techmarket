@@ -11,7 +11,7 @@
           :autoplay="{ delay: 3000, disableOnInteraction: false }"
           :pagination="{ clickable: true }"
           :navigation="true"
-          class="w-full h-[400px]"
+          class="w-full h-[30px]"
         >
           <swiper-slide v-for="(slide, index) in slides" :key="index">
             <div class="relative h-full overflow-hidden group">
@@ -23,20 +23,7 @@
               />
               <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
               
-              <!-- Content -->
-              <div class="absolute inset-0 flex items-center">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                  <div class="max-w-xl space-y-4">
-                    <h2 class="text-4xl font-bold text-white tracking-tight">
-                      {{ slide.title }}
-                    </h2>
-                    <p class="text-lg text-white/90">{{ slide.description }}</p>
-                    <button class="bg-[#00BD7E] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#009964] transition-colors duration-300">
-                      {{ slide.buttonText }}
-                    </button>
-                  </div>
-                </div>
-              </div>
+              
             </div>
           </swiper-slide>
         </swiper>
@@ -53,13 +40,7 @@ import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
 const slides = [
-  {
-    id: 1,
-    title: 'Yangi kolleksiya 2024',
-    description: 'Eng so\'nggi trenddagi kiyimlar kolleksiyasi bilan tanishing',
-    buttonText: 'Ko\'proq bilish',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1950&q=80'
-  },
+  
   {
     id: 2,
     title: 'Chegirmalar 50% gacha',
@@ -78,14 +59,6 @@ const slides = [
 </script>
 
 <style>
-.swiper-pagination-bullet {
-  @apply w-2 h-2 bg-white/50;
-}
-.swiper-pagination-bullet-active {
-  @apply bg-[#00BD7E];
-}
-.swiper-button-next,
-.swiper-button-prev {
-  @apply text-white/70 hover:text-[#00BD7E] transition-colors duration-300;
-}
+
+
 </style>
