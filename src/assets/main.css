@@ -1,0 +1,140 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&display=swap');
+
+:root {
+  /* Primary Colors */
+  --primary-color: #1a1a1a;
+  --primary-dark: #000000;
+  --primary-light: #333333;
+  --color-secondary: #1a1a1a;
+  --color-secondary-dark: #000000;
+  
+  /* Gradients */
+  --gradient-primary: linear-gradient(to right, var(--primary-color), var(--primary-dark));
+  --gradient-secondary: linear-gradient(to right, var(--color-secondary), var(--color-secondary-dark));
+  --gradient-light: linear-gradient(to right, #e6fff5, #f5f5f5);
+  
+  /* Typography */
+  --font-family: 'Inter', sans-serif;
+}
+
+/* Base Styles */
+body {
+  font-family: var(--font-family);
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  @apply antialiased text-gray-800;
+}
+
+/* Typography */
+.title-gradient {
+  @apply text-[#1a1a1a];
+}
+
+.hover-gradient {
+  @apply hover:text-[#1a1a1a] transition-colors duration-300;
+}
+
+/* Buttons */
+.btn-primary {
+  @apply bg-[#1a1a1a] hover:bg-black text-white px-6 py-2.5 rounded-lg 
+         transition-all duration-300 
+         font-medium shadow-lg shadow-[#1a1a1a]/10;
+}
+
+.btn-secondary {
+  @apply bg-white hover:bg-gray-50 text-[#1a1a1a] border border-gray-200
+         px-6 py-2.5 rounded-lg 
+         transition-all duration-300 
+         font-medium;
+}
+
+/* Cards */
+.card {
+  @apply bg-white rounded-lg shadow-sm 
+         hover:shadow-md transition-shadow duration-300 
+         border border-gray-100;
+}
+
+/* Inputs */
+.input-primary {
+  @apply w-full py-2.5 px-4 rounded-lg 
+         bg-gray-50 text-gray-900 
+         placeholder-gray-500 border-gray-200 
+         focus:outline-none focus:border-[#1a1a1a] 
+         focus:ring-2 focus:ring-[#1a1a1a]/10 
+         transition-all duration-300;
+}
+
+/* Badges */
+.badge-primary {
+  @apply min-w-[20px] h-[20px] px-1.5
+         bg-[#1a1a1a]
+         text-white text-xs font-bold rounded-full 
+         flex items-center justify-center 
+         shadow-lg shadow-[#1a1a1a]/10;
+}
+
+/* Links */
+.link-hover {
+  @apply hover:text-[#1a1a1a]
+         transition-colors duration-200;
+}
+
+/* Custom Scrollbar */
+.scrollbar-hide::-webkit-scrollbar {
+  display: none;
+}
+
+/* Animations */
+.hover-scale {
+  @apply transition-transform duration-300 hover:scale-105;
+}
+
+.hover-lift {
+  @apply transition-all duration-300 hover:-translate-y-1 hover:shadow-lg;
+}
+
+/* Container */
+.container-custom {
+  @apply max-w-7xl mx-auto px-4 sm:px-6 lg:px-8;
+}
+
+@import './base.css';
+
+#app {
+  max-width: 1280px;
+  margin: 0 auto;
+  padding: 2rem;
+  font-weight: normal;
+}
+
+a,
+.green {
+  text-decoration: none;
+  color: hsla(0, 0%, 0%, 1);
+  transition: 0.4s;
+  padding: 3px;
+}
+
+@media (hover: hover) {
+  a:hover {
+    background-color: hsla(0, 0%, 0%, 0.2);
+  }
+}
+
+@media (min-width: 1024px) {
+  body {
+    display: flex;
+    place-items: center;
+  }
+
+  #app {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    padding: 0 2rem;
+  }
+}
