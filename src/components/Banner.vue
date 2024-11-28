@@ -1,91 +1,174 @@
 <!-- Banner.vue -->
 <template>
-  <div class="w-full bg-gray-50">
-    <div class="container mx-auto">
-      <!-- Banner Slider -->
-      <div class="relative overflow-hidden rounded-xl shadow-lg">
-        <swiper 
-          :modules="[SwiperAutoplay, SwiperPagination, SwiperNavigation]" 
-          :slides-per-view="1"
-          :loop="true"
-          :autoplay="{ delay: 3000, disableOnInteraction: false }"
-          :pagination="{ clickable: true }"
-          :navigation="true"
-          class="w-full h-[400px]"
-        >
-          <swiper-slide v-for="(slide, index) in slides" :key="index">
-            <div class="relative h-full overflow-hidden group">
-              <!-- Background Image with Gradient Overlay -->
-              <img 
-                :src="slide.image" 
-                :alt="slide.title"
-                class="absolute inset-0 w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-700"
-              />
-              <div class="absolute inset-0 bg-gradient-to-r from-black/60 to-black/40"></div>
-              
-              <!-- Content -->
-              <div class="absolute inset-0 flex items-center">
-                <div class="container mx-auto px-4 sm:px-6 lg:px-8">
-                  <div class="max-w-xl space-y-4">
-                    <h2 class="text-4xl font-bold text-white tracking-tight">
-                      {{ slide.title }}
-                    </h2>
-                    <p class="text-lg text-white/90">{{ slide.description }}</p>
-                    <button class="bg-[#00BD7E] text-white px-6 py-3 rounded-lg font-medium hover:bg-[#009964] transition-colors duration-300">
-                      {{ slide.buttonText }}
-                    </button>
-                  </div>
+  <div class="relative overflow-hidden rounded-2xl bg-gradient-to-r from-primary-600 to-accent-600">
+    <!-- Swiper container -->
+    <swiper
+      :modules="[SwiperAutoplay, SwiperEffectFade, SwiperPagination, SwiperNavigation]"
+      :slides-per-view="1"
+      :loop="true"
+      :effect="'fade'"
+      :autoplay="{
+        delay: 5000,
+        disableOnInteraction: false,
+      }"
+      :pagination="{
+        clickable: true,
+      }"
+      :navigation="true"
+      class="h-[300px] md:h-[400px]"
+    >
+      <!-- Slide 1 -->
+      <swiper-slide>
+        <div class="relative h-full w-full">
+          <div class="absolute inset-0 bg-gradient-to-r from-primary-900/80 to-transparent"></div>
+          <img
+            src="/images/banner1.jpg"
+            alt="Banner 1"
+            class="h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-4">
+              <div class="max-w-lg">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float">
+                  iPhone 15 Pro Max
+                </h2>
+                <p class="text-lg text-white/90 mb-8">
+                  Eng so'nggi texnologiyalar bilan jihozlangan smartfon endi TechMarketda
+                </p>
+                <div class="flex space-x-4">
+                  <button class="px-8 py-3 bg-white text-primary-600 rounded-full font-semibold hover:bg-primary-50 transition-colors">
+                    Sotib olish
+                  </button>
+                  <button class="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm">
+                    Batafsil
+                  </button>
                 </div>
               </div>
             </div>
-          </swiper-slide>
-        </swiper>
-      </div>
-    </div>
+          </div>
+        </div>
+      </swiper-slide>
+
+      <!-- Slide 2 -->
+      <swiper-slide>
+        <div class="relative h-full w-full">
+          <div class="absolute inset-0 bg-gradient-to-r from-accent-900/80 to-transparent"></div>
+          <img
+            src="/images/banner2.jpg"
+            alt="Banner 2"
+            class="h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-4">
+              <div class="max-w-lg">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float">
+                  MacBook Pro M3
+                </h2>
+                <p class="text-lg text-white/90 mb-8">
+                  Professional darajadagi noutbuk endi yanada kuchliroq
+                </p>
+                <div class="flex space-x-4">
+                  <button class="px-8 py-3 bg-white text-accent-600 rounded-full font-semibold hover:bg-accent-50 transition-colors">
+                    Sotib olish
+                  </button>
+                  <button class="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm">
+                    Batafsil
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+
+      <!-- Slide 3 -->
+      <swiper-slide>
+        <div class="relative h-full w-full">
+          <div class="absolute inset-0 bg-gradient-to-r from-secondary-900/80 to-transparent"></div>
+          <img
+            src="/images/banner3.jpg"
+            alt="Banner 3"
+            class="h-full w-full object-cover"
+          />
+          <div class="absolute inset-0 flex items-center">
+            <div class="container mx-auto px-4">
+              <div class="max-w-lg">
+                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float">
+                  Samsung Neo QLED 8K
+                </h2>
+                <p class="text-lg text-white/90 mb-8">
+                  Yangi avlod televizorlari bilan dunyoni yangicha kashf eting
+                </p>
+                <div class="flex space-x-4">
+                  <button class="px-8 py-3 bg-white text-secondary-600 rounded-full font-semibold hover:bg-secondary-50 transition-colors">
+                    Sotib olish
+                  </button>
+                  <button class="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm">
+                    Batafsil
+                  </button>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </swiper-slide>
+    </swiper>
+
+    <!-- Decorative elements -->
+    <div class="absolute top-0 right-0 w-1/3 h-full bg-white/5 backdrop-blur-3xl transform skew-x-12 translate-x-1/2"></div>
+    <div class="absolute bottom-0 left-0 w-full h-32 bg-gradient-to-t from-black/20 to-transparent"></div>
   </div>
 </template>
 
 <script setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay as SwiperAutoplay, Pagination as SwiperPagination, Navigation as SwiperNavigation } from 'swiper/modules'
+import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules'
 import 'swiper/css'
+import 'swiper/css/effect-fade'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-const slides = [
-  {
-    id: 1,
-    title: 'Yangi kolleksiya 2024',
-    description: 'Eng so\'nggi trenddagi kiyimlar kolleksiyasi bilan tanishing',
-    buttonText: 'Ko\'proq bilish',
-    image: 'https://images.unsplash.com/photo-1441986300917-64674bd600d8?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1950&q=80'
-  },
-  {
-    id: 2,
-    title: 'Chegirmalar 50% gacha',
-    description: 'Barcha mavsumiy mahsulotlarga maxsus chegirmalar',
-    buttonText: 'Ko\'proq bilish',
-    image: 'https://images.unsplash.com/photo-1607082348824-0a96f2a4b9da?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2070&q=80'
-  },
-  {
-    id: 3,
-    title: 'Yangi smartfonlar',
-    description: 'Premium smartfonlar hamyonbop narxlarda',
-    buttonText: 'Ko\'proq bilish',
-    image: 'https://images.unsplash.com/photo-1601784551446-20c9e07cdbdb?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=2067&q=80'
-  }
-]
+const SwiperAutoplay = Autoplay
+const SwiperEffectFade = EffectFade
+const SwiperPagination = Pagination
+const SwiperNavigation = Navigation
 </script>
 
-<style>
-.swiper-pagination-bullet {
-  @apply w-2 h-2 bg-white/50;
+<style scoped>
+.swiper {
+  width: 100%;
+  height: 100%;
 }
-.swiper-pagination-bullet-active {
-  @apply bg-[#00BD7E];
+
+:deep(.swiper-pagination-bullet) {
+  width: 10px;
+  height: 10px;
+  background: white;
+  opacity: 0.5;
 }
-.swiper-button-next,
-.swiper-button-prev {
-  @apply text-white/70 hover:text-[#00BD7E] transition-colors duration-300;
+
+:deep(.swiper-pagination-bullet-active) {
+  opacity: 1;
+  background: white;
+}
+
+:deep(.swiper-button-prev),
+:deep(.swiper-button-next) {
+  color: white;
+  background: rgba(255, 255, 255, 0.1);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  backdrop-filter: blur(4px);
+}
+
+:deep(.swiper-button-prev:hover),
+:deep(.swiper-button-next:hover) {
+  background: rgba(255, 255, 255, 0.2);
+}
+
+:deep(.swiper-button-prev:after),
+:deep(.swiper-button-next:after) {
+  font-size: 20px;
 }
 </style>
