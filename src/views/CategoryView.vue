@@ -1,15 +1,17 @@
 <template>
-  <main class="flex-grow flex justify-center items-start py-8">
+  <main class="flex-grow flex justify-center items-start py-4 sm:py-8">
     <div class="container mx-auto px-4 max-w-7xl w-full">
-    <!-- Banner Section -->
-      <div class="mb-12">
+      <!-- Banner Section -->
+      <div class="mb-6 sm:mb-12">
         <CategoryBanner />
       </div>
-      <div class="mb-12">
+
+      <!-- Breadcrumb -->
+      <div class="mb-6 sm:mb-12">
         <nav class="flex" aria-label="Breadcrumb">
-          <ol class="inline-flex items-center space-x-1 md:space-x-3">
+          <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
             <li class="inline-flex items-center">
-              <router-link to="/" class="text-gray-700 hover:text-blue-600">
+              <router-link to="/" class="text-gray-700 hover:text-primary-600">
                 Bosh sahifa
               </router-link>
             </li>
@@ -22,149 +24,142 @@
               </div>
             </li>
           </ol>
-        </nav> 
-        <div class="flex flex-col md:flex-row gap-6">
-          <!-- Filters Sidebar -->
-          <div class="w-full md:w-1/4">
-            <FilterSidebar @apply-filters="handleFilters" />
-          </div>
+        </nav>
+      </div>
 
-          <!-- Products Grid -->
-          <div class="w-full md:w-3/4">
+      <!-- Main Content -->
+      <div class="flex flex-col lg:flex-row gap-6">
+        <!-- Filters Sidebar -->
+        <div class="w-full lg:w-1/4 lg:sticky lg:top-4">
+          <FilterSidebar @apply-filters="handleFilters" />
+        </div>
+
+        <!-- Products Section -->
+        <div class="w-full lg:w-3/4">
           <!-- Sort Options -->
-          <div class="bg-white rounded-lg shadow p-4 mb-6 flex justify-between items-center">
-            <h1 class="text-xl font-bold">{{ category.name }}</h1>
-            <select v-model="sortBy" class="border rounded-md px-3 py-2">
-              <option value="popular">Ommabop</option>
-              <option value="price_asc">Narx: Arzondan qimmatga</option>
-              <option value="price_desc">Narx: Qimmatdan arzonga</option>
-              <option value="new">Yangi</option>
-            </select>
-          </div>
-
-          <!-- Products Grid -->
-          <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
-            <div v-for="product in products" :key="product.id" 
-              class="bg-white rounded-lg shadow-sm overflow-hidden">
-              <router-link :to="'/product/' + product.id" class="block">
-                <!-- Product Image -->
-                <div class="relative aspect-[3/4] overflow-hidden bg-white">
-                  <img 
-                    :src="product.image" 
-                    :alt="product.name"
-                    class="w-full h-full object-cover"
-                  />
-                  <!-- Favorite Button -->
-                  <button 
-                    @click.stop="toggleFavorite(product)"
-                    class="absolute top-2 right-2 w-8 h-8 rounded-full bg-white/80 backdrop-blur-sm hover:bg-white flex items-center justify-center transition-all duration-300 group/fav"
-                  >
-                    <svg xmlns="http://www.w3.org/2000/svg" 
-                      class="h-5 w-5 transition-all duration-300"
-                      :class="[
-                        product.isFavorite 
-                          ? 'text-red-500 scale-110 fill-red-500' 
-                          : 'text-gray-400 group-hover/fav:text-red-500 group-hover/fav:scale-110'
-                      ]"
-                      viewBox="0 0 24 24" 
-                      stroke="currentColor" 
-                      :stroke-width="product.isFavorite ? 0 : 2"
-                    >
-                      <path stroke-linecap="round" stroke-linejoin="round" 
-                        d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" 
-                      />
-                    </svg>
-                  </button>
-                </div>
-
-                <!-- Product Info -->
-                <div class="p-3 space-y-2">
-                  <!-- Title -->
-                  <h3 class="font-medium text-gray-800 line-clamp-2 hover:text-blue-600 transition-colors duration-300">
-                    {{ product.name }}
-                  </h3>
-
-                  <!-- Price -->
-                  <div class="space-y-1">
-                    <p v-if="product.discount" class="text-sm text-gray-500">
-                      <span class="line-through">{{ product.originalPrice.toLocaleString() }} so'm</span>
-                      <span class="ml-2 text-xs px-1.5 py-0.5 bg-red-100 text-red-600 rounded">
-                        -{{ Math.floor((product.originalPrice - product.price) / product.originalPrice * 100) }}%
-                      </span>
-                    </p>
-                    <p class="text-lg font-semibold text-gray-900">
-                      {{ product.price.toLocaleString() }} so'm
-                    </p>
-                  </div>
-
-                  <!-- Monthly Payment -->
-                  <div v-if="product.installment" class="bg-gray-50 -mx-3 px-3 py-2">
-                    <p class="text-sm text-gray-600">
-                      <span class="font-medium text-gray-900">{{ Math.round(product.price / 12).toLocaleString() }} so'm</span>
-                      x 12 oy
-                    </p>
-                  </div>
-                </div>
-              </router-link>
-
-              <!-- Cart Button -->
-              <div class="p-3">
-                <button @click="addToCart(product)" 
-                  class="w-full py-2 bg-black hover:bg-gray-900 text-white rounded-lg transition-colors duration-300 flex items-center justify-center space-x-2">
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-                  </svg>
-                  <span>Savatga</span>
-                </button>
+          <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+            <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
+              <h1 class="text-lg sm:text-xl font-semibold text-gray-900">{{ category.name }}</h1>
+              <div class="flex items-center gap-2 w-full sm:w-auto">
+                <select v-model="sortBy" class="w-full sm:w-auto bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
+                  <option value="popular">Ommabop</option>
+                  <option value="price_asc">Narx: Arzondan qimmatga</option>
+                  <option value="price_desc">Narx: Qimmatdan arzonga</option>
+                  <option value="new">Yangi</option>
+                </select>
               </div>
             </div>
           </div>
 
+          <!-- Products Grid -->
+          <div class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4">
+            <ProductCard 
+              v-for="product in products" 
+              :key="product.id"
+              :product="product"
+              @add-to-cart="addToCart"
+              @toggle-favorite="toggleFavorite"
+            />
+          </div>
+
           <!-- Pagination -->
           <div class="flex justify-center mt-8">
-            <nav class="flex items-center gap-2">
+            <nav class="flex items-center gap-1 sm:gap-2">
               <button 
                 :disabled="currentPage === 1"
                 @click="changePage(currentPage - 1)"
-                class="px-3 py-1 rounded border"
-                :class="currentPage === 1 ? 'text-gray-400' : 'hover:bg-gray-100'">
-                &lt;
+                class="px-3 py-1 sm:px-4 sm:py-2 rounded-lg border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              >
+                Oldingi
               </button>
               <button 
                 v-for="page in totalPages" 
                 :key="page"
                 @click="changePage(page)"
-                class="px-3 py-1 rounded border"
-                :class="currentPage === page ? 'bg-blue-600 text-white' : 'hover:bg-gray-100'">
+                :class="[
+                  'px-3 py-1 sm:px-4 sm:py-2 rounded-lg text-sm font-medium',
+                  currentPage === page 
+                    ? 'bg-primary-600 text-white' 
+                    : 'border hover:bg-gray-50'
+                ]"
+              >
                 {{ page }}
               </button>
               <button 
                 :disabled="currentPage === totalPages"
                 @click="changePage(currentPage + 1)"
-                class="px-3 py-1 rounded border"
-                :class="currentPage === totalPages ? 'text-gray-400' : 'hover:bg-gray-100'">
-                &gt;
+                class="px-3 py-1 sm:px-4 sm:py-2 rounded-lg border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              >
+                Keyingi
               </button>
             </nav>
           </div>
         </div>
       </div>
-      </div>
-      
     </div>
   </main>
-  
 </template>
 
 <script setup>
 import { ref } from 'vue'
-import CategoryBanner from './../components/CategoryBanner.vue'
-import FilterSidebar from './../components/FilterSidebar.vue'
+import CategoryBanner from '../components/CategoryBanner.vue'
+import FilterSidebar from '../components/FilterSidebar.vue'
+import ProductCard from '../components/ProductCard.vue'
 
-// Methods
+const category = ref({
+  id: 1,
+  name: 'Smartfonlar'
+})
+
+const products = ref([
+  {
+    id: 1,
+    name: 'iPhone 13 Pro Max',
+    price: 12000000,
+    originalPrice: 13000000,
+    image: 'https://picsum.photos/400/500',
+    discount: true,
+    installment: true,
+    isFavorite: false
+  },
+  {
+    id: 2,
+    name: 'Samsung Galaxy S21 Ultra',
+    price: 11000000,
+    originalPrice: 12000000,
+    image: 'https://picsum.photos/300/300',
+    discount: true,
+    installment: true,
+    isFavorite: false
+  },
+  {
+    id: 3,
+    name: 'Xiaomi Mi 11',
+    price: 8000000,
+    originalPrice: 9000000,
+    image: 'https://picsum.photos/300/300',
+    discount: true,
+    installment: true,
+    isFavorite: false
+  },
+  {
+    id: 4,
+    name: 'Huawei P40 Pro',
+    price: 9000000,
+    originalPrice: 10000000,
+    image: 'https://picsum.photos/300/300',
+    discount: true,
+    installment: true,
+    isFavorite: false
+  }
+])
+
+const sortBy = ref('popular')
+const currentPage = ref(1)
+const totalPages = ref(5)
+
 const addToCart = (product) => {
   console.log('Adding to cart:', product)
-  // Add cart logic here
 }
 
 const toggleFavorite = (product) => {
@@ -173,60 +168,18 @@ const toggleFavorite = (product) => {
 
 const handleFilters = (filters) => {
   console.log('Filters applied:', filters)
-  // Apply filters logic here
+}
+
+const changePage = (page) => {
+  currentPage.value = page
 }
 </script>
+
 <script>
 export default {
   name: 'CategoryView',
   data() {
     return {
-      category: {
-        id: 1,
-        name: 'Smartfonlar'
-      },
-      products: [
-        {
-          id: 1,
-          name: 'iPhone 13 Pro Max',
-          price: 12000000,
-          originalPrice: 13000000,
-          image: 'https://picsum.photos/400/500',
-          discount: true,
-          installment: true,
-          isFavorite: false
-        },
-        {
-          id: 2,
-          name: 'Samsung Galaxy S21 Ultra',
-          price: 11000000,
-          originalPrice: 12000000,
-          image: 'https://picsum.photos/300/300',
-          discount: true,
-          installment: true,
-          isFavorite: false
-        },
-        {
-          id: 3,
-          name: 'Xiaomi Mi 11',
-          price: 8000000,
-          originalPrice: 9000000,
-          image: 'https://picsum.photos/300/300',
-          discount: true,
-          installment: true,
-          isFavorite: false
-        },
-        {
-          id: 4,
-          name: 'Huawei P40 Pro',
-          price: 9000000,
-          originalPrice: 10000000,
-          image: 'https://picsum.photos/300/300',
-          discount: true,
-          installment: true,
-          isFavorite: false
-        }
-      ],
       brands: [
         { id: 1, name: 'Apple' },
         { id: 2, name: 'Samsung' },
@@ -248,10 +201,7 @@ export default {
         brands: [],
         colors: [],
         sizes: []
-      },
-      sortBy: 'popular',
-      currentPage: 1,
-      totalPages: 5
+      }
     }
   },
   methods: {
@@ -370,5 +320,21 @@ body {
 
 .custom-scrollbar::-webkit-scrollbar-thumb:hover {
   background: #ccc;
+}
+</style>
+
+<style>
+@media screen and (max-width: 480px) {
+  .text-lg {
+    font-size: 14px !important;
+  }
+  
+  .text-sm {
+    font-size: 12px !important;
+  }
+  
+  .text-xs {
+    font-size: 10px !important;
+  }
 }
 </style>

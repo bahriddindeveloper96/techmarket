@@ -1,6 +1,6 @@
 <template>
-  <main class="min-h-screen">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-[1240px]">
+  <main class="flex-grow flex justify-center items-start py-8">
+    <div class="container mx-auto px-4 max-w-7xl w-full">
       <!-- Breadcrumb -->
       <nav class="flex mb-8" aria-label="Breadcrumb">
         <ol class="inline-flex items-center space-x-1 md:space-x-3">
@@ -32,7 +32,7 @@
 
       <!-- Product Details -->
       <div class="bg-white rounded-2xl shadow-sm overflow-hidden">
-        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-4 md:p-8">
+        <div class="grid grid-cols-1 lg:grid-cols-2 gap-8 p-6">
           <!-- Product Images -->
           <div class="space-y-4">
             <div class="aspect-square rounded-lg overflow-hidden bg-gray-100">
@@ -159,7 +159,7 @@
             Barchasini ko'rish
           </router-link>
         </div>
-        <div class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-5 gap-4 md:gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <ProductCard 
             v-for="product in similarProducts" 
             :key="product.id"
