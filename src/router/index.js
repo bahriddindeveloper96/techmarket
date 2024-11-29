@@ -6,6 +6,7 @@ import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
 import Profile from '../components/Profile.vue'
 import Favorites from '../components/Favorites.vue'
+import OrdersView from '../views/OrdersView.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -44,6 +45,11 @@ const router = createRouter({
       path: '/favorites',
       name: 'favorites',
       component: Favorites
+    },
+    {
+      path: '/orders',
+      name: 'orders',
+      component: OrdersView
     }
   ]
 })

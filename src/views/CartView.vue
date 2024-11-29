@@ -1,94 +1,87 @@
 <template>
-  <main class="min-h-screen bg-gray-50">
-    <div class="container mx-auto px-4 sm:px-6 lg:px-8 py-8 max-w-[1240px]">
-      <!-- Breadcrumb -->
-      <nav class="flex mb-8" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-3">
-          <li class="inline-flex items-center">
-            <router-link to="/" class="text-gray-700 hover:text-primary-600">
-              Bosh sahifa
-            </router-link>
-          </li>
-          <li>
-            <div class="flex items-center">
-              <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
-                <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
-              </svg>
-              <span class="text-gray-500">Savatcha</span>
-            </div>
-          </li>
-        </ol>
-      </nav>
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+    <Banner />
+    
+    <div class="container mx-auto px-4 py-8">
+      <!-- Cart Header -->
+      <div class="flex items-center justify-between mb-8">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
+          Savat
+        </h1>
+        <button v-if="cartItems.length" @click="clearCart" class="text-sm text-red-500 hover:text-red-600 transition-colors">
+          Savatni tozalash
+        </button>
+      </div>
 
-      <div v-if="cartItems.length > 0" class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <!-- Empty Cart -->
+      <div v-if="!cartItems.length" class="text-center py-16">
+        <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
+          <svg fill="currentColor" viewBox="0 0 24 24">
+            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
+          </svg>
+        </div>
+        <p class="text-gray-500 mb-6">Savatingiz bo'sh</p>
+        <router-link to="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
+          </svg>
+          Xarid qilishni davom ettirish
+        </router-link>
+      </div>
+
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Cart Items -->
         <div class="lg:col-span-2 space-y-4">
-          <!-- Cart Header -->
-          <div class="flex items-center justify-between mb-6">
-            <h1 class="text-2xl font-bold text-gray-900">Savatcha ({{ cartItems.length }})</h1>
-            <button @click="clearCart" class="text-red-600 hover:text-red-700 text-sm font-medium">
-              Hammasini o'chirish
-            </button>
-          </div>
+          <div v-for="item in cartItems" :key="item.id" class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
+            <div class="flex gap-4">
+              <!-- Product Image -->
+              <div class="w-24 h-24 rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 p-2 flex-shrink-0">
+                <img :src="item.image" :alt="item.name" class="w-full h-full object-contain" />
+              </div>
 
-          <!-- Cart Items List -->
-          <div class="space-y-4">
-            <div v-for="item in cartItems" :key="item.id" 
-                 class="bg-white rounded-2xl shadow-sm overflow-hidden hover:shadow-md transition-shadow duration-300">
-              <div class="p-4 sm:p-6 flex gap-4">
-                <!-- Product Image -->
-                <router-link :to="'/product/' + item.id" class="shrink-0">
-                  <div class="w-24 h-24 sm:w-32 sm:h-32 rounded-xl overflow-hidden bg-gray-50">
-                    <img :src="item.image" :alt="item.name" class="w-full h-full object-contain" />
-                  </div>
-                </router-link>
-
-                <!-- Product Info -->
-                <div class="flex-grow min-w-0">
-                  <div class="flex items-start justify-between gap-4">
-                    <div>
-                      <router-link :to="'/product/' + item.id" class="block group">
-                        <h3 class="text-base sm:text-lg font-medium text-gray-900 group-hover:text-primary-600 line-clamp-2">
-                          {{ item.name }}
-                        </h3>
-                      </router-link>
-                      <p class="mt-1 text-sm text-gray-500">{{ item.category }}</p>
+              <!-- Product Info -->
+              <div class="flex-grow">
+                <div class="flex justify-between items-start">
+                  <div>
+                    <h3 class="font-medium text-gray-900 mb-1">{{ item.name }}</h3>
+                    <div class="text-sm text-gray-500 space-y-1">
+                      <p v-if="item.color">Rang: <span class="inline-block w-3 h-3 rounded-full ml-1" :style="{ backgroundColor: item.color }"></span></p>
+                      <p v-if="item.size">O'lcham: {{ item.size }}</p>
                     </div>
-                    <button @click="removeFromCart(item)" class="text-gray-400 hover:text-red-500">
-                      <i class="fas fa-times"></i>
+                  </div>
+                  <button @click="removeFromCart(item)" class="text-gray-400 hover:text-red-500 transition-colors">
+                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+                    </svg>
+                  </button>
+                </div>
+
+                <!-- Price and Quantity -->
+                <div class="flex justify-between items-center mt-4">
+                  <div class="flex items-center gap-2">
+                    <span class="font-medium text-purple-600">{{ formatPrice(item.price) }}</span>
+                    <span v-if="item.oldPrice" class="text-sm text-gray-400 line-through">{{ formatPrice(item.oldPrice) }}</span>
+                  </div>
+                  
+                  <div class="flex items-center border-2 border-gray-200 rounded-lg">
+                    <button 
+                      @click="decrementQuantity(item)"
+                      class="px-3 py-1 text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
+                      :disabled="item.quantity <= 1"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
+                      </svg>
                     </button>
-                  </div>
-
-                  <div class="mt-4 flex flex-wrap items-end justify-between gap-4">
-                    <!-- Price -->
-                    <div>
-                      <p v-if="item.oldPrice" class="text-sm text-gray-500 line-through">
-                        {{ formatPrice(item.oldPrice) }} so'm
-                      </p>
-                      <p class="text-lg font-semibold text-gray-900">
-                        {{ formatPrice(item.price) }} so'm
-                      </p>
-                    </div>
-
-                    <!-- Quantity Controls -->
-                    <div class="flex items-center gap-3 bg-gray-50 rounded-lg p-1">
-                      <button 
-                        @click="decreaseQuantity(item)"
-                        class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary-600 
-                               hover:bg-gray-100 rounded-lg transition-colors"
-                        :disabled="item.quantity <= 1"
-                      >
-                        <i class="fas fa-minus"></i>
-                      </button>
-                      <span class="w-8 text-center font-medium">{{ item.quantity }}</span>
-                      <button 
-                        @click="increaseQuantity(item)"
-                        class="w-8 h-8 flex items-center justify-center text-gray-600 hover:text-primary-600 
-                               hover:bg-gray-100 rounded-lg transition-colors"
-                      >
-                        <i class="fas fa-plus"></i>
-                      </button>
-                    </div>
+                    <span class="w-8 text-center font-medium">{{ item.quantity }}</span>
+                    <button 
+                      @click="incrementQuantity(item)"
+                      class="px-3 py-1 text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
+                    >
+                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
+                      </svg>
+                    </button>
                   </div>
                 </div>
               </div>
@@ -98,57 +91,47 @@
 
         <!-- Order Summary -->
         <div class="lg:col-span-1">
-          <div class="bg-white rounded-2xl shadow-sm overflow-hidden sticky top-8">
-            <div class="p-6">
-              <h2 class="text-lg font-semibold text-gray-900 mb-4">Buyurtma ma'lumotlari</h2>
-              
-              <!-- Summary Items -->
-              <div class="space-y-3 mb-6">
-                <div class="flex justify-between text-sm">
-                  <span class="text-gray-600">Mahsulotlar ({{ cartItems.length }})</span>
-                  <span class="font-medium">{{ formatPrice(subtotal) }} so'm</span>
-                </div>
-                <div class="flex justify-between text-sm">
-                  <span class="text-gray-600">Yetkazib berish</span>
-                  <span class="font-medium">Bepul</span>
-                </div>
-                <div class="pt-3 border-t border-gray-200">
-                  <div class="flex justify-between">
-                    <span class="text-base font-semibold">Jami</span>
-                    <span class="text-base font-semibold">{{ formatPrice(total) }} so'm</span>
-                  </div>
-                </div>
+          <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-4">
+            <h2 class="text-lg font-medium mb-4">Buyurtma ma'lumotlari</h2>
+            
+            <div class="space-y-3 mb-6">
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Mahsulotlar ({{ totalItems }})</span>
+                <span>{{ formatPrice(subtotal) }}</span>
               </div>
-
-              <!-- Checkout Button -->
-              <router-link 
-                to="/checkout"
-                class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-medium
-                       hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 
-                       focus:ring-offset-2 transition-colors duration-200 flex items-center justify-center gap-2"
-              >
-                <span>Buyurtma berish</span>
-                <i class="fas fa-arrow-right"></i>
-              </router-link>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Chegirma</span>
+                <span class="text-green-500">-{{ formatPrice(discount) }}</span>
+              </div>
+              <div class="flex justify-between text-sm">
+                <span class="text-gray-500">Yetkazib berish</span>
+                <span>{{ formatPrice(shipping) }}</span>
+              </div>
+              <div class="border-t pt-3 flex justify-between font-medium">
+                <span>Jami</span>
+                <span class="text-lg text-purple-600">{{ formatPrice(total) }}</span>
+              </div>
             </div>
+
+            <button class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]">
+              Buyurtma berish
+            </button>
           </div>
         </div>
       </div>
 
-      <!-- Empty Cart -->
-      <div v-else class="text-center py-12">
-        <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
-          <i class="fas fa-shopping-cart text-6xl"></i>
+      <!-- Similar Products -->
+      <div class="mt-16">
+        <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
+          Sizga yoqishi mumkin
+        </h2>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+          <ProductCard 
+            v-for="product in similarProducts" 
+            :key="product.id"
+            :product="product"
+          />
         </div>
-        <h2 class="text-2xl font-bold text-gray-900 mb-4">Savatchangiz bo'sh</h2>
-        <p class="text-gray-600 mb-8">Siz hali hech qanday mahsulot qo'shmagansiz</p>
-        <router-link 
-          to="/" 
-          class="inline-flex items-center justify-center px-6 py-3 bg-primary-600 text-white rounded-xl
-                 hover:bg-primary-700 transition-colors"
-        >
-          Xarid qilishni boshlash
-        </router-link>
       </div>
     </div>
   </main>
@@ -156,70 +139,107 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import Banner from './../components/Banner.vue'
+import ProductCard from '@/components/ProductCard.vue'
 
-// Sample cart data
+// Cart items
 const cartItems = ref([
   {
     id: 1,
-    name: 'Apple iPhone 14 Pro 256GB Space Black',
-    category: 'Smartfonlar',
-    price: 15_000_000,
-    oldPrice: 16_500_000,
-    image: 'https://picsum.photos/400?random=1',
+    name: 'iPhone 15 Pro Max 256GB Natural Titanium',
+    price: 15999000,
+    oldPrice: 17500000,
+    image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
+    color: '#A6A6A6',
+    size: '256GB',
     quantity: 1
   },
   {
     id: 2,
     name: 'Samsung Galaxy S23 Ultra 512GB Black',
-    category: 'Smartfonlar',
-    price: 13_500_000,
-    oldPrice: 14_800_000,
-    image: 'https://picsum.photos/400?random=2',
+    price: 13500000,
+    oldPrice: 14800000,
+    image: 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
+    color: '#2B2B2B',
+    size: '512GB',
     quantity: 1
   }
 ])
 
+// Similar products
+const similarProducts = ref([
+  {
+    id: 3,
+    name: 'Google Pixel 8 Pro 256GB',
+    price: 12500000,
+    oldPrice: 13800000,
+    image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
+    rating: 4.7,
+    reviews: 156,
+    isFavorite: false
+  },
+  {
+    id: 4,
+    name: 'Xiaomi 13T Pro 512GB',
+    price: 9999000,
+    oldPrice: 11200000,
+    image: 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg',
+    rating: 4.5,
+    reviews: 98,
+    isFavorite: false
+  },
+  {
+    id: 5,
+    name: 'OnePlus 11 256GB',
+    price: 11500000,
+    oldPrice: 12800000,
+    image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg',
+    rating: 4.6,
+    reviews: 145,
+    isFavorite: false
+  }
+])
+
 // Computed properties
+const totalItems = computed(() => {
+  return cartItems.value.reduce((total, item) => total + item.quantity, 0)
+})
+
 const subtotal = computed(() => {
-  return cartItems.value.reduce((total, item) => {
-    return total + (item.price * item.quantity)
-  }, 0)
+  return cartItems.value.reduce((total, item) => total + (item.price * item.quantity), 0)
 })
 
 const discount = computed(() => {
   return cartItems.value.reduce((total, item) => {
-    if (item.oldPrice) {
-      return total + ((item.oldPrice - item.price) * item.quantity)
-    }
-    return total
+    return total + ((item.oldPrice - item.price) * item.quantity)
   }, 0)
 })
 
-const total = computed(() => {
-  return subtotal.value
+const shipping = computed(() => {
+  return totalItems.value > 0 ? 50000 : 0
 })
 
-const calculateMonthlyPayment = computed(() => {
-  return Math.round(total.value / 12)
+const total = computed(() => {
+  return subtotal.value + shipping.value
 })
 
 // Methods
 const formatPrice = (price) => {
-  return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
+  return new Intl.NumberFormat('uz-UZ').format(price)
 }
 
-const increaseQuantity = (item) => {
+const incrementQuantity = (item) => {
   item.quantity++
 }
 
-const decreaseQuantity = (item) => {
+const decrementQuantity = (item) => {
   if (item.quantity > 1) {
     item.quantity--
   }
 }
 
 const removeFromCart = (item) => {
-  const index = cartItems.value.indexOf(item)
+  const index = cartItems.value.findIndex(cartItem => cartItem.id === item.id)
   if (index > -1) {
     cartItems.value.splice(index, 1)
   }
@@ -228,36 +248,4 @@ const removeFromCart = (item) => {
 const clearCart = () => {
   cartItems.value = []
 }
-
-const checkout = () => {
-  // Checkout logic here
-  console.log('Proceeding to checkout with items:', cartItems.value)
-}
 </script>
-
-<style scoped>
-.line-clamp-2 {
-  display: -webkit-box;
-  -webkit-line-clamp: 2;
-  -webkit-box-orient: vertical;
-  overflow: hidden;
-}
-
-@media screen and (max-width: 480px) {
-  .text-2xl {
-    font-size: 1.25rem !important;
-  }
-  
-  .text-lg {
-    font-size: 1rem !important;
-  }
-  
-  .text-base {
-    font-size: 0.875rem !important;
-  }
-  
-  .text-sm {
-    font-size: 0.75rem !important;
-  }
-}
-</style>
