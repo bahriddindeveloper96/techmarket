@@ -100,7 +100,7 @@
         <div class="lg:col-span-1">
           <div class="bg-white rounded-2xl shadow-sm overflow-hidden sticky top-8">
             <div class="p-6">
-              <h2 class="text-lg font-bold text-gray-900 mb-4">Buyurtma ma'lumotlari</h2>
+              <h2 class="text-lg font-semibold text-gray-900 mb-4">Buyurtma ma'lumotlari</h2>
               
               <!-- Summary Items -->
               <div class="space-y-3 mb-6">
@@ -109,45 +109,27 @@
                   <span class="font-medium">{{ formatPrice(subtotal) }} so'm</span>
                 </div>
                 <div class="flex justify-between text-sm">
-                  <span class="text-gray-600">Chegirma</span>
-                  <span class="font-medium text-red-600">-{{ formatPrice(discount) }} so'm</span>
-                </div>
-                <div class="flex justify-between text-sm">
                   <span class="text-gray-600">Yetkazib berish</span>
                   <span class="font-medium">Bepul</span>
                 </div>
-              </div>
-
-              <!-- Total -->
-              <div class="border-t pt-4 mb-6">
-                <div class="flex justify-between items-center">
-                  <span class="text-base font-bold text-gray-900">Jami</span>
-                  <span class="text-xl font-bold text-gray-900">{{ formatPrice(total) }} so'm</span>
+                <div class="pt-3 border-t border-gray-200">
+                  <div class="flex justify-between">
+                    <span class="text-base font-semibold">Jami</span>
+                    <span class="text-base font-semibold">{{ formatPrice(total) }} so'm</span>
+                  </div>
                 </div>
               </div>
 
               <!-- Checkout Button -->
-              <button 
-                @click="checkout"
-                class="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium 
-                       transition-colors flex items-center justify-center gap-2"
+              <router-link 
+                to="/checkout"
+                class="w-full bg-primary-600 text-white py-3 px-4 rounded-xl font-medium
+                       hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 
+                       focus:ring-offset-2 transition-colors duration-200 flex items-center justify-center gap-2"
               >
-                <i class="fas fa-lock"></i>
-                Buyurtma berish
-              </button>
-
-              <!-- Installment Option -->
-              <div class="mt-4 p-4 bg-green-50 rounded-xl">
-                <div class="flex items-center gap-3 text-green-800">
-                  <i class="fas fa-credit-card text-lg"></i>
-                  <div>
-                    <p class="font-medium">Muddatli to'lov</p>
-                    <p class="text-sm mt-0.5">
-                      {{ formatPrice(calculateMonthlyPayment) }} so'm x 12 oy
-                    </p>
-                  </div>
-                </div>
-              </div>
+                <span>Buyurtma berish</span>
+                <i class="fas fa-arrow-right"></i>
+              </router-link>
             </div>
           </div>
         </div>
