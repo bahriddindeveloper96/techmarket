@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact"
+  },
+  "header": {
+    "search": "Search",
+    "cart": "Cart",
+    "login": "Login",
+    "register": "Register"
+  },
+  "products": {
+    "all": "All Products",
+    "new": "New Products",
+    "popular": "Popular Products",
+    "sale": "Sale",
+    "addToCart": "Add to Cart",
+    "outOfStock": "Out of Stock",
+    "price": "Price"
+  },
+  "footer": {
+    "about": "About Us",
+    "contact": "Contact",
+    "terms": "Terms of Service",
+    "privacy": "Privacy Policy",
+    "followUs": "Follow Us"
+  }
+}

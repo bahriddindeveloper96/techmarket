@@ -1,0 +1,30 @@
+{
+  "nav": {
+    "home": "Bosh sahifa",
+    "products": "Mahsulotlar",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa"
+  },
+  "header": {
+    "search": "Qidirish",
+    "cart": "Savatcha",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish"
+  },
+  "products": {
+    "all": "Barcha mahsulotlar",
+    "new": "Yangi mahsulotlar",
+    "popular": "Ommabop mahsulotlar",
+    "sale": "Chegirmalar",
+    "addToCart": "Savatga qo'shish",
+    "outOfStock": "Sotuvda yo'q",
+    "price": "Narxi"
+  },
+  "footer": {
+    "about": "Biz haqimizda",
+    "contact": "Aloqa",
+    "terms": "Foydalanish shartlari",
+    "privacy": "Maxfiylik siyosati",
+    "followUs": "Bizni kuzatib boring"
+  }
+}
