@@ -52,17 +52,17 @@
               <i class="ri-heart-3-line text-2xl"></i>
               <span class="text-xs mt-1">{{ $t('nav.favorites') }}</span>
             </a>
-            <a href="#" class="flex flex-col items-center text-gray-700 hover:text-primary-600 transition-colors">
+            <router-link to="/profile" class="flex flex-col items-center text-gray-700 hover:text-primary-600 transition-colors">
               <i class="ri-user-3-line text-2xl"></i>
               <span class="text-xs mt-1">{{ $t('nav.profile') }}</span>
-            </a>
-            <a href="#" class="flex flex-col items-center text-gray-700 hover:text-primary-600 transition-colors">
+            </router-link>
+            <router-link to="/cart" class="flex flex-col items-center text-gray-700 hover:text-primary-600 transition-colors">
               <div class="relative">
                 <i class="ri-shopping-cart-2-line text-2xl"></i>
-                <span class="absolute -top-1 -right-2 bg-primary-500 text-white text-xs w-5 h-5 flex items-center justify-center rounded-full">2</span>
+                <span class="absolute -top-1 -right-2 bg-primary-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">2</span>
               </div>
               <span class="text-xs mt-1">{{ $t('nav.cart') }}</span>
-            </a>
+            </router-link>
           </div>
         </div>
 
@@ -131,13 +131,13 @@
     <div class="fixed bottom-0 left-0 right-0 md:hidden z-50">
       <div class="bg-white shadow-t-lg border-t border-gray-200 rounded-t-xl">
         <div class="grid grid-cols-5 h-16">
-          <a href="#" class="group relative flex flex-col items-center justify-center py-2">
+          <router-link to="/" class="group relative flex flex-col items-center justify-center py-2">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-store-2-line text-white text-lg"></i>
             </div>
             <i class="ri-store-2-line text-2xl mb-1 text-gray-600 group-hover:text-primary-600 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 group-hover:text-primary-600 transition-colors duration-300">{{ $t('nav.home') }}</span>
-          </a>
+          </router-link>
           <a href="#" class="group relative flex flex-col items-center justify-center py-2">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-apps-2-line text-white text-lg"></i>
@@ -152,20 +152,26 @@
             <i class="ri-heart-3-line text-2xl mb-1 text-gray-600 group-hover:text-primary-600 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 group-hover:text-primary-600 transition-colors duration-300">{{ $t('nav.favorites') }}</span>
           </a>
-          <a href="#" class="group relative flex flex-col items-center justify-center py-2">
+          <router-link to="/cart" class="group relative flex flex-col items-center justify-center py-2">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-shopping-cart-2-line text-white text-lg"></i>
             </div>
-            <i class="ri-shopping-cart-2-line text-2xl mb-1 text-gray-600 group-hover:text-primary-600 transition-colors duration-300"></i>
+            <div class="relative">
+              <i class="ri-shopping-cart-2-line text-2xl mb-1 text-gray-600 group-hover:text-primary-600 transition-colors duration-300"></i>
+              <span class="absolute -top-1 -right-2 bg-primary-500 text-white text-xs w-4 h-4 rounded-full flex items-center justify-center">2</span>
+            </div>
             <span class="text-xs font-medium text-gray-600 group-hover:text-primary-600 transition-colors duration-300">{{ $t('nav.cart') }}</span>
-          </a>
-          <a href="#" class="group relative flex flex-col items-center justify-center py-2">
+          </router-link>
+          <router-link 
+            to="/profile" 
+            class="group relative flex flex-col items-center justify-center py-2"
+          >
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-user-3-line text-white text-lg"></i>
             </div>
             <i class="ri-user-3-line text-2xl mb-1 text-gray-600 group-hover:text-primary-600 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 group-hover:text-primary-600 transition-colors duration-300">{{ $t('nav.profile') }}</span>
-          </a>
+          </router-link>
         </div>
       </div>
     </div>

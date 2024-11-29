@@ -4,6 +4,7 @@ import CategoryView from '../views/CategoryView.vue'
 import ProductDetail from '../views/ProductDetail.vue'
 import CartView from '../views/CartView.vue'
 import CheckoutView from '../views/CheckoutView.vue'
+import Profile from '../components/Profile.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -32,6 +33,11 @@ const router = createRouter({
       path: '/checkout',
       name: 'checkout',
       component: CheckoutView
+    },
+    {
+      path: '/profile',
+      name: 'profile',
+      component: Profile
     }
   ]
 })

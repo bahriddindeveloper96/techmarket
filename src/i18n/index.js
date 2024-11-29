@@ -25,6 +25,15 @@ const messages = {
       cart: 'Cart',
       login: 'Login',
       register: 'Register'
+    },
+    profile: {
+      title: 'Profile',
+      settings: 'Settings',
+      orders: 'My Orders',
+      favorites: 'Favorites',
+      addresses: 'Delivery Addresses',
+      help: 'Help Center',
+      logout: 'Log Out'
     }
   },
   ru: {
@@ -51,6 +60,15 @@ const messages = {
       cart: 'Корзина',
       login: 'Войти',
       register: 'Регистрация'
+    },
+    profile: {
+      title: 'Профиль',
+      settings: 'Настройки',
+      orders: 'Мои заказы',
+      favorites: 'Избранное',
+      addresses: 'Адреса доставки',
+      help: 'Центр помощи',
+      logout: 'Выйти'
     }
   },
   uz: {
@@ -77,6 +95,15 @@ const messages = {
       cart: 'Savatcha',
       login: 'Kirish',
       register: 'Ro\'yxatdan o\'tish'
+    },
+    profile: {
+      title: 'Profil',
+      settings: 'Sozlamalar',
+      orders: 'Buyurtmalarim',
+      favorites: 'Sevimlilar',
+      addresses: 'Yetkazib berish manzillari',
+      help: 'Yordam markazi',
+      logout: 'Chiqish'
     }
   }
 }
