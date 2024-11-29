@@ -34,6 +34,11 @@ const messages = {
       addresses: 'Delivery Addresses',
       help: 'Help Center',
       logout: 'Log Out'
+    },
+    favorites: {
+      empty_title: 'No favorites yet',
+      empty_description: 'Products you like will appear here. Start browsing to add some!',
+      browse_products: 'Browse Products'
     }
   },
   ru: {
@@ -69,6 +74,11 @@ const messages = {
       addresses: 'Адреса доставки',
       help: 'Центр помощи',
       logout: 'Выйти'
+    },
+    favorites: {
+      empty_title: 'Пока нет избранного',
+      empty_description: 'Здесь появятся товары, которые вам понравятся. Начните просмотр, чтобы добавить что-нибудь!',
+      browse_products: 'Просмотреть товары'
     }
   },
   uz: {
@@ -104,6 +114,11 @@ const messages = {
       addresses: 'Yetkazib berish manzillari',
       help: 'Yordam markazi',
       logout: 'Chiqish'
+    },
+    favorites: {
+      empty_title: 'Sevimlilar hali yo\'q',
+      empty_description: 'Sizga yoqqan mahsulotlar shu yerda ko\'rinadi. Qo\'shish uchun mahsulotlarni ko\'rib chiqing!',
+      browse_products: 'Mahsulotlarni ko\'rish'
     }
   }
 }
