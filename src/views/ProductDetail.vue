@@ -107,7 +107,7 @@
             <!-- Actions -->
             <div class="space-y-4">
               <button 
-                @click="addToCart"
+                @click="addToCartAndNavigate"
                 class="w-full py-4 bg-primary-600 hover:bg-primary-700 text-white rounded-xl font-medium transition-colors flex items-center justify-center gap-2"
                 :disabled="!product.inStock"
               >
@@ -173,10 +173,11 @@
 
 <script setup>
 import { ref, onMounted } from 'vue'
-import { useRoute } from 'vue-router'
+import { useRoute, useRouter } from 'vue-router'
 import ProductCard from '../components/ProductCard.vue'
 
 const route = useRoute()
+const router = useRouter()
 const selectedImage = ref('')
 
 // Sample product data
@@ -233,9 +234,11 @@ const calculateMonthlyPayment = (price) => {
   return Math.round(price / 12)
 }
 
-const addToCart = () => {
-  // Add to cart logic
+const addToCartAndNavigate = () => {
+  // Add to cart logic here
   console.log('Adding to cart:', product.value)
+  // Navigate to cart page
+  router.push('/cart')
 }
 
 const toggleFavorite = () => {

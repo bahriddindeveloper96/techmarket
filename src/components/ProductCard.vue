@@ -77,7 +77,7 @@
             {{ formatPrice(product.price) }} so'm
           </span>
           <button 
-            @click.stop="addToCart"
+            @click="addToCartAndNavigate"
             class="p-2 text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-full transition-colors duration-300"
           >
             <i class="fas fa-shopping-cart"></i>
@@ -96,7 +96,9 @@
 
 <script setup>
 import { defineProps } from 'vue'
+import { useRouter } from 'vue-router'
 
+const router = useRouter()
 const props = defineProps({
   product: {
     type: Object,
@@ -122,10 +124,13 @@ const toggleFavorite = (event) => {
   props.product.isFavorite = !props.product.isFavorite
 }
 
-const addToCart = (event) => {
+const addToCartAndNavigate = (event) => {
   event.preventDefault()
+  event.stopPropagation()
   // Add to cart logic here
   console.log('Adding to cart:', props.product)
+  // Navigate to cart page
+  router.push('/cart')
 }
 </script>
 
