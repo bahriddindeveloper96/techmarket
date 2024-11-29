@@ -1,42 +1,39 @@
 <template>
-  <main class="flex-grow flex justify-center items-start py-8">
-    <div class="container mx-auto px-4 max-w-7xl w-full">
+  <main class="py-8">
     <!-- Banner Section -->
-      <div class="mb-12">
-        <Banner />
+    <div class="mb-12">
+      <Banner />
+    </div>
+    <!-- Popular Products -->
+    <div class="mb-12">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Ommabop mahsulotlar</h2>
+        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
       </div>
-      <!-- Popular Products -->
-      <div class="mb-12">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold">Ommabop mahsulotlar</h2>
-          <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <ProductCard 
-            v-for="product in popularProducts" 
-            :key="product.id"
-            :product="product"
-          />
-        </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <ProductCard 
+          v-for="product in popularProducts" 
+          :key="product.id"
+          :product="product"
+        />
       </div>
+    </div>
 
-      <!-- New Products -->
-      <div class="mb-12">
-        <div class="flex justify-between items-center mb-6">
-          <h2 class="text-2xl font-bold">Yangi mahsulotlar</h2>
-          <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
-        </div>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <ProductCard 
-            v-for="product in newProducts" 
-            :key="product.id"
-            :product="product"
-          />
-        </div>
+    <!-- New Products -->
+    <div class="mb-12">
+      <div class="flex justify-between items-center mb-6">
+        <h2 class="text-2xl font-bold">Yangi mahsulotlar</h2>
+        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
       </div>
-  </div>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+        <ProductCard 
+          v-for="product in newProducts" 
+          :key="product.id"
+          :product="product"
+        />
+      </div>
+    </div>
   </main>
-  
 </template>
 
 <script setup>
@@ -205,10 +202,5 @@ body {
   padding: 0;
   min-height: 100vh;
   background-color: rgb(249, 250, 251);
-}
-
-.container {
-  max-width: 1280px;
-  margin: 0 auto;
 }
 </style>
