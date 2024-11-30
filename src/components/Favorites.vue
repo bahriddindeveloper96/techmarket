@@ -1,25 +1,25 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
     <Banner />
     
     <div class="container mx-auto px-4 py-8">
       <!-- Favorites Header -->
       <div class="flex items-center justify-between mb-8">
-        <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent">
           {{ $t('nav.favorites') }}
         </h1>
-        <button v-if="favorites.length" @click="clearFavorites" class="text-sm text-red-500 hover:text-red-600 transition-colors">
+        <button v-if="favorites.length" @click="clearFavorites" class="text-sm text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors">
           {{ $t('favorites.clear_all') }}
         </button>
       </div>
 
       <!-- Empty Favorites -->
       <div v-if="!favorites.length" class="text-center py-16">
-        <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
+        <div class="w-24 h-24 mx-auto mb-6 text-gray-300 dark:text-gray-600">
           <i class="ri-heart-3-line text-6xl"></i>
         </div>
-        <p class="text-gray-500 mb-6">{{ $t('favorites.empty_description') }}</p>
-        <router-link to="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]">
+        <p class="text-gray-500 dark:text-gray-400 mb-6">{{ $t('favorites.empty_description') }}</p>
+        <router-link to="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 dark:hover:shadow-purple-900 active:scale-[0.98]">
           <i class="ri-store-2-line"></i>
           {{ $t('favorites.browse_products') }}
         </router-link>
@@ -28,10 +28,10 @@
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Favorites Items -->
         <div class="lg:col-span-2 space-y-4">
-          <div v-for="item in favorites" :key="item.id" class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
+          <div v-for="item in favorites" :key="item.id" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
             <div class="flex gap-4">
               <!-- Product Image -->
-              <div class="w-24 h-24 rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 p-2 flex-shrink-0">
+              <div class="w-24 h-24 rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-2 flex-shrink-0">
                 <img :src="item.image" :alt="item.name" class="w-full h-full object-contain" @error="handleImageError" />
               </div>
 
@@ -40,20 +40,20 @@
                 <div class="flex justify-between items-start">
                   <div>
                     <h3 
-                      class="font-medium text-gray-900 mb-1 hover:text-purple-600 cursor-pointer transition-colors"
+                      class="font-medium text-gray-900 dark:text-white mb-1 hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer transition-colors"
                       @click="goToProduct(item.id)"
                     >
                       {{ item.name }}
                     </h3>
-                    <div class="text-sm text-gray-500">
+                    <div class="text-sm text-gray-500 dark:text-gray-400">
                       <p>
-                        <span class="hover:text-purple-600 cursor-pointer transition-colors" @click="goToCategory(item.category.toLowerCase())">
+                        <span class="hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer transition-colors" @click="goToCategory(item.category.toLowerCase())">
                           {{ $t('favorites.category') }}: {{ $t(`category.categories.${item.category.toLowerCase()}`) }}
                         </span>
                       </p>
                     </div>
                   </div>
-                  <button @click="removeFromFavorites(item.id)" class="text-gray-400 hover:text-red-500 transition-colors" :title="$t('favorites.remove')">
+                  <button @click="removeFromFavorites(item.id)" class="text-gray-400 dark:text-gray-500 hover:text-red-500 dark:hover:text-red-400 transition-colors" :title="$t('favorites.remove')">
                     <i class="ri-close-line text-xl"></i>
                   </button>
                 </div>
@@ -61,12 +61,12 @@
                 <!-- Price and Add to Cart -->
                 <div class="flex justify-between items-center mt-4">
                   <div class="flex items-center gap-2">
-                    <span class="font-medium text-purple-600">${{ item.price }}</span>
+                    <span class="font-medium text-purple-600 dark:text-purple-400">${{ item.price }}</span>
                   </div>
                   
                   <button 
                     @click="addToCartAndNavigate(item)"
-                    class="flex items-center gap-2 px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors"
+                    class="flex items-center gap-2 px-4 py-2 bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 rounded-lg hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                   >
                     <i class="ri-shopping-cart-2-line"></i>
                     {{ $t('favorites.add_to_cart') }}
@@ -79,12 +79,12 @@
 
         <!-- Similar Products -->
         <div class="lg:col-span-1">
-          <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-4">
-            <h2 class="text-lg font-medium mb-4">{{ $t('favorites.recommended_products') }}</h2>
+          <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-6 sticky top-4">
+            <h2 class="text-lg font-medium text-gray-900 dark:text-white mb-4">{{ $t('favorites.recommended_products') }}</h2>
             
             <div class="space-y-4">
               <div v-for="product in recommendedProducts" :key="product.id" 
-                class="flex gap-3 p-2 rounded-xl hover:bg-gray-50 transition-colors cursor-pointer"
+                class="flex gap-3 p-2 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700/50 transition-colors cursor-pointer"
                 @click="goToProduct(product.id)"
               >
                 <img :src="product.image" :alt="product.name" 
@@ -92,8 +92,8 @@
                   @error="handleImageError"
                 />
                 <div>
-                  <h3 class="text-sm font-medium text-gray-900 line-clamp-2">{{ product.name }}</h3>
-                  <p class="text-sm text-purple-600 font-medium">${{ product.price }}</p>
+                  <h3 class="text-sm font-medium text-gray-900 dark:text-white line-clamp-2">{{ product.name }}</h3>
+                  <p class="text-sm text-purple-600 dark:text-purple-400 font-medium">${{ product.price }}</p>
                 </div>
               </div>
             </div>
