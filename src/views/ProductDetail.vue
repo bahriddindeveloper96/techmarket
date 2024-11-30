@@ -74,120 +74,119 @@
           </div>
 
           <!-- Right Column - Product Details (2 column) -->
-          <div class="md:col-span-2 space-y-6">
-            <!-- Title and Rating -->
-            <div>
-              <h1 class="text-2xl font-bold mb-3 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
-                {{ product.name }}
-              </h1>
-              <div class="flex items-center gap-4 text-sm">
-                <div class="flex items-center gap-1">
-                  <div class="flex items-center text-yellow-400">
-                    <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
-                      <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z"/>
-                    </svg>
-                    <span class="ml-1 font-medium">{{ product.rating }}</span>
-                  </div>
-                  <span class="text-gray-400">•</span>
-                  <span class="text-gray-600">{{ product.reviews }} ta sharh</span>
+          <div class="md:col-span-2 p-6 space-y-6">
+            <h1 class="text-2xl font-bold text-gray-900">
+              {{ $t(`products.${product.id}.name`, product.name) }}
+            </h1>
+
+            <!-- Rating & Reviews -->
+            <div class="flex items-center gap-6">
+              <div class="flex items-center gap-2">
+                <div class="flex items-center">
+                  <i v-for="i in 5" :key="i" 
+                    :class="[
+                      'fas fa-star text-sm',
+                      i <= product.rating ? 'text-yellow-400' : 'text-gray-300'
+                    ]"
+                  ></i>
                 </div>
+                <span class="text-sm text-gray-600">{{ product.rating }} {{ $t('product.rating') }}</span>
               </div>
+              <span class="text-sm text-gray-600">{{ product.reviews }} {{ $t('product.reviews') }}</span>
+              <span class="text-sm text-gray-600">{{ product.orders }} {{ $t('product.orders') }}</span>
             </div>
 
-            <!-- Price Info -->
+            <!-- Price -->
             <div class="bg-gradient-to-br from-purple-50 to-gray-50 rounded-xl p-4 space-y-2">
               <div class="flex items-baseline gap-2">
                 <span class="text-3xl font-bold bg-gradient-to-r from-purple-600 to-purple-800 bg-clip-text text-transparent">
-                  {{ formatPrice(product.price) }}
+                  {{ formatPrice(product.price) }} {{ $t('currency') }}
                 </span>
-                <span class="text-base text-gray-400 line-through">{{ formatPrice(product.oldPrice) }}</span>
+                <span class="text-base text-gray-400 line-through">
+                  {{ formatPrice(product.oldPrice) }} {{ $t('currency') }}
+                </span>
               </div>
               <div class="flex items-center gap-2">
                 <span class="px-2 py-1 bg-red-100 text-red-600 rounded-full text-xs font-medium">
                   -{{ calculateDiscount(product.price, product.oldPrice) }}%
                 </span>
-                <span class="text-sm text-gray-500">Aksiya narxi</span>
+                <span class="text-sm text-gray-500">{{ $t('product.sale_price') }}</span>
               </div>
             </div>
 
-            <!-- Variants -->
+            <!-- Colors -->
             <div class="space-y-4">
-              <!-- Colors -->
-              <div v-if="product.colors && product.colors.length">
-                <h3 class="text-sm font-medium text-gray-700 mb-2">Ranglar:</h3>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="color in product.colors"
-                    :key="color"
-                    class="w-10 h-10 rounded-xl transition-transform hover:scale-105 duration-300 relative group"
-                    :class="selectedColor === color ? 'ring-2 ring-purple-500 ring-offset-2' : ''"
-                    @click="selectedColor = color"
-                  >
-                    <div class="w-full h-full rounded-xl" :style="{ backgroundColor: color }"></div>
-                    <div class="absolute inset-0 rounded-xl bg-black/5 opacity-0 group-hover:opacity-100 transition-opacity"></div>
-                  </button>
-                </div>
+              <h3 class="font-medium">{{ $t('product.colors') }}</h3>
+              <div class="flex gap-3">
+                <button
+                  v-for="color in product.colors"
+                  :key="color"
+                  @click="selectedColor = color"
+                  class="w-10 h-10 rounded-full border-2 transition-all duration-300"
+                  :class="selectedColor === color ? 'ring-2 ring-purple-500 ring-offset-2' : ''"
+                  :style="{ backgroundColor: color }"
+                ></button>
               </div>
+            </div>
 
-              <!-- Sizes -->
-              <div v-if="product.sizes && product.sizes.length">
-                <h3 class="text-sm font-medium text-gray-700 mb-2">O'lchamlar:</h3>
-                <div class="flex flex-wrap gap-2">
-                  <button
-                    v-for="size in product.sizes"
-                    :key="size"
-                    class="px-4 py-2 rounded-lg border-2 text-sm font-medium transition-all duration-300 hover:shadow-md"
-                    :class="selectedSize === size ? 'border-purple-500 bg-purple-50 text-purple-700' : 'border-gray-200 text-gray-700 hover:border-purple-200'"
-                    @click="selectedSize = size"
-                  >
-                    {{ size }}
-                  </button>
-                </div>
+            <!-- Sizes -->
+            <div class="space-y-4">
+              <h3 class="font-medium">{{ $t('product.sizes') }}</h3>
+              <div class="flex flex-wrap gap-3">
+                <button
+                  v-for="size in product.sizes"
+                  :key="size"
+                  @click="selectedSize = size"
+                  class="px-4 py-2 rounded-lg border transition-all duration-300"
+                  :class="selectedSize === size ? 'border-purple-500 bg-purple-50 text-purple-700' : 'border-gray-200 hover:border-purple-500'"
+                >
+                  {{ size }}
+                </button>
+              </div>
+            </div>
+
+            <!-- Quantity -->
+            <div class="space-y-4">
+              <h3 class="font-medium">{{ $t('product.quantity') }}</h3>
+              <div class="flex items-center gap-3">
+                <button
+                  @click="quantity > 1 && quantity--"
+                  class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center hover:border-purple-500 transition-colors"
+                >
+                  <i class="fas fa-minus text-gray-600"></i>
+                </button>
+                <span class="text-lg font-medium w-10 text-center">{{ quantity }}</span>
+                <button
+                  @click="quantity++"
+                  class="w-10 h-10 rounded-lg border border-gray-200 flex items-center justify-center hover:border-purple-500 transition-colors"
+                >
+                  <i class="fas fa-plus text-gray-600"></i>
+                </button>
               </div>
             </div>
 
             <!-- Add to Cart -->
-            <div class="flex gap-3">
-              <div class="flex items-center border-2 border-gray-200 rounded-lg overflow-hidden">
-                <button 
-                  @click="decrementQuantity"
-                  class="px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
-                  :disabled="quantity <= 1"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                  </svg>
-                </button>
-                <span class="w-10 text-center font-medium text-gray-900">{{ quantity }}</span>
-                <button 
-                  @click="incrementQuantity"
-                  class="px-3 py-2 text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
-                >
-                  <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                  </svg>
-                </button>
-              </div>
+            <div class="flex gap-4">
               <button 
                 @click="addToCart"
                 class="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-lg px-6 py-2 text-sm font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]"
               >
-                Savatga qo'shish
+                {{ $t('product.add_to_cart') }}
               </button>
             </div>
 
             <!-- Specifications -->
             <div class="border-t pt-4">
-              <h3 class="font-medium mb-3 text-sm">Mahsulot haqida</h3>
+              <h3 class="font-medium mb-3 text-sm">{{ $t('product.specifications') }}</h3>
               <div class="prose prose-sm text-gray-600 mb-4 text-sm">
-                {{ product.description }}
+                {{ $t(`products.${product.id}.description`, product.description) }}
               </div>
               <div class="space-y-2">
                 <div v-for="(spec, index) in product.specifications" :key="index" 
                   class="flex py-1.5 px-3 rounded-lg hover:bg-gray-50 transition-colors text-sm"
                 >
-                  <span class="text-gray-500 w-1/3">{{ spec.name }}:</span>
-                  <span class="text-gray-900 w-2/3 font-medium">{{ spec.value }}</span>
+                  <span class="text-gray-500 w-1/3">{{ $t(`products.${product.id}.specs.${spec.name}`, spec.name) }}:</span>
+                  <span class="text-gray-900 w-2/3 font-medium">{{ $t(`products.${product.id}.specs.${spec.name}_value`, spec.value) }}</span>
                 </div>
               </div>
             </div>
@@ -198,7 +197,7 @@
       <!-- Similar Products -->
       <div class="mt-12">
         <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
-          O'xshash mahsulotlar
+          {{ $t('product.similar') }}
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           <ProductCard 

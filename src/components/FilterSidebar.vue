@@ -1,139 +1,230 @@
 <template>
-  <div class="bg-white rounded-xl p-4">
-    <h3 class="font-medium text-base mb-4 text-gray-900">Filterlar</h3>
-    
+  <div class="bg-white rounded-lg shadow-sm p-6">
+    <!-- Header -->
+    <div class="flex items-center justify-between mb-6">
+      <h2 class="text-lg font-semibold">{{ $t('category.filter.title') }}</h2>
+      <button 
+        @click="clearAllFilters"
+        class="text-sm text-gray-500 hover:text-gray-700"
+      >
+        {{ $t('category.filter.clear') }}
+      </button>
+    </div>
+
+    <!-- Categories -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium mb-3">{{ $t('category.categories.smartphones') }}</h3>
+      <div class="space-y-2">
+        <label 
+          v-for="category in categories" 
+          :key="category.id"
+          class="flex items-center"
+        >
+          <input
+            type="checkbox"
+            :value="category.id"
+            v-model="selectedCategories"
+            class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+          >
+          <span class="ml-2 text-sm text-gray-600">{{ $t(`category.categories.${category.id}`) }}</span>
+        </label>
+      </div>
+    </div>
+
     <!-- Price Range -->
-    <div class="mb-6 border-b pb-4">
-      <h4 class="font-medium text-sm mb-3 text-gray-900">Narx</h4>
-      <div class="flex gap-2 items-center">
-        <input type="number" v-model="priceRange.min" placeholder="dan" 
-          class="w-1/2 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500">
-        <span class="text-gray-400">-</span>
-        <input type="number" v-model="priceRange.max" placeholder="gacha"
-          class="w-1/2 px-3 py-2 border rounded-lg text-sm focus:outline-none focus:border-blue-500">
-      </div>
-    </div>
-
-    <!-- Brand Filter -->
-    <div class="mb-6 border-b pb-4">
-      <h4 class="font-medium text-sm mb-3 text-gray-900">Brendlar</h4>
-      <div class="space-y-2 max-h-[200px] overflow-y-auto custom-scrollbar">
-        <div v-for="brand in brands" :key="brand.id" class="flex items-center">
-          <label class="flex items-center cursor-pointer group">
-            <input type="checkbox" 
-              :id="brand.id" 
-              :value="brand.id"
-              v-model="selectedBrands"
-              class="w-4 h-4 rounded border-gray-300 text-blue-600 focus:ring-0 focus:ring-offset-0">
-            <span class="ml-2 text-sm text-gray-700 group-hover:text-blue-600">{{ brand.name }}</span>
-          </label>
+    <div class="mb-6">
+      <h3 class="text-sm font-medium mb-3">{{ $t('category.filter.price_range') }}</h3>
+      <div class="grid grid-cols-2 gap-4">
+        <div>
+          <label class="text-xs text-gray-500">{{ $t('category.filter.min_price') }}</label>
+          <input
+            type="number"
+            v-model="priceRange.min"
+            class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+          >
+        </div>
+        <div>
+          <label class="text-xs text-gray-500">{{ $t('category.filter.max_price') }}</label>
+          <input
+            type="number"
+            v-model="priceRange.max"
+            class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+          >
         </div>
       </div>
     </div>
 
-    <!-- Colors Filter -->
-    <div class="mb-6 border-b pb-4">
-      <h4 class="font-medium text-sm mb-3 text-gray-900">Ranglar</h4>
-      <div class="grid grid-cols-6 gap-2">
-        <div v-for="color in colors" :key="color.id" class="relative">
-          <input type="checkbox" 
-            :id="'color-' + color.id"
-            :value="color.id"
-            v-model="selectedColors"
-            class="peer hidden">
-          <label 
-            :for="'color-' + color.id"
-            class="block w-8 h-8 rounded-full cursor-pointer border-2 border-transparent peer-checked:border-blue-600"
-            :class="[color.class]"
-            :title="color.name"
-          ></label>
-        </div>
+    <!-- Brands -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium mb-3">{{ $t('category.filter.brand') }}</h3>
+      <input
+        type="text"
+        v-model="brandSearch"
+        :placeholder="$t('category.filter.brand_search')"
+        class="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+      >
+      <div class="space-y-2 max-h-48 overflow-y-auto">
+        <label 
+          v-for="brand in filteredBrands" 
+          :key="brand"
+          class="flex items-center"
+        >
+          <input
+            type="checkbox"
+            :value="brand"
+            v-model="selectedBrands"
+            class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+          >
+          <span class="ml-2 text-sm text-gray-600">{{ brand }}</span>
+        </label>
       </div>
     </div>
 
-    <!-- Sizes Filter -->
-    <div class="mb-6 border-b pb-4">
-      <h4 class="font-medium text-sm mb-3 text-gray-900">O'lchamlar</h4>
-      <div class="grid grid-cols-4 gap-2">
-        <div v-for="size in sizes" :key="size" class="relative">
-          <input type="checkbox" 
-            :id="'size-' + size"
-            :value="size"
-            v-model="selectedSizes"
-            class="peer hidden">
-          <label 
-            :for="'size-' + size"
-            class="block text-center py-1.5 border rounded cursor-pointer text-sm text-gray-700 peer-checked:border-blue-600 peer-checked:bg-blue-50 peer-checked:text-blue-600 hover:border-gray-400"
-          >{{ size }}</label>
-        </div>
+    <!-- Colors -->
+    <div class="mb-6">
+      <h3 class="text-sm font-medium mb-3">{{ $t('category.filter.color') }}</h3>
+      <div class="flex flex-wrap gap-2">
+        <button
+          v-for="color in colors"
+          :key="color.value"
+          @click="toggleColor(color.value)"
+          class="w-8 h-8 rounded-full border-2 transition-all duration-300"
+          :class="selectedColors.includes(color.value) ? 'ring-2 ring-primary-500 ring-offset-2' : ''"
+          :style="{ backgroundColor: color.value }"
+          :title="$t(`filters.colors.${color.name}`)"
+        ></button>
       </div>
     </div>
 
-    <button @click="applyFilters" 
-      class="w-full bg-blue-600 text-white py-2.5 px-4 rounded-lg hover:bg-blue-700 text-sm font-medium transition-colors">
-      Filterlash
+    <!-- Rating -->
+    <div class="mb-6">
+      <h3 class="font-medium text-gray-900 mb-3">{{ $t('category.filter.rating') }}</h3>
+      <div class="space-y-2">
+        <label 
+          v-for="rating in [5, 4, 3, 2, 1]" 
+          :key="rating"
+          class="flex items-center"
+        >
+          <input
+            type="checkbox"
+            :value="rating"
+            v-model="selectedRatings"
+            class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+          >
+          <span class="ml-2 text-sm text-gray-600">
+            {{ rating }} {{ $t('category.filter.rating_and_up') }}
+          </span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Availability -->
+    <div class="mb-6">
+      <h3 class="font-medium text-gray-900 mb-3">{{ $t('category.filter.availability') }}</h3>
+      <div class="space-y-2">
+        <label class="flex items-center">
+          <input
+            type="checkbox"
+            v-model="inStockOnly"
+            class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+          >
+          <span class="ml-2 text-sm text-gray-600">{{ $t('category.filter.in_stock') }}</span>
+        </label>
+      </div>
+    </div>
+
+    <!-- Apply Button -->
+    <button
+      @click="applyFilters"
+      class="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+    >
+      {{ $t('category.filter.apply') }}
     </button>
   </div>
 </template>
 
-<script>
-export default {
-  name: 'FilterSidebar',
-  data() {
-    return {
-      priceRange: {
-        min: '',
-        max: ''
-      },
-      selectedBrands: [],
-      selectedColors: [],
-      selectedSizes: [],
-      brands: [
-        { id: 1, name: 'Apple' },
-        { id: 2, name: 'Samsung' },
-        { id: 3, name: 'Xiaomi' },
-        { id: 4, name: 'Huawei' }
-      ],
-      colors: [
-        { id: 1, name: 'Qizil', class: 'bg-red-500' },
-        { id: 2, name: 'Kulrang', class: 'bg-gray-500' },
-        { id: 3, name: 'Yashil', class: 'bg-green-500' },
-        { id: 4, name: "Ko'k", class: 'bg-blue-500' },
-        { id: 5, name: 'Sariq', class: 'bg-yellow-500' },
-        { id: 6, name: 'Jigarrang', class: 'bg-purple-500' }
-      ],
-      sizes: ['S', 'M', 'L', 'XL', 'XXL']
-    }
+<script setup>
+import { ref, computed } from 'vue'
+
+const props = defineProps({
+  categories: {
+    type: Array,
+    default: () => []
   },
-  methods: {
-    applyFilters() {
-      this.$emit('apply-filters', {
-        priceRange: this.priceRange,
-        brands: this.selectedBrands,
-        colors: this.selectedColors,
-        sizes: this.selectedSizes
-      })
-    }
+  brands: {
+    type: Array,
+    default: () => []
+  },
+  initialFilters: {
+    type: Object,
+    default: () => ({})
+  }
+})
+
+const emit = defineEmits(['update:filters'])
+
+// Filter states
+const selectedCategories = ref(props.initialFilters.categories || [])
+const priceRange = ref({
+  min: props.initialFilters.minPrice || '',
+  max: props.initialFilters.maxPrice || ''
+})
+const selectedBrands = ref(props.initialFilters.brands || [])
+const selectedColors = ref(props.initialFilters.colors || [])
+const selectedRatings = ref(props.initialFilters.rating || null)
+const inStockOnly = ref(props.initialFilters.inStock || false)
+const brandSearch = ref('')
+
+// Available colors
+const colors = [
+  { name: 'black', value: '#000000' },
+  { name: 'white', value: '#FFFFFF' },
+  { name: 'gray', value: '#808080' },
+  { name: 'silver', value: '#C0C0C0' },
+  { name: 'gold', value: '#FFD700' },
+  { name: 'red', value: '#FF0000' },
+  { name: 'blue', value: '#0000FF' },
+  { name: 'green', value: '#008000' }
+]
+
+// Computed
+const filteredBrands = computed(() => {
+  if (!brandSearch.value) return props.brands
+  return props.brands.filter(brand => 
+    brand.toLowerCase().includes(brandSearch.value.toLowerCase())
+  )
+})
+
+// Methods
+const toggleColor = (color) => {
+  const index = selectedColors.value.indexOf(color)
+  if (index === -1) {
+    selectedColors.value.push(color)
+  } else {
+    selectedColors.value.splice(index, 1)
   }
 }
+
+const clearAllFilters = () => {
+  selectedCategories.value = []
+  priceRange.value = { min: '', max: '' }
+  selectedBrands.value = []
+  selectedColors.value = []
+  selectedRatings.value = null
+  inStockOnly.value = false
+  brandSearch.value = ''
+  applyFilters()
+}
+
+const applyFilters = () => {
+  emit('update:filters', {
+    categories: selectedCategories.value,
+    minPrice: priceRange.value.min,
+    maxPrice: priceRange.value.max,
+    brands: selectedBrands.value,
+    colors: selectedColors.value,
+    rating: selectedRatings.value,
+    inStock: inStockOnly.value
+  })
+}
 </script>
-
-<style scoped>
-.custom-scrollbar::-webkit-scrollbar {
-  width: 4px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-track {
-  background: #f1f1f1;
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb {
-  background: #ddd;
-  border-radius: 10px;
-}
-
-.custom-scrollbar::-webkit-scrollbar-thumb:hover {
-  background: #ccc;
-}
-</style>

@@ -12,7 +12,7 @@
           <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
             <li class="inline-flex items-center">
               <router-link to="/" class="text-gray-700 hover:text-primary-600">
-                Bosh sahifa
+                {{ $t('nav.home') }}
               </router-link>
             </li>
             <li>
@@ -20,7 +20,7 @@
                 <svg class="w-3 h-3 text-gray-400 mx-1" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 6 10">
                   <path stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="m1 9 4-4-4-4"/>
                 </svg>
-                <span class="text-gray-500">{{ category.name }}</span>
+                <span class="text-gray-500">{{ $t(`${category.name.toLowerCase()}`) }}</span>
               </div>
             </li>
           </ol>
@@ -39,13 +39,13 @@
           <!-- Sort Options -->
           <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
-              <h1 class="text-lg sm:text-xl font-semibold text-gray-900">{{ category.name }}</h1>
+              <h1 class="text-lg sm:text-xl font-semibold text-gray-900">{{ $t(`${category.name.toLowerCase()}`) }}</h1>
               <div class="flex items-center gap-2 w-full sm:w-auto">
                 <select v-model="sortBy" class="w-full sm:w-auto bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500">
-                  <option value="popular">Ommabop</option>
-                  <option value="price_asc">Narx: Arzondan qimmatga</option>
-                  <option value="price_desc">Narx: Qimmatdan arzonga</option>
-                  <option value="new">Yangi</option>
+                  <option value="popular">{{ $t('category.sort.popular') }}</option>
+                  <option value="price_asc">{{ $t('category.sort.price_low') }}</option>
+                  <option value="price_desc">{{ $t('category.sort.price_high') }}</option>
+                  <option value="new">{{ $t('category.sort.newest') }}</option>
                 </select>
               </div>
             </div>
@@ -70,7 +70,7 @@
                 @click="changePage(currentPage - 1)"
                 class="px-3 py-1 sm:px-4 sm:py-2 rounded-lg border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
-                Oldingi
+                {{ $t('category.pagination.prev') }}
               </button>
               <button 
                 v-for="page in totalPages" 
@@ -90,7 +90,7 @@
                 @click="changePage(currentPage + 1)"
                 class="px-3 py-1 sm:px-4 sm:py-2 rounded-lg border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
               >
-                Keyingi
+                {{ $t('category.pagination.next') }}
               </button>
             </nav>
           </div>
@@ -112,7 +112,7 @@ const category = ref({
 })
 
 const products = ref([
-{
+  {
     id: 1,
     name: 'iPhone 13 Pro Max',
     price: 13_999_000,

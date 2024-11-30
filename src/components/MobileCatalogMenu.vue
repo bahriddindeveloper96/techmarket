@@ -60,6 +60,7 @@
             <router-link
               :to="subcategory.link"
               class="block mb-4 text-lg font-medium text-gray-900 hover:text-purple-600"
+              @click="handleSubcategoryClick"
             >
               {{ subcategory.name }}
             </router-link>
@@ -70,6 +71,7 @@
                 <router-link
                   :to="item.link"
                   class="text-gray-600 hover:text-purple-600 transition-colors"
+                  @click="handleSubcategoryClick"
                 >
                   {{ item.name }}
                 </router-link>
@@ -110,27 +112,37 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
 const activeCategory = ref(null)
 
-defineEmits(['close'])
+const emit = defineEmits(['close'])
 
 const handleCategoryClick = (category) => {
-  activeCategory.value = category
+  if (category.subcategories && category.subcategories.length > 0) {
+    activeCategory.value = category
+  } else {
+    emit('close')
+    router.push(category.link)
+  }
 }
 
+const handleSubcategoryClick = () => {
+  emit('close')
+}
 // Categories data
 const categories = [
   {
     id: 1,
-    name: 'Smartfonlar',
+    name: t('mobileCatalog.categories.smartphones'),
     icon: 'ri-smartphone-line',
     link: '/smartphones',
     subcategories: [
       {
         id: 1,
-        name: 'Brendlar',
+        name: t('mobileCatalog.brands'),
         link: '/smartphones/brands',
         items: [
           { id: 1, name: 'Apple', link: '/smartphones/brands/apple' },
@@ -141,24 +153,56 @@ const categories = [
       },
       {
         id: 2,
-        name: 'Narx bo\'yicha',
+        name: t('mobileCatalog.byPrice'),
         link: '/smartphones/price',
         items: [
-          { id: 1, name: '1 000 000 so\'mgacha', link: '/smartphones/price/under-1m' },
-          { id: 2, name: '1-3 million so\'m', link: '/smartphones/price/1m-3m' },
-          { id: 3, name: '3-5 million so\'m', link: '/smartphones/price/3m-5m' },
-          { id: 4, name: '5 million so\'mdan yuqori', link: '/smartphones/price/over-5m' }
+          { 
+            id: 1, 
+            name: t('mobileCatalog.price.under_1m'), 
+            link: '/smartphones/price/under-1m' 
+          },
+          { 
+            id: 2, 
+            name: t('mobileCatalog.price.from_1m_to_3m'), 
+            link: '/smartphones/price/1m-3m' 
+          },
+          { 
+            id: 3, 
+            name: t('mobileCatalog.price.from_3m_to_5m'), 
+            link: '/smartphones/price/3m-5m' 
+          },
+          { 
+            id: 4, 
+            name: t('mobileCatalog.price.over_5m'), 
+            link: '/smartphones/price/over-5m' 
+          }
         ]
       },
       {
         id: 3,
-        name: 'Operativ xotira',
+        name: t('mobileCatalog.ram'),
         link: '/smartphones/ram',
         items: [
-          { id: 1, name: '4 GB', link: '/smartphones/ram/4gb' },
-          { id: 2, name: '6 GB', link: '/smartphones/ram/6gb' },
-          { id: 3, name: '8 GB', link: '/smartphones/ram/8gb' },
-          { id: 4, name: '12 GB va undan yuqori', link: '/smartphones/ram/over-12gb' }
+          { 
+            id: 1, 
+            name: t('mobileCatalog.ram_options.gb_4'), 
+            link: '/smartphones/ram/4gb' 
+          },
+          { 
+            id: 2, 
+            name: t('mobileCatalog.ram_options.gb_6'), 
+            link: '/smartphones/ram/6gb' 
+          },
+          { 
+            id: 3, 
+            name: t('mobileCatalog.ram_options.gb_8'), 
+            link: '/smartphones/ram/8gb' 
+          },
+          { 
+            id: 4, 
+            name: t('mobileCatalog.ram_options.gb_12_plus'), 
+            link: '/smartphones/ram/over-12gb' 
+          }
         ]
       }
     ],
@@ -181,13 +225,13 @@ const categories = [
   },
   {
     id: 2,
-    name: 'Planshetlar',
+    name: t('mobileCatalog.categories.tablets'),
     icon: 'ri-tablet-line',
     link: '/tablets',
     subcategories: [
       {
         id: 1,
-        name: 'Brendlar',
+        name: t('mobileCatalog.brands'),
         link: '/tablets/brands',
         items: [
           { id: 1, name: 'Apple iPad', link: '/tablets/brands/apple' },
@@ -198,97 +242,33 @@ const categories = [
       },
       {
         id: 2,
-        name: 'Ekran o\'lchami',
+        name: t('mobileCatalog.screenSize'),
         link: '/tablets/screen-size',
         items: [
-          { id: 1, name: '7-8 dyum', link: '/tablets/screen-size/7-8' },
-          { id: 2, name: '9-10 dyum', link: '/tablets/screen-size/9-10' },
-          { id: 3, name: '11-12 dyum', link: '/tablets/screen-size/11-12' },
-          { id: 4, name: '12 dyumdan katta', link: '/tablets/screen-size/over-12' }
+          { 
+            id: 1, 
+            name: t('mobileCatalog.screen_size.under_8'), 
+            link: '/tablets/screen-size/under-8' 
+          },
+          { 
+            id: 2, 
+            name: t('mobileCatalog.screen_size.from_8_to_10'), 
+            link: '/tablets/screen-size/8-10' 
+          },
+          { 
+            id: 3, 
+            name: t('mobileCatalog.screen_size.over_10'), 
+            link: '/tablets/screen-size/over-10' 
+          }
         ]
-      },
-      {
-        id: 3,
-        name: 'Xotira hajmi',
-        link: '/tablets/storage',
-        items: [
-          { id: 1, name: '32 GB', link: '/tablets/storage/32gb' },
-          { id: 2, name: '64 GB', link: '/tablets/storage/64gb' },
-          { id: 3, name: '128 GB', link: '/tablets/storage/128gb' },
-          { id: 4, name: '256 GB va undan yuqori', link: '/tablets/storage/over-256gb' }
-        ]
-      }
-    ],
-    featured: [
-      {
-        id: 1,
-        name: 'iPad Pro 12.9" 256GB Space Gray',
-        price: '12 999 000 so\'m',
-        image: '/images/products/ipad-pro.jpg',
-        link: '/product/ipad-pro'
-      },
-      {
-        id: 2,
-        name: 'Samsung Galaxy Tab S9 Ultra 512GB',
-        price: '11 999 000 so\'m',
-        image: '/images/products/galaxy-tab-s9.jpg',
-        link: '/product/galaxy-tab-s9'
       }
     ]
   },
   {
     id: 3,
-    name: 'Planshet aksessuarlari',
+    name: t('mobileCatalog.categories.tablet_accessories'),
     icon: 'ri-keyboard-box-line',
-    link: '/tablet-accessories',
-    subcategories: [
-      {
-        id: 1,
-        name: 'Klaviaturalar',
-        link: '/tablet-accessories/keyboards',
-        items: [
-          { id: 1, name: 'Apple Magic Keyboard', link: '/tablet-accessories/keyboards/magic-keyboard' },
-          { id: 2, name: 'Samsung Book Cover Keyboard', link: '/tablet-accessories/keyboards/book-cover' },
-          { id: 3, name: 'Logitech Klaviaturalar', link: '/tablet-accessories/keyboards/logitech' }
-        ]
-      },
-      {
-        id: 2,
-        name: 'Ruchkalar',
-        link: '/tablet-accessories/pens',
-        items: [
-          { id: 1, name: 'Apple Pencil', link: '/tablet-accessories/pens/apple-pencil' },
-          { id: 2, name: 'S Pen', link: '/tablet-accessories/pens/s-pen' },
-          { id: 3, name: 'Boshqa ruchkalar', link: '/tablet-accessories/pens/other' }
-        ]
-      },
-      {
-        id: 3,
-        name: 'G\'iloflar',
-        link: '/tablet-accessories/cases',
-        items: [
-          { id: 1, name: 'Smart Case', link: '/tablet-accessories/cases/smart-case' },
-          { id: 2, name: 'Book Cover', link: '/tablet-accessories/cases/book-cover' },
-          { id: 3, name: 'Himoya g\'iloflari', link: '/tablet-accessories/cases/protective' }
-        ]
-      }
-    ],
-    featured: [
-      {
-        id: 1,
-        name: 'Apple Magic Keyboard iPad Pro 12.9"',
-        price: '3 999 000 so\'m',
-        image: '/images/products/magic-keyboard.jpg',
-        link: '/product/magic-keyboard'
-      },
-      {
-        id: 2,
-        name: 'Apple Pencil 2',
-        price: '1 999 000 so\'m',
-        image: '/images/products/apple-pencil.jpg',
-        link: '/product/apple-pencil'
-      }
-    ]
+    link: '/tablet-accessories'
   }
 ]
 </script>

@@ -52,7 +52,7 @@
       <!-- Title -->
       <router-link :to="{ name: 'product', params: { id: product.id }}" class="block group-hover:text-primary-600 transition-colors duration-300">
         <h3 class="font-medium text-gray-900 text-sm sm:text-base line-clamp-2 mb-2">
-          {{ product.name }}
+          {{ $t(`products.${product.id}.name`, product.name) }}
         </h3>
       </router-link>
 
@@ -73,12 +73,12 @@
       <div class="space-y-1">
         <div v-if="product.oldPrice" class="flex items-center gap-2">
           <span class="text-sm text-gray-500 line-through">
-            {{ formatPrice(product.oldPrice) }} so'm
+            {{ formatPrice(product.oldPrice) }} {{ $t('currency') }}
           </span>
         </div>
         <div class="flex items-center justify-between">
           <span class="font-semibold text-gray-900">
-            {{ formatPrice(product.price) }} so'm
+            {{ formatPrice(product.price) }} {{ $t('currency') }}
           </span>
           <button 
             @click="addToCartAndNavigate"
@@ -92,7 +92,7 @@
       <!-- Installment Badge -->
       <div v-if="product.installment" class="mt-3 flex items-center text-xs text-green-600 bg-green-50 rounded-lg p-2">
         <i class="fas fa-credit-card mr-1"></i>
-        <span>{{ formatPrice(calculateMonthlyPayment(product.price)) }} so'm x 12 oy</span>
+        <span>{{ formatPrice(calculateMonthlyPayment(product.price)) }} {{ $t('currency') }} x 12 {{ $t('month') }}</span>
       </div>
     </div>
   </div>

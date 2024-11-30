@@ -6,10 +6,10 @@
       <!-- Favorites Header -->
       <div class="flex items-center justify-between mb-8">
         <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
-          {{ t('nav.favorites') }}
+          {{ $t('nav.favorites') }}
         </h1>
         <button v-if="favorites.length" @click="clearFavorites" class="text-sm text-red-500 hover:text-red-600 transition-colors">
-          {{ t('favorites.clear_all') }}
+          {{ $t('favorites.clear_all') }}
         </button>
       </div>
 
@@ -18,10 +18,10 @@
         <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
           <i class="ri-heart-3-line text-6xl"></i>
         </div>
-        <p class="text-gray-500 mb-6">{{ t('favorites.empty_description') }}</p>
+        <p class="text-gray-500 mb-6">{{ $t('favorites.empty_description') }}</p>
         <router-link to="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]">
           <i class="ri-store-2-line"></i>
-          {{ t('favorites.browse_products') }}
+          {{ $t('favorites.browse_products') }}
         </router-link>
       </div>
 
@@ -48,12 +48,12 @@
                     <div class="text-sm text-gray-500">
                       <p>
                         <span class="hover:text-purple-600 cursor-pointer transition-colors" @click="goToCategory(item.category.toLowerCase())">
-                          {{ t('favorites.category') }}: {{ item.category }}
+                          {{ $t('favorites.category') }}: {{ $t(`category.categories.${item.category.toLowerCase()}`) }}
                         </span>
                       </p>
                     </div>
                   </div>
-                  <button @click="removeFromFavorites(item.id)" class="text-gray-400 hover:text-red-500 transition-colors" :title="t('favorites.remove')">
+                  <button @click="removeFromFavorites(item.id)" class="text-gray-400 hover:text-red-500 transition-colors" :title="$t('favorites.remove')">
                     <i class="ri-close-line text-xl"></i>
                   </button>
                 </div>
@@ -69,7 +69,7 @@
                     class="flex items-center gap-2 px-4 py-2 bg-purple-50 text-purple-600 rounded-lg hover:bg-purple-100 transition-colors"
                   >
                     <i class="ri-shopping-cart-2-line"></i>
-                    {{ t('favorites.add_to_cart') }}
+                    {{ $t('favorites.add_to_cart') }}
                   </button>
                 </div>
               </div>
@@ -80,7 +80,7 @@
         <!-- Similar Products -->
         <div class="lg:col-span-1">
           <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-4">
-            <h2 class="text-lg font-medium mb-4">{{ t('favorites.recommended') }}</h2>
+            <h2 class="text-lg font-medium mb-4">{{ $t('favorites.recommended_products') }}</h2>
             
             <div class="space-y-4">
               <div v-for="product in recommendedProducts" :key="product.id" 

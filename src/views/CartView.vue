@@ -6,118 +6,127 @@
       <!-- Cart Header -->
       <div class="flex items-center justify-between mb-8">
         <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
-          Savat
+          {{ $t('cart.title') }}
         </h1>
         <button v-if="cartItems.length" @click="clearCart" class="text-sm text-red-500 hover:text-red-600 transition-colors">
-          Savatni tozalash
+          {{ $t('cart.clear_cart') }}
         </button>
       </div>
 
       <!-- Empty Cart -->
       <div v-if="!cartItems.length" class="text-center py-16">
         <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
-          <svg fill="currentColor" viewBox="0 0 24 24">
-            <path d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
-          </svg>
+          <i class="fas fa-shopping-cart text-6xl"></i>
         </div>
-        <p class="text-gray-500 mb-6">Savatingiz bo'sh</p>
-        <router-link to="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]">
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10 19l-7-7m0 0l7-7m-7 7h18" />
-          </svg>
-          Xarid qilishni davom ettirish
+        <h2 class="text-xl font-medium text-gray-600 mb-4">{{ $t('cart.empty') }}</h2>
+        <router-link to="/" class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+          {{ $t('cart.continue_shopping') }}
         </router-link>
       </div>
 
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
         <!-- Cart Items -->
         <div class="lg:col-span-2 space-y-4">
-          <div v-for="item in cartItems" :key="item.id" class="bg-white rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
-            <div class="flex gap-4">
-              <!-- Product Image -->
-              <div class="w-24 h-24 rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 p-2 flex-shrink-0">
-                <img :src="item.image" :alt="item.name" class="w-full h-full object-contain" />
+          <div v-for="item in cartItems" :key="item.id" 
+            class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+          >
+            <!-- Product Image -->
+            <img :src="item.image" :alt="item.name" class="w-24 h-24 object-cover rounded-lg">
+            
+            <!-- Product Info -->
+            <div class="flex-1">
+              <h3 class="font-medium">{{ $t(`products.${item.id}.name`, item.name) }}</h3>
+              <div class="text-sm text-gray-500 mt-1">
+                <span v-if="item.color" class="mr-2">
+                  <i class="fas fa-circle" :style="{ color: item.color }"></i>
+                </span>
+                <span v-if="item.size">{{ item.size }}</span>
               </div>
-
-              <!-- Product Info -->
-              <div class="flex-grow">
-                <div class="flex justify-between items-start">
-                  <div>
-                    <h3 class="font-medium text-gray-900 mb-1">{{ item.name }}</h3>
-                    <div class="text-sm text-gray-500 space-y-1">
-                      <p v-if="item.color">Rang: <span class="inline-block w-3 h-3 rounded-full ml-1" :style="{ backgroundColor: item.color }"></span></p>
-                      <p v-if="item.size">O'lcham: {{ item.size }}</p>
-                    </div>
-                  </div>
-                  <button @click="removeFromCart(item)" class="text-gray-400 hover:text-red-500 transition-colors">
-                    <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                      <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
-                    </svg>
-                  </button>
-                </div>
-
-                <!-- Price and Quantity -->
-                <div class="flex justify-between items-center mt-4">
-                  <div class="flex items-center gap-2">
-                    <span class="font-medium text-purple-600">{{ formatPrice(item.price) }}</span>
-                    <span v-if="item.oldPrice" class="text-sm text-gray-400 line-through">{{ formatPrice(item.oldPrice) }}</span>
-                  </div>
-                  
-                  <div class="flex items-center border-2 border-gray-200 rounded-lg">
-                    <button 
-                      @click="decrementQuantity(item)"
-                      class="px-3 py-1 text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
-                      :disabled="item.quantity <= 1"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4"/>
-                      </svg>
-                    </button>
-                    <span class="w-8 text-center font-medium">{{ item.quantity }}</span>
-                    <button 
-                      @click="incrementQuantity(item)"
-                      class="px-3 py-1 text-gray-600 hover:text-purple-600 hover:bg-purple-50 transition-colors"
-                    >
-                      <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/>
-                      </svg>
-                    </button>
-                  </div>
-                </div>
+              <div class="mt-2 flex items-center gap-4">
+                <span class="font-medium">{{ formatPrice(item.price) }} {{ $t('currency') }}</span>
               </div>
             </div>
+
+            <!-- Quantity Controls -->
+            <div class="flex items-center gap-2">
+              <button 
+                @click="updateQuantity(item, -1)"
+                class="w-8 h-8 flex items-center justify-center rounded-lg border hover:border-purple-500 transition-colors"
+                :disabled="item.quantity <= 1"
+              >
+                <i class="fas fa-minus text-sm"></i>
+              </button>
+              <span class="w-8 text-center">{{ item.quantity }}</span>
+              <button 
+                @click="updateQuantity(item, 1)"
+                class="w-8 h-8 flex items-center justify-center rounded-lg border hover:border-purple-500 transition-colors"
+              >
+                <i class="fas fa-plus text-sm"></i>
+              </button>
+            </div>
+
+            <!-- Actions -->
+            <div class="flex gap-2">
+              <button 
+                @click="removeFromCart(item)"
+                class="text-gray-400 hover:text-red-500 transition-colors"
+                :title="$t('cart.remove')"
+              >
+                <i class="fas fa-trash"></i>
+              </button>
+              <button 
+                @click="saveForLater(item)"
+                class="text-gray-400 hover:text-purple-500 transition-colors"
+                :title="$t('cart.save_for_later')"
+              >
+                <i class="fas fa-bookmark"></i>
+              </button>
+            </div>
           </div>
+
+          <!-- Clear Cart -->
+          <button 
+            @click="clearCart"
+            class="text-sm text-gray-500 hover:text-red-500 transition-colors"
+          >
+            {{ $t('cart.clear_cart') }}
+          </button>
         </div>
 
         <!-- Order Summary -->
         <div class="lg:col-span-1">
-          <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-4">
-            <h2 class="text-lg font-medium mb-4">Buyurtma ma'lumotlari</h2>
+          <div class="bg-white p-6 rounded-xl shadow-sm">
+            <h2 class="text-lg font-bold mb-4">{{ $t('cart.total') }}</h2>
             
-            <div class="space-y-3 mb-6">
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-500">Mahsulotlar ({{ totalItems }})</span>
-                <span>{{ formatPrice(subtotal) }}</span>
-              </div>
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-500">Chegirma</span>
-                <span class="text-green-500">-{{ formatPrice(discount) }}</span>
-              </div>
-              <div class="flex justify-between text-sm">
-                <span class="text-gray-500">Yetkazib berish</span>
-                <span>{{ formatPrice(shipping) }}</span>
-              </div>
-              <div class="border-t pt-3 flex justify-between font-medium">
-                <span>Jami</span>
-                <span class="text-lg text-purple-600">{{ formatPrice(total) }}</span>
-              </div>
+            <!-- Items Count -->
+            <div class="text-sm text-gray-600 mb-4">
+              {{ cartItems.length }} {{ $t('cart.total_items') }}
             </div>
 
-            <button
+            <!-- Subtotal -->
+            <div class="flex justify-between py-2 border-t">
+              <span class="text-gray-600">{{ $t('cart.subtotal') }}</span>
+              <span class="font-medium">{{ formatPrice(subtotal) }} {{ $t('currency') }}</span>
+            </div>
+
+            <!-- Shipping -->
+            <div class="flex justify-between py-2 border-t">
+              <span class="text-gray-600">{{ $t('cart.shipping') }}</span>
+              <span class="text-green-500">{{ $t('cart.free') }}</span>
+            </div>
+
+            <!-- Total -->
+            <div class="flex justify-between py-2 border-t border-b">
+              <span class="font-medium">{{ $t('cart.total') }}</span>
+              <span class="font-bold">{{ formatPrice(total) }} {{ $t('currency') }}</span>
+            </div>
+
+            <!-- Checkout Button -->
+            <button 
               @click="checkout"
-              class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 w-full"
+              class="w-full mt-6 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors"
             >
-              Buyurtma berish
+              {{ $t('cart.checkout') }}
             </button>
           </div>
         </div>
@@ -126,7 +135,7 @@
       <!-- Similar Products -->
       <div class="mt-16">
         <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
-          Sizga yoqishi mumkin
+          {{ $t('cart.similar_products') }}
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
           <ProductCard 
@@ -279,13 +288,10 @@ const formatPrice = (price) => {
   return new Intl.NumberFormat('uz-UZ').format(price)
 }
 
-const incrementQuantity = (item) => {
-  item.quantity++
-}
-
-const decrementQuantity = (item) => {
-  if (item.quantity > 1) {
-    item.quantity--
+const updateQuantity = (item, quantity) => {
+  item.quantity += quantity
+  if (item.quantity < 1) {
+    item.quantity = 1
   }
 }
 

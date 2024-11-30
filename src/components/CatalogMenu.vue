@@ -33,7 +33,7 @@
               <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 mr-3">
                 <i :class="[category.icon, 'text-lg']"></i>
               </div>
-              <span class="font-medium text-gray-700">{{ category.name }}</span>
+              <span class="font-medium text-gray-700">{{ $t(category.name) }}</span>
               <i class="ri-arrow-right-s-line ml-auto text-gray-400"></i>
             </div>
           </div>
@@ -47,7 +47,7 @@
           <div class="max-w-full sm:max-w-4xl">
             <!-- Category Header -->
             <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100">
-              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">{{ activeCategory.name }}</h3>
+              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">{{ $t(activeCategory.name) }}</h3>
               <router-link
                 :to="activeCategory.link"
                 class="text-purple-600 hover:text-purple-700 font-medium text-sm sm:text-base"
@@ -63,44 +63,23 @@
                 <router-link
                   :to="subcategory.link"
                   class="block mb-3 sm:mb-4 text-base sm:text-lg font-medium text-gray-900 hover:text-purple-600"
+                  @click="isOpen = false"
                 >
-                  {{ subcategory.name }}
+                  {{ $t(subcategory.name) }}
                 </router-link>
                 
                 <!-- Subcategory Items -->
-                <ul v-if="subcategory.items" class="space-y-2 sm:space-y-3">
+                <ul class="space-y-2">
                   <li v-for="item in subcategory.items" :key="item.id">
                     <router-link
                       :to="item.link"
                       class="text-sm sm:text-base text-gray-600 hover:text-purple-600 transition-colors"
+                      @click="isOpen = false"
                     >
-                      {{ item.name }}
+                      {{ $t(item.name) }}
                     </router-link>
                   </li>
                 </ul>
-              </div>
-            </div>
-
-            <!-- Featured Products -->
-            <div v-if="activeCategory.featured" class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-100">
-              <h4 class="text-base sm:text-lg font-medium text-gray-900 mb-4 sm:mb-6">{{ $t('nav.featured') }}</h4>
-              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
-                <router-link
-                  v-for="product in activeCategory.featured"
-                  :key="product.id"
-                  :to="product.link"
-                  class="group block"
-                >
-                  <div class="aspect-square rounded-xl bg-gray-100 mb-2 sm:mb-3 overflow-hidden">
-                    <img
-                      :src="product.image"
-                      :alt="product.name"
-                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
-                    />
-                  </div>
-                  <p class="text-xs sm:text-sm text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-2">{{ product.name }}</p>
-                  <p class="text-xs sm:text-sm font-medium text-purple-600 mt-1">{{ product.price }}</p>
-                </router-link>
               </div>
             </div>
           </div>
@@ -113,8 +92,10 @@
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
 
 const { t } = useI18n()
+const router = useRouter()
 const isOpen = ref(false)
 const activeCategory = ref(null)
 
@@ -126,33 +107,32 @@ const toggleMenu = () => {
 }
 
 const handleCategoryClick = (category) => {
-  // Mobil qurilmalarda kategoriyani bosganda aktivlashtirish
-  if (window.innerWidth < 640) {
-    activeCategory.value = category
-  }
+  activeCategory.value = category
+  isOpen.value = false
+  router.push(category.link)
 }
 
 // Categories data
 const categories = [
   {
     id: 1,
-    name: t('categories.electronics'),
+    name: 'electronics',
     icon: 'ri-computer-line',
     link: '/category/electronics',
     subcategories: [
       {
         id: 1,
-        name: t('categories.computers'),
+        name: 'computers',
         link: '/category/computers',
         items: [
-          { id: 1, name: t('categories.laptops'), link: '/category/laptops' },
-          { id: 2, name: t('categories.desktops'), link: '/category/desktops' },
-          { id: 3, name: t('categories.accessories'), link: '/category/computer-accessories' }
+          { id: 1, name: 'laptops', link: '/category/laptops' },
+          { id: 2, name: 'desktops', link: '/category/desktops' },
+          { id: 3, name: 'accessories', link: '/category/computer-accessories' }
         ]
       },
       {
         id: 2,
-        name: t('categories.phones'),
+        name: 'phones',
         link: '/category/phones',
         items: [
           { id: 1, name: 'iPhone', link: '/category/iphone' },
@@ -164,14 +144,14 @@ const categories = [
     featured: [
       {
         id: 1,
-        name: 'MacBook Pro 14"',
+        name: 'macbook_pro',
         price: '$1,999',
         image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1671304673229',
         link: '/product/macbook-pro-14'
       },
       {
         id: 2,
-        name: 'iPhone 14 Pro',
+        name: 'iphone_14_pro',
         price: '$999',
         image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-model-unselect-gallery-2-202209?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1660753617559',
         link: '/product/iphone-14-pro'
@@ -180,35 +160,35 @@ const categories = [
   },
   {
     id: 2,
-    name: t('categories.appliances'),
+    name: 'appliances',
     icon: 'ri-home-gear-line',
     link: '/category/appliances',
     subcategories: [
       {
         id: 1,
-        name: t('categories.kitchen'),
+        name: 'kitchen',
         link: '/category/kitchen',
         items: [
-          { id: 1, name: t('categories.refrigerators'), link: '/category/refrigerators' },
-          { id: 2, name: t('categories.ovens'), link: '/category/ovens' },
-          { id: 3, name: t('categories.dishwashers'), link: '/category/dishwashers' }
+          { id: 1, name: 'refrigerators', link: '/category/refrigerators' },
+          { id: 2, name: 'ovens', link: '/category/ovens' },
+          { id: 3, name: 'dishwashers', link: '/category/dishwashers' }
         ]
       },
       {
         id: 2,
-        name: t('categories.climate'),
+        name: 'climate',
         link: '/category/climate',
         items: [
-          { id: 1, name: t('categories.air_conditioners'), link: '/category/air-conditioners' },
-          { id: 2, name: t('categories.heaters'), link: '/category/heaters' },
-          { id: 3, name: t('categories.fans'), link: '/category/fans' }
+          { id: 1, name: 'air_conditioners', link: '/category/air-conditioners' },
+          { id: 2, name: 'heaters', link: '/category/heaters' },
+          { id: 3, name: 'fans', link: '/category/fans' }
         ]
       }
     ],
     featured: [
       {
         id: 1,
-        name: 'Samsung Neo QLED 4K',
+        name: 'samsung_neo_qled',
         price: '$1,499',
         image: 'https://images.samsung.com/is/image/samsung/p6pim/levant/qe55qn85catxzn/gallery/levant-neo-qled-qn85c-qe55qn85catxzn-537812395?$1300_1038_PNG$',
         link: '/product/samsung-neo-qled'
@@ -217,13 +197,13 @@ const categories = [
   },
   {
     id: 3,
-    name: t('categories.tv_audio'),
+    name: 'tv_audio',
     icon: 'ri-tv-2-line',
     link: '/category/tv-audio',
     subcategories: [
       {
         id: 1,
-        name: t('categories.tv'),
+        name: 'tv',
         link: '/category/tv',
         items: [
           { id: 1, name: 'Samsung', link: '/category/samsung-tv' },
@@ -233,19 +213,19 @@ const categories = [
       },
       {
         id: 2,
-        name: t('categories.audio'),
+        name: 'audio',
         link: '/category/audio',
         items: [
-          { id: 1, name: t('categories.speakers'), link: '/category/speakers' },
-          { id: 2, name: t('categories.headphones'), link: '/category/headphones' },
-          { id: 3, name: t('categories.home_theater'), link: '/category/home-theater' }
+          { id: 1, name: 'speakers', link: '/category/speakers' },
+          { id: 2, name: 'headphones', link: '/category/headphones' },
+          { id: 3, name: 'home_theater', link: '/category/home-theater' }
         ]
       }
     ],
     featured: [
       {
         id: 1,
-        name: 'Samsung Neo QLED 4K',
+        name: 'samsung_neo_qled',
         price: '$1,499',
         image: 'https://images.samsung.com/is/image/samsung/p6pim/levant/qe55qn85catxzn/gallery/levant-neo-qled-qn85c-qe55qn85catxzn-537812395?$1300_1038_PNG$',
         link: '/product/samsung-neo-qled'

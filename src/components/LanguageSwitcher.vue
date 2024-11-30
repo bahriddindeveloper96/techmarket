@@ -49,7 +49,7 @@ const changeLanguage = (langCode) => {
   locale.value = langCode
   localStorage.setItem('language', langCode)
   isOpen.value = false
-  window.location.reload() // Sahifani qayta yuklash
+  document.documentElement.lang = langCode
 }
 
 const toggleDropdown = () => {

@@ -20,7 +20,7 @@
                 <img src="https://ui-avatars.com/api/?name=John+Doe&background=6466f1&color=fff" alt="Profile" class="w-full h-full object-cover">
               </div>
               <div class="text-center">
-                <button @click="activeTab = 'personal'" class="text-lg font-semibold text-gray-900 hover:text-primary-600">John Doe</button>
+                <button @click="activeTab = 'personal'" class="text-lg font-semibold text-gray-900 hover:text-primary-600">{{ $t('profile.personal_info') }}</button>
                 <p class="text-sm text-gray-500">+998 90 123 45 67</p>
               </div>
               <div class="w-full pt-4 border-t">
@@ -33,7 +33,7 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 7a4 4 0 11-8 0 4 4 0 018 0zM12 14a7 7 0 00-7 7h14a7 7 0 00-7-7z" />
                     </svg>
-                    <span class="font-medium">Shaxsiy Ma'lumotlar</span>
+                    <span class="font-medium">{{ $t('profile.personal_info') }}</span>
                   </button>
 
                   <button @click="activeTab = 'orders'"
@@ -44,14 +44,14 @@
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M16 11V7a4 4 0 00-8 0v4M5 9h14l1 12H4L5 9z" />
                     </svg>
-                    <span class="font-medium">Buyurtmalarim</span>
+                    <span class="font-medium">{{ $t('profile.orders') }}</span>
                   </button>
 
                   <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-gray-50 text-gray-700 font-medium transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4.318 6.318a4.5 4.5 0 000 6.364L12 20.364l7.682-7.682a4.5 4.5 0 00-6.364-6.364L12 7.636l-1.318-1.318a4.5 4.5 0 00-6.364 0z" />
                     </svg>
-                    <span>Saqlanganlar</span>
+                    <span>{{ $t('profile.favorites') }}</span>
                   </a>
 
                   <button @click="activeTab = 'settings'" 
@@ -63,7 +63,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span class="font-medium">Sozlamalar</span>
+                    <span class="font-medium">{{ $t('profile.settings') }}</span>
                   </button>
 
                   <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-gray-50 text-gray-700 font-medium transition-colors">
@@ -71,7 +71,7 @@
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
-                    <span>Sozlamalar</span>
+                    <span>{{ $t('profile.settings') }}</span>
                   </a>
                 </nav>
               </div>
@@ -89,57 +89,57 @@
               <Settings />
             </div>
             <div v-else>
-              <h2 class="text-2xl font-bold text-gray-800 mb-6">Shaxsiy Ma'lumotlar</h2>
+              <h2 class="text-2xl font-bold text-gray-800 mb-6">{{ $t('profile.personal_info') }}</h2>
               
               <!-- Form Grid -->
               <div class="grid grid-cols-2 gap-6">
                 <!-- First Name -->
                 <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Ism</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.first_name') }}</label>
                   <input 
                     v-model="userData.firstName"
                     type="text" 
                     class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    placeholder="Ismingiz" 
+                    :placeholder="$t('profile.placeholders.first_name')" 
                   />
                 </div>
 
                 <!-- Last Name -->
                 <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Familiya</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.last_name') }}</label>
                   <input 
                     v-model="userData.lastName"
                     type="text" 
                     class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    placeholder="Familiyangiz" 
+                    :placeholder="$t('profile.placeholders.last_name')" 
                   />
                 </div>
 
                 <!-- Email -->
                 <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Email</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.email') }}</label>
                   <input 
                     v-model="userData.email"
                     type="email" 
                     class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    placeholder="email@example.com" 
+                    :placeholder="$t('profile.placeholders.email')" 
                   />
                 </div>
 
                 <!-- Phone -->
                 <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Telefon</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.phone') }}</label>
                   <input 
                     v-model="userData.phone"
                     type="tel" 
                     class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    placeholder="+998 90 123 45 67" 
+                    :placeholder="$t('profile.placeholders.phone')" 
                   />
                 </div>
 
                 <!-- Birthday -->
                 <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Tug'ilgan sana</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.birthday') }}</label>
                   <input 
                     v-model="userData.birthday"
                     type="date" 
@@ -149,37 +149,37 @@
 
                 <!-- Gender -->
                 <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Jins</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.gender') }}</label>
                   <select 
                     v-model="userData.gender"
                     class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
                   >
-                    <option value="">Tanlang</option>
-                    <option value="male">Erkak</option>
-                    <option value="female">Ayol</option>
+                    <option value="">{{ $t('profile.select') }}</option>
+                    <option value="male">{{ $t('profile.male') }}</option>
+                    <option value="female">{{ $t('profile.female') }}</option>
                   </select>
                 </div>
 
                 <!-- Address -->
                 <div class="col-span-2 space-y-2">
-                  <label class="block text-sm font-medium text-gray-700">Manzil</label>
+                  <label class="block text-sm font-medium text-gray-700">{{ $t('profile.address') }}</label>
                   <textarea 
                     v-model="userData.address"
                     class="w-full px-4 py-2 rounded-xl border border-gray-200 focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
                     rows="3" 
-                    placeholder="To'liq manzilingiz"
+                    :placeholder="$t('profile.placeholders.address')"
                   ></textarea>
                 </div>
-              </div>
 
-              <!-- Save Button -->
-              <div class="mt-8 flex justify-end">
-                <button 
-                  @click="saveUserData"
-                  class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300 focus:ring-4 focus:ring-primary-500 focus:ring-opacity-50"
-                >
-                  Saqlash
-                </button>
+                <!-- Save Button -->
+                <div class="col-span-2 flex justify-end">
+                  <button 
+                    @click="saveUserData"
+                    class="px-6 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors"
+                  >
+                    {{ $t('profile.save') }}
+                  </button>
+                </div>
               </div>
             </div>
           </div>
@@ -194,7 +194,7 @@
               <img src="https://ui-avatars.com/api/?name=John+Doe&background=6466f1&color=fff" alt="Profile" class="w-full h-full object-cover">
             </div>
             <div>
-              <button @click="activeTab = 'personal'" class="text-lg font-semibold text-gray-900">John Doe</button>
+              <button @click="activeTab = 'personal'" class="text-lg font-semibold text-gray-900">{{ $t('profile.personal_info') }}</button>
               <p class="text-sm text-gray-500">+998 90 123 45 67</p>
             </div>
           </div>
@@ -224,19 +224,8 @@
             </div>
           </a>
 
-          <!-- Addresses -->
-          <a href="#" class="block bg-white rounded-2xl shadow-sm">
-            <div class="p-4 flex items-center">
-              <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600">
-                <i class="ri-map-pin-2-line text-xl"></i>
-              </div>
-              <span class="ml-4 text-gray-900 font-medium">{{ $t('profile.addresses') }}</span>
-              <i class="ri-arrow-right-s-line text-xl text-gray-400 ml-auto"></i>
-            </div>
-          </a>
-
           <!-- Settings -->
-          <a href="#" class="block bg-white rounded-2xl shadow-sm">
+          <router-link to="/settings" class="block bg-white rounded-2xl shadow-sm">
             <div class="p-4 flex items-center">
               <div class="w-10 h-10 rounded-xl bg-primary-50 flex items-center justify-center text-primary-600">
                 <i class="ri-settings-3-line text-xl"></i>
@@ -244,7 +233,7 @@
               <span class="ml-4 text-gray-900 font-medium">{{ $t('profile.settings') }}</span>
               <i class="ri-arrow-right-s-line text-xl text-gray-400 ml-auto"></i>
             </div>
-          </a>
+          </router-link>
 
           <!-- Help Center -->
           <a href="#" class="block bg-white rounded-2xl shadow-sm">

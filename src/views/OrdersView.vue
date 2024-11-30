@@ -1,55 +1,64 @@
 <template>
   <div class="min-h-screen bg-white">
     <!-- Orders Header -->
-    <div class="mb-6">
-      <h2 class="text-2xl font-semibold text-gray-900">Mening buyurtmalarim</h2>
-      <p class="text-gray-500">Barcha buyurtmalaringizni kuzatib boring</p>
+    <div class="flex items-center justify-between mb-6">
+      <h1 class="text-2xl font-bold text-gray-900">{{ $t('orders.title') }}</h1>
     </div>
 
     <!-- Orders Filters -->
-    <div class="mb-6">
-      <div class="flex flex-wrap items-center gap-4">
+    <div class="bg-white rounded-2xl p-6 mb-6">
+      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Search -->
-        <div class="flex-grow max-w-md">
-          <div class="relative">
-            <input 
-              type="text" 
-              v-model="searchQuery"
-              class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
-              placeholder="Buyurtma raqami yoki mahsulot nomi"
-            >
-            <i class="ri-search-line absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"></i>
-          </div>
+        <div class="relative">
+          <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
+            </svg>
+          </span>
+          <input
+            v-model="searchQuery"
+            type="text"
+            :placeholder="$t('orders.filters.search')"
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+          >
         </div>
 
         <!-- Status Filter -->
         <div class="relative">
-          <select 
+          <select
             v-model="statusFilter"
             class="appearance-none pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
-            <option value="">Barcha holatlar</option>
-            <option value="pending">Kutilmoqda</option>
-            <option value="processing">Jarayonda</option>
-            <option value="shipped">Yetkazilmoqda</option>
-            <option value="delivered">Yetkazildi</option>
-            <option value="cancelled">Bekor qilindi</option>
+            <option value="">{{ $t('orders.filters.status.all') }}</option>
+            <option value="pending">{{ $t('orders.filters.status.pending') }}</option>
+            <option value="processing">{{ $t('orders.filters.status.processing') }}</option>
+            <option value="shipped">{{ $t('orders.filters.status.shipped') }}</option>
+            <option value="delivered">{{ $t('orders.filters.status.delivered') }}</option>
+            <option value="cancelled">{{ $t('orders.filters.status.cancelled') }}</option>
           </select>
-          <i class="ri-arrow-down-s-line absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
         </div>
 
-        <!-- Date Filter -->
+        <!-- Period Filter -->
         <div class="relative">
-          <select 
-            v-model="dateFilter"
+          <select
+            v-model="periodFilter"
             class="appearance-none pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
           >
-            <option value="all">Barcha vaqt</option>
-            <option value="today">Bugun</option>
-            <option value="week">Shu hafta</option>
-            <option value="month">Shu oy</option>
+            <option value="">{{ $t('orders.filters.period.all') }}</option>
+            <option value="today">{{ $t('orders.filters.period.today') }}</option>
+            <option value="week">{{ $t('orders.filters.period.week') }}</option>
+            <option value="month">{{ $t('orders.filters.period.month') }}</option>
           </select>
-          <i class="ri-arrow-down-s-line absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none"></i>
+          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
+            </svg>
+          </span>
         </div>
       </div>
     </div>
@@ -59,24 +68,24 @@
       <div v-for="order in filteredOrders" :key="order.id" class="bg-gray-50 rounded-2xl p-4">
         <!-- Order Header -->
         <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-          <div>
-            <p class="text-sm text-gray-500">Buyurtma raqami: <span class="font-medium text-gray-900">#{{ order.number }}</span></p>
-            <p class="text-sm text-gray-500">Sana: <span class="font-medium text-gray-900">{{ formatDate(order.date) }}</span></p>
+          <div class="space-y-1">
+            <p class="text-sm text-gray-500">{{ $t('orders.order.number') }}: <span class="font-medium text-gray-900">#{{ order.number }}</span></p>
+            <p class="text-sm text-gray-500">{{ $t('orders.order.date') }}: <span class="font-medium text-gray-900">{{ formatDate(order.date) }}</span></p>
           </div>
           <div :class="getStatusClass(order.status)" class="px-3 py-1 rounded-full text-sm font-medium">
-            {{ getStatusText(order.status) }}
+            {{ $t(`orders.filters.status.${order.status}`) }}
           </div>
         </div>
 
         <!-- Order Items -->
-        <div class="space-y-4">
+        <div class="space-y-2">
           <div v-for="item in order.items" :key="item.id" class="flex items-center gap-4 bg-white p-4 rounded-xl">
-            <div class="w-16 h-16 rounded-xl overflow-hidden bg-gray-100">
-              <img :src="item.image" :alt="item.name" class="w-full h-full object-cover">
-            </div>
-            <div class="flex-grow">
-              <h3 class="font-medium text-gray-900">{{ item.name }}</h3>
-              <p class="text-sm text-gray-500">{{ item.quantity }} × {{ formatPrice(item.price) }}</p>
+            <img :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-lg">
+            <div class="flex-1 min-w-0">
+              <h4 class="font-medium text-gray-900 truncate">{{ item.name }}</h4>
+              <p class="text-sm text-gray-500">
+                {{ item.quantity }} {{ $t('orders.order.quantity') }} × {{ formatPrice(item.price) }}
+              </p>
             </div>
             <div class="text-right">
               <p class="font-medium text-gray-900">{{ formatPrice(item.price * item.quantity) }}</p>
@@ -86,32 +95,26 @@
 
         <!-- Order Footer -->
         <div class="mt-4 pt-4 border-t border-gray-200 flex flex-wrap items-center justify-between gap-4">
-          <div>
-            <p class="text-sm text-gray-500">Jami: <span class="font-medium text-gray-900">{{ formatPrice(order.total) }}</span></p>
-            <p class="text-sm text-gray-500">To'lov usuli: <span class="font-medium text-gray-900">{{ order.paymentMethod }}</span></p>
+          <div class="space-y-1">
+            <p class="text-sm text-gray-500">{{ $t('orders.order.total') }}: <span class="font-medium text-gray-900">{{ formatPrice(order.total) }}</span></p>
+            <p class="text-sm text-gray-500">{{ $t('orders.order.payment_method') }}: <span class="font-medium text-gray-900">{{ order.paymentMethod }}</span></p>
           </div>
-          <div class="flex items-center gap-3">
-            <button class="px-4 py-2 text-sm font-medium text-gray-700 hover:text-gray-800 hover:bg-gray-100 rounded-xl transition-colors">
-              Buyurtmani kuzatish
-            </button>
-            <button class="px-4 py-2 text-sm font-medium text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition-colors">
-              Qayta buyurtma berish
-            </button>
-          </div>
+          <button class="px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors">
+            {{ $t('common.details') }}
+          </button>
         </div>
       </div>
     </div>
 
     <!-- Empty State -->
     <div v-if="filteredOrders.length === 0" class="text-center py-12">
-      <div class="w-20 h-20 mx-auto mb-4 text-gray-400">
-        <i class="ri-shopping-bag-line text-5xl"></i>
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
+        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
+        </svg>
       </div>
-      <h3 class="text-lg font-medium text-gray-900 mb-2">Buyurtmalar yo'q</h3>
-      <p class="text-gray-500 mb-6">Siz hali hech qanday buyurtma bermagansiz</p>
-      <router-link to="/" class="inline-flex items-center px-6 py-3 text-white bg-primary-600 hover:bg-primary-700 rounded-xl transition-colors">
-        Xarid qilishni boshlash
-      </router-link>
+      <h3 class="text-lg font-medium text-gray-900 mb-1">{{ $t('orders.empty.title') }}</h3>
+      <p class="text-gray-500">{{ $t('orders.empty.description') }}</p>
     </div>
   </div>
 </template>
@@ -122,7 +125,7 @@ import { ref, computed } from 'vue'
 // State
 const searchQuery = ref('')
 const statusFilter = ref('')
-const dateFilter = ref('all')
+const periodFilter = ref('')
 
 // Mock data
 const orders = ref([
@@ -184,10 +187,10 @@ const filteredOrders = computed(() => {
     result = result.filter(order => order.status === statusFilter.value)
   }
 
-  if (dateFilter.value !== 'all') {
+  if (periodFilter.value !== '') {
     const now = new Date()
     
-    switch(dateFilter.value) {
+    switch(periodFilter.value) {
       case 'today':
         result = result.filter(order => 
           new Date(order.date).toDateString() === now.toDateString()
