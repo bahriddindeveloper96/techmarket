@@ -1,6 +1,6 @@
 <!-- ProductCard.vue -->
 <template>
-  <div class="group relative overflow-hidden bg-white rounded-2xl shadow-sm hover:shadow-xl transition-all duration-300">
+  <div class="group relative bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-lg transition-shadow duration-300">
     <!-- Discount Badge -->
     <div v-if="product.oldPrice" class="absolute top-3 left-3 z-10">
       <span class="bg-red-100 text-red-600 text-xs font-medium px-2.5 py-1 rounded-full">
@@ -11,8 +11,8 @@
     <!-- Favorite Button -->
     <button 
       @click.stop="toggleFavorite"
-      class="absolute top-3 right-3 z-10 p-2 bg-white/80 backdrop-blur-sm rounded-full 
-             shadow-sm hover:shadow-md transition-all duration-300"
+      class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white dark:bg-gray-700 shadow-md flex items-center justify-center transition-colors duration-300"
+      :class="{'text-red-500 dark:text-red-400': product.isFavorite, 'text-gray-400 dark:text-gray-500': !product.isFavorite}"
     >
       <i class="fas fa-heart text-lg" 
          :class="product.isFavorite ? 'text-red-500' : 'text-gray-400 group-hover:text-gray-600'">
@@ -51,7 +51,7 @@
     <div class="p-4">
       <!-- Title -->
       <router-link :to="{ name: 'product', params: { id: product.id }}" class="block group-hover:text-primary-600 transition-colors duration-300">
-        <h3 class="font-medium text-gray-900 text-sm sm:text-base line-clamp-2 mb-2">
+        <h3 class="font-medium text-gray-900 dark:text-white text-sm sm:text-base line-clamp-2 mb-2">
           {{ $t(`products.${product.id}.name`, product.name) }}
         </h3>
       </router-link>
@@ -62,22 +62,22 @@
           <i v-for="i in 5" :key="i" 
             :class="[
               'fas fa-star text-xs sm:text-sm',
-              i <= product.rating ? 'text-yellow-400' : 'text-gray-300'
+              i <= product.rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'
             ]"
           ></i>
         </div>
-        <span class="text-xs text-gray-500 ml-2">({{ product.reviews }})</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 ml-2">({{ product.reviews }})</span>
       </div>
 
       <!-- Price -->
       <div class="space-y-1">
         <div v-if="product.oldPrice" class="flex items-center gap-2">
-          <span class="text-sm text-gray-500 line-through">
+          <span class="text-sm text-gray-500 dark:text-gray-400 line-through">
             {{ formatPrice(product.oldPrice) }} {{ $t('currency') }}
           </span>
         </div>
         <div class="flex items-center justify-between">
-          <span class="font-semibold text-gray-900">
+          <span class="font-semibold text-gray-900 dark:text-white">
             {{ formatPrice(product.price) }} {{ $t('currency') }}
           </span>
           <button 
@@ -90,7 +90,7 @@
       </div>
 
       <!-- Installment Badge -->
-      <div v-if="product.installment" class="mt-3 flex items-center text-xs text-green-600 bg-green-50 rounded-lg p-2">
+      <div v-if="product.installment" class="mt-3 flex items-center text-xs text-green-600 dark:text-green-400 bg-green-50 dark:bg-green-900 rounded-lg p-2">
         <i class="fas fa-credit-card mr-1"></i>
         <span>{{ formatPrice(calculateMonthlyPayment(product.price)) }} {{ $t('currency') }} x 12 {{ $t('month') }}</span>
       </div>

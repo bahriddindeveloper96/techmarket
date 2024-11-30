@@ -1,10 +1,10 @@
 <template>
-  <div class="fixed inset-0 z-50 bg-white">
+  <div class="fixed inset-0 z-50 bg-white dark:bg-gray-900">
     <!-- Header -->
-    <div class="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-white border-b border-gray-100">
-      <h2 class="text-lg font-semibold text-gray-900">{{ $t('nav.catalog') }}</h2>
+    <div class="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('nav.catalog') }}</h2>
       <button
-        class="p-2 text-gray-500 hover:text-gray-700 focus:outline-none"
+        class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
         @click="$emit('close')"
       >
         <i class="ri-close-line text-xl"></i>
@@ -12,11 +12,11 @@
     </div>
 
     <!-- Content -->
-    <div class="h-[calc(100vh-56px)] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-100">
+    <div class="h-[calc(100vh-56px)] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
       <!-- Back Button (when subcategory is active) -->
-      <div v-if="activeCategory" class="px-4 py-3 border-b border-gray-100">
+      <div v-if="activeCategory" class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
         <button
-          class="flex items-center space-x-2 text-gray-600"
+          class="flex items-center space-x-2 text-gray-600 dark:text-gray-400"
           @click="activeCategory = null"
         >
           <i class="ri-arrow-left-s-line text-xl"></i>
@@ -25,7 +25,7 @@
       </div>
 
       <!-- Categories List -->
-      <div v-if="!activeCategory" class="divide-y divide-gray-100">
+      <div v-if="!activeCategory" class="divide-y divide-gray-100 dark:divide-gray-800">
         <div
           v-for="category in categories"
           :key="category.id"
@@ -36,12 +36,12 @@
             @click="handleCategoryClick(category)"
           >
             <div class="flex items-center space-x-3">
-              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100">
-                <i :class="[category.icon, 'text-lg']"></i>
+              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
+                <i :class="[category.icon, 'text-lg dark:text-gray-300']"></i>
               </div>
-              <span class="font-medium text-gray-700">{{ category.name }}</span>
+              <span class="font-medium text-gray-700 dark:text-gray-200">{{ category.name }}</span>
             </div>
-            <i class="ri-arrow-right-s-line text-gray-400"></i>
+            <i class="ri-arrow-right-s-line text-gray-400 dark:text-gray-500"></i>
           </div>
         </div>
       </div>
@@ -49,8 +49,8 @@
       <!-- Subcategories View -->
       <div v-else class="pb-8">
         <!-- Category Header -->
-        <div class="px-4 py-3 border-b border-gray-100">
-          <h3 class="text-xl font-semibold text-gray-900">{{ activeCategory.name }}</h3>
+        <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ activeCategory.name }}</h3>
         </div>
 
         <!-- Subcategories -->
@@ -59,7 +59,7 @@
             <!-- Subcategory Header -->
             <router-link
               :to="subcategory.link"
-              class="block mb-4 text-lg font-medium text-gray-900 hover:text-purple-600"
+              class="block mb-4 text-lg font-medium text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400"
               @click="handleSubcategoryClick"
             >
               {{ subcategory.name }}
@@ -70,7 +70,7 @@
               <li v-for="item in subcategory.items" :key="item.id">
                 <router-link
                   :to="item.link"
-                  class="text-gray-600 hover:text-purple-600 transition-colors"
+                  class="text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                   @click="handleSubcategoryClick"
                 >
                   {{ item.name }}
@@ -82,8 +82,8 @@
 
         <!-- Featured Products -->
         <div v-if="activeCategory.featured" class="mt-8 px-4">
-          <div class="pt-6 border-t border-gray-100">
-            <h4 class="text-lg font-medium text-gray-900 mb-6">{{ $t('nav.featured') }}</h4>
+          <div class="pt-6 border-t border-gray-100 dark:border-gray-800">
+            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-6">{{ $t('nav.featured') }}</h4>
             <div class="grid grid-cols-2 gap-4">
               <router-link
                 v-for="product in activeCategory.featured"
@@ -91,15 +91,15 @@
                 :to="product.link"
                 class="group block"
               >
-                <div class="aspect-square rounded-xl bg-gray-100 mb-2 overflow-hidden">
+                <div class="aspect-square rounded-xl bg-gray-100 dark:bg-gray-800 mb-2 overflow-hidden">
                   <img
                     :src="product.image"
                     :alt="product.name"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <p class="text-sm text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-2">{{ product.name }}</p>
-                <p class="text-sm font-medium text-purple-600 mt-1">{{ product.price }}</p>
+                <p class="text-sm text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">{{ product.name }}</p>
+                <p class="text-sm font-medium text-purple-600 dark:text-purple-400 mt-1">{{ product.price }}</p>
               </router-link>
             </div>
           </div>
@@ -280,21 +280,25 @@ const categories = [
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  @apply bg-gray-100;
+  @apply bg-gray-100 dark:bg-gray-800;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  @apply bg-purple-500 rounded-full transition-colors duration-200;
+  @apply bg-purple-500 dark:bg-purple-400 rounded-full transition-colors duration-200;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  @apply bg-purple-600;
+  @apply bg-purple-600 dark:bg-purple-500;
 }
 
 /* Hide scrollbar for Firefox */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: #8B5CF6 #F3F4F6;
+  scrollbar-color: theme('colors.purple.500') theme('colors.gray.100');
+}
+
+:global(.dark) .scrollbar-thin {
+  scrollbar-color: theme('colors.purple.400') theme('colors.gray.800');
 }
 
 /* Hide scrollbar for IE and Edge */

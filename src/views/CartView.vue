@@ -1,25 +1,25 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white">
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
     <Banner />
     
     <div class="container mx-auto px-4 py-8">
       <!-- Cart Header -->
       <div class="flex items-center justify-between mb-8">
-        <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
+        <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
           {{ $t('cart.title') }}
         </h1>
-        <button v-if="cartItems.length" @click="clearCart" class="text-sm text-red-500 hover:text-red-600 transition-colors">
+        <button v-if="cartItems.length" @click="clearCart" class="text-sm text-red-500 hover:text-red-600 transition-colors dark:text-red-400 dark:hover:text-red-300">
           {{ $t('cart.clear_cart') }}
         </button>
       </div>
 
       <!-- Empty Cart -->
       <div v-if="!cartItems.length" class="text-center py-16">
-        <div class="w-24 h-24 mx-auto mb-6 text-gray-300">
+        <div class="w-24 h-24 mx-auto mb-6 text-gray-300 dark:text-gray-600">
           <i class="fas fa-shopping-cart text-6xl"></i>
         </div>
-        <h2 class="text-xl font-medium text-gray-600 mb-4">{{ $t('cart.empty') }}</h2>
-        <router-link to="/" class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors">
+        <h2 class="text-xl font-medium text-gray-600 dark:text-gray-400 mb-4">{{ $t('cart.empty') }}</h2>
+        <router-link to="/" class="inline-block bg-purple-600 text-white px-6 py-2 rounded-lg hover:bg-purple-700 transition-colors dark:bg-purple-500 dark:hover:bg-purple-600">
           {{ $t('cart.continue_shopping') }}
         </router-link>
       </div>
@@ -28,22 +28,22 @@
         <!-- Cart Items -->
         <div class="lg:col-span-2 space-y-4">
           <div v-for="item in cartItems" :key="item.id" 
-            class="flex items-center gap-4 bg-white p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
+            class="flex items-center gap-4 bg-white dark:bg-gray-900 p-4 rounded-xl shadow-sm hover:shadow-md transition-shadow"
           >
             <!-- Product Image -->
             <img :src="item.image" :alt="item.name" class="w-24 h-24 object-cover rounded-lg">
             
             <!-- Product Info -->
             <div class="flex-1">
-              <h3 class="font-medium">{{ $t(`products.${item.id}.name`, item.name) }}</h3>
-              <div class="text-sm text-gray-500 mt-1">
+              <h3 class="font-medium text-gray-900 dark:text-white">{{ $t(`products.${item.id}.name`, item.name) }}</h3>
+              <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">
                 <span v-if="item.color" class="mr-2">
                   <i class="fas fa-circle" :style="{ color: item.color }"></i>
                 </span>
                 <span v-if="item.size">{{ item.size }}</span>
               </div>
               <div class="mt-2 flex items-center gap-4">
-                <span class="font-medium">{{ formatPrice(item.price) }} {{ $t('currency') }}</span>
+                <span class="font-medium text-gray-900 dark:text-white">{{ formatPrice(item.price) }} {{ $t('currency') }}</span>
               </div>
             </div>
 
@@ -51,17 +51,17 @@
             <div class="flex items-center gap-2">
               <button 
                 @click="updateQuantity(item, -1)"
-                class="w-8 h-8 flex items-center justify-center rounded-lg border hover:border-purple-500 transition-colors"
+                class="w-8 h-8 flex items-center justify-center rounded-lg border hover:border-purple-500 transition-colors dark:border-gray-700 dark:hover:border-purple-400"
                 :disabled="item.quantity <= 1"
               >
-                <i class="fas fa-minus text-sm"></i>
+                <i class="fas fa-minus text-sm text-gray-600 dark:text-gray-400"></i>
               </button>
-              <span class="w-8 text-center">{{ item.quantity }}</span>
+              <span class="w-8 text-center text-gray-900 dark:text-white">{{ item.quantity }}</span>
               <button 
                 @click="updateQuantity(item, 1)"
-                class="w-8 h-8 flex items-center justify-center rounded-lg border hover:border-purple-500 transition-colors"
+                class="w-8 h-8 flex items-center justify-center rounded-lg border hover:border-purple-500 transition-colors dark:border-gray-700 dark:hover:border-purple-400"
               >
-                <i class="fas fa-plus text-sm"></i>
+                <i class="fas fa-plus text-sm text-gray-600 dark:text-gray-400"></i>
               </button>
             </div>
 
@@ -69,14 +69,14 @@
             <div class="flex gap-2">
               <button 
                 @click="removeFromCart(item)"
-                class="text-gray-400 hover:text-red-500 transition-colors"
+                class="text-gray-400 dark:text-gray-600 hover:text-red-500 dark:hover:text-red-400"
                 :title="$t('cart.remove')"
               >
                 <i class="fas fa-trash"></i>
               </button>
               <button 
                 @click="saveForLater(item)"
-                class="text-gray-400 hover:text-purple-500 transition-colors"
+                class="text-gray-400 dark:text-gray-600 hover:text-purple-500 dark:hover:text-purple-400"
                 :title="$t('cart.save_for_later')"
               >
                 <i class="fas fa-bookmark"></i>
@@ -87,7 +87,7 @@
           <!-- Clear Cart -->
           <button 
             @click="clearCart"
-            class="text-sm text-gray-500 hover:text-red-500 transition-colors"
+            class="text-sm text-gray-500 dark:text-gray-400 hover:text-red-500 dark:hover:text-red-400 transition-colors"
           >
             {{ $t('cart.clear_cart') }}
           </button>
@@ -95,36 +95,36 @@
 
         <!-- Order Summary -->
         <div class="lg:col-span-1">
-          <div class="bg-white p-6 rounded-xl shadow-sm">
-            <h2 class="text-lg font-bold mb-4">{{ $t('cart.total') }}</h2>
+          <div class="bg-white dark:bg-gray-900 p-6 rounded-xl shadow-sm">
+            <h2 class="text-lg font-bold text-gray-900 dark:text-white mb-4">{{ $t('cart.total') }}</h2>
             
             <!-- Items Count -->
-            <div class="text-sm text-gray-600 mb-4">
+            <div class="text-sm text-gray-600 dark:text-gray-400 mb-4">
               {{ cartItems.length }} {{ $t('cart.total_items') }}
             </div>
 
             <!-- Subtotal -->
-            <div class="flex justify-between py-2 border-t">
-              <span class="text-gray-600">{{ $t('cart.subtotal') }}</span>
-              <span class="font-medium">{{ formatPrice(subtotal) }} {{ $t('currency') }}</span>
+            <div class="flex justify-between py-2 border-t dark:border-gray-800">
+              <span class="text-gray-600 dark:text-gray-400">{{ $t('cart.subtotal') }}</span>
+              <span class="font-medium text-gray-900 dark:text-white">{{ formatPrice(subtotal) }} {{ $t('currency') }}</span>
             </div>
 
             <!-- Shipping -->
-            <div class="flex justify-between py-2 border-t">
-              <span class="text-gray-600">{{ $t('cart.shipping') }}</span>
-              <span class="text-green-500">{{ $t('cart.free') }}</span>
+            <div class="flex justify-between py-2 border-t dark:border-gray-800">
+              <span class="text-gray-600 dark:text-gray-400">{{ $t('cart.shipping') }}</span>
+              <span class="text-green-500 dark:text-green-400">{{ $t('cart.free') }}</span>
             </div>
 
             <!-- Total -->
-            <div class="flex justify-between py-2 border-t border-b">
-              <span class="font-medium">{{ $t('cart.total') }}</span>
-              <span class="font-bold">{{ formatPrice(total) }} {{ $t('currency') }}</span>
+            <div class="flex justify-between py-2 border-t border-b dark:border-gray-800">
+              <span class="font-medium text-gray-900 dark:text-white">{{ $t('cart.total') }}</span>
+              <span class="font-bold text-gray-900 dark:text-white">{{ formatPrice(total) }} {{ $t('currency') }}</span>
             </div>
 
             <!-- Checkout Button -->
             <button 
               @click="checkout"
-              class="w-full mt-6 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors"
+              class="w-full mt-6 bg-purple-600 text-white py-2 rounded-lg hover:bg-purple-700 transition-colors dark:bg-purple-500 dark:hover:bg-purple-600"
             >
               {{ $t('cart.checkout') }}
             </button>
@@ -134,7 +134,7 @@
 
       <!-- Similar Products -->
       <div class="mt-16">
-        <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent">
+        <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
           {{ $t('cart.similar_products') }}
         </h2>
         <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">

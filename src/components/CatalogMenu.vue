@@ -2,7 +2,7 @@
   <div class="relative group">
     <!-- Catalog Button -->
     <button
-      class="flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 shadow-lg shadow-purple-200"
+      class="flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 dark:bg-purple-700 text-white rounded-xl hover:bg-purple-700 dark:hover:bg-purple-800 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 dark:focus:ring-offset-gray-900 shadow-lg shadow-purple-200 dark:shadow-none"
       @click="toggleMenu"
     >
       <i class="ri-menu-line text-lg sm:text-xl"></i>
@@ -13,12 +13,12 @@
     <!-- Dropdown Menu -->
     <div
       v-show="isOpen"
-      class="fixed top-[96px] left-1/2 -translate-x-1/2 z-50 mt-8 bg-white rounded-2xl shadow-xl border border-gray-100 w-[95%] sm:w-[90%] md:w-[95%] lg:w-[1280px] max-h-[80vh] sm:max-h-[650px] overflow-hidden"
+      class="fixed top-[96px] left-1/2 -translate-x-1/2 z-50 mt-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 w-[95%] sm:w-[90%] md:w-[95%] lg:w-[1280px] max-h-[80vh] sm:max-h-[650px] overflow-hidden"
     >
       <!-- Content -->
       <div class="flex flex-col sm:flex-row h-full">
         <!-- Main Categories -->
-        <div class="w-full sm:w-72 bg-gray-50 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-100 hover:scrollbar-thumb-purple-600 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none">
+        <div class="w-full sm:w-72 bg-gray-50 dark:bg-gray-900 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none">
           <div
             v-for="category in categories"
             :key="category.id"
@@ -28,13 +28,13 @@
           >
             <div
               class="flex items-center px-4 py-3 cursor-pointer"
-              :class="{ 'bg-white': activeCategory === category }"
+              :class="{ 'bg-white dark:bg-gray-800': activeCategory === category }"
             >
-              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 mr-3">
-                <i :class="[category.icon, 'text-lg']"></i>
+              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700 mr-3">
+                <i :class="[category.icon, 'text-lg dark:text-gray-300']"></i>
               </div>
-              <span class="font-medium text-gray-700">{{ $t(category.name) }}</span>
-              <i class="ri-arrow-right-s-line ml-auto text-gray-400"></i>
+              <span class="font-medium text-gray-700 dark:text-gray-200">{{ $t(category.name) }}</span>
+              <i class="ri-arrow-right-s-line ml-auto text-gray-400 dark:text-gray-500"></i>
             </div>
           </div>
         </div>
@@ -42,15 +42,15 @@
         <!-- Subcategories Panel -->
         <div 
           v-if="activeCategory" 
-          class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-100 hover:scrollbar-thumb-purple-600 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
+          class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
         >
           <div class="max-w-full sm:max-w-4xl">
             <!-- Category Header -->
-            <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100">
-              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">{{ $t(activeCategory.name) }}</h3>
+            <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
+              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{{ $t(activeCategory.name) }}</h3>
               <router-link
                 :to="activeCategory.link"
-                class="text-purple-600 hover:text-purple-700 font-medium text-sm sm:text-base"
+                class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium text-sm sm:text-base"
               >
                 {{ $t('nav.see_all') }}
               </router-link>
@@ -62,7 +62,7 @@
                 <!-- Subcategory Header -->
                 <router-link
                   :to="subcategory.link"
-                  class="block mb-3 sm:mb-4 text-base sm:text-lg font-medium text-gray-900 hover:text-purple-600"
+                  class="block mb-3 sm:mb-4 text-base sm:text-lg font-medium text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400"
                   @click="isOpen = false"
                 >
                   {{ $t(subcategory.name) }}
@@ -73,7 +73,7 @@
                   <li v-for="item in subcategory.items" :key="item.id">
                     <router-link
                       :to="item.link"
-                      class="text-sm sm:text-base text-gray-600 hover:text-purple-600 transition-colors"
+                      class="text-sm sm:text-base text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
                       @click="isOpen = false"
                     >
                       {{ $t(item.name) }}
@@ -242,21 +242,25 @@ const categories = [
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  @apply bg-gray-100 rounded-full;
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {
-  @apply bg-purple-500 rounded-full transition-colors duration-200;
+  @apply bg-purple-500 dark:bg-purple-400 rounded-full transition-colors duration-200;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb:hover {
-  @apply bg-purple-600;
+  @apply bg-purple-600 dark:bg-purple-500;
 }
 
 /* Hide scrollbar for Firefox */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: #8B5CF6 #F3F4F6;
+  scrollbar-color: theme('colors.purple.500') theme('colors.gray.100');
+}
+
+:global(.dark) .scrollbar-thin {
+  scrollbar-color: theme('colors.purple.400') theme('colors.gray.800');
 }
 
 /* Hide scrollbar for IE and Edge */

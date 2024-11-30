@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen bg-gradient-to-b from-gray-50 to-white py-8">
+  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-8">
     <Banner />
     <div class="container mx-auto px-4">
       <h1 class="text-2xl font-bold mb-8">{{ $t('checkout.title') }}</h1>
@@ -7,45 +7,45 @@
       <div class="flex flex-col lg:flex-row gap-8">
         <!-- Checkout form -->
         <div class="lg:w-2/3">
-          <div class="bg-white rounded-2xl shadow-sm p-6 mb-6">
+          <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6 mb-6">
             <h2 class="text-xl font-semibold mb-6">{{ $t('checkout.personal_info') }}</h2>
             
             <form @submit.prevent="submitOrder" class="space-y-6">
               <!-- Contact Information -->
               <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('checkout.first_name') }}</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('checkout.first_name') }}</label>
                   <input 
                     type="text" 
                     v-model="form.firstName"
-                    class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
                     required
                   >
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('checkout.last_name') }}</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('checkout.last_name') }}</label>
                   <input 
                     type="text" 
                     v-model="form.lastName"
-                    class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
                     required
                   >
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('checkout.phone') }}</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('checkout.phone') }}</label>
                   <input 
                     type="tel" 
                     v-model="form.phone"
-                    class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
                     required
                   >
                 </div>
                 <div>
-                  <label class="block text-sm font-medium text-gray-700 mb-2">{{ $t('checkout.email') }}</label>
+                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">{{ $t('checkout.email') }}</label>
                   <input 
                     type="email" 
                     v-model="form.email"
-                    class="w-full px-4 py-2 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+                    class="w-full px-4 py-2 border border-gray-200 dark:border-gray-700 rounded-xl bg-white dark:bg-gray-900 text-gray-900 dark:text-white focus:ring-2 focus:ring-primary-500 dark:focus:ring-primary-400"
                   >
                 </div>
               </div>
@@ -57,8 +57,8 @@
                   <label 
                     v-for="method in deliveryMethods" 
                     :key="method.id"
-                    class="relative flex cursor-pointer rounded-lg border bg-white p-4 focus:outline-none"
-                    :class="selectedDeliveryMethod.id === method.id ? 'border-primary-500 ring-2 ring-primary-500' : 'border-gray-300'"
+                    class="relative flex cursor-pointer rounded-lg border bg-white dark:bg-gray-900 p-4 focus:outline-none"
+                    :class="selectedDeliveryMethod.id === method.id ? 'border-primary-500 ring-2 ring-primary-500' : 'border-gray-300 dark:border-gray-700'"
                   >
                     <input
                       type="radio"
@@ -70,18 +70,18 @@
                     <div class="flex w-full items-center justify-between">
                       <div class="flex items-center">
                         <div class="text-sm">
-                          <p class="font-medium text-gray-900">
+                          <p class="font-medium text-gray-900 dark:text-white">
                             {{ $t(`checkout.shipping_methods.${method.id}.title`) }}
                           </p>
-                          <p class="text-gray-500">
+                          <p class="text-gray-500 dark:text-gray-400">
                             {{ $t(`checkout.shipping_methods.${method.id}.description`) }}
                           </p>
-                          <p class="text-sm font-medium text-primary-600 mt-1">
+                          <p class="text-sm font-medium text-primary-600 dark:text-primary-400 mt-1">
                             {{ method.price === 0 ? $t('checkout.free') : formatPrice(method.price) }}
                           </p>
                         </div>
                       </div>
-                      <div v-if="selectedDeliveryMethod.id === method.id" class="shrink-0 text-primary-500">
+                      <div v-if="selectedDeliveryMethod.id === method.id" class="shrink-0 text-primary-500 dark:text-primary-400">
                         <i class="ri-check-line text-lg"></i>
                       </div>
                     </div>
@@ -96,8 +96,8 @@
                   <label 
                     v-for="method in paymentMethods" 
                     :key="method.id"
-                    class="relative flex p-4 border border-gray-200 rounded-xl cursor-pointer hover:border-primary-500 transition-colors"
-                    :class="{ 'border-primary-500 bg-primary-50': form.paymentMethod === method.id }"
+                    class="relative flex p-4 border border-gray-200 dark:border-gray-700 rounded-xl cursor-pointer hover:border-primary-500 dark:hover:border-primary-400 transition-colors"
+                    :class="{ 'border-primary-500 bg-primary-50 dark:bg-primary-900/30': form.paymentMethod === method.id }"
                   >
                     <input
                       type="radio"
@@ -107,8 +107,8 @@
                       class="sr-only"
                     />
                     <div class="flex items-center w-full">
-                      <i :class="[method.icon, 'text-2xl mr-3', form.paymentMethod === method.id ? 'text-primary-500' : 'text-gray-400']"></i>
-                      <span class="font-medium" :class="form.paymentMethod === method.id ? 'text-primary-700' : 'text-gray-700'">
+                      <i :class="[method.icon, 'text-2xl mr-3', form.paymentMethod === method.id ? 'text-primary-500 dark:text-primary-400' : 'text-gray-400 dark:text-gray-600']"></i>
+                      <span class="font-medium" :class="form.paymentMethod === method.id ? 'text-primary-700 dark:text-primary-500' : 'text-gray-700 dark:text-gray-400'">
                         {{ method.id.charAt(0).toUpperCase() + method.id.slice(1) }}
                       </span>
                     </div>
@@ -118,7 +118,7 @@
 
               <button 
                 type="submit"
-                class="w-full bg-primary-600 text-white py-3 rounded-xl hover:bg-primary-700 transition-colors"
+                class="w-full bg-primary-600 dark:bg-primary-500 text-white py-3 rounded-xl hover:bg-primary-700 dark:hover:bg-primary-600 transition-colors"
               >
                 {{ $t('checkout.place_order') }}
               </button>
@@ -128,29 +128,29 @@
 
         <!-- Order Summary -->
         <div class="lg:w-1/3">
-          <div class="bg-white rounded-2xl shadow-sm p-6 sticky top-4">
+          <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6 sticky top-4">
             <h3 class="text-lg font-semibold mb-4">{{ $t('checkout.order_summary') }}</h3>
             
             <!-- Cart Items -->
             <div class="space-y-4 mb-6">
               <div v-for="item in cartItems" :key="item.id" class="flex justify-between">
                 <div>
-                  <p class="font-medium">{{ item.name }}</p>
-                  <p class="text-sm text-gray-500">{{ $t('checkout.quantity') }}: {{ item.quantity }}</p>
+                  <p class="font-medium text-gray-900 dark:text-white">{{ item.name }}</p>
+                  <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('checkout.quantity') }}: {{ item.quantity }}</p>
                 </div>
-                <p class="font-medium">{{ formatPrice(item.price * item.quantity) }}</p>
+                <p class="font-medium text-gray-900 dark:text-white">{{ formatPrice(item.price * item.quantity) }}</p>
               </div>
             </div>
 
             <!-- Totals -->
             <div class="border-t pt-4 space-y-2">
               <div class="flex justify-between">
-                <span class="text-gray-600">{{ t('checkout.subtotal') }}</span>
-                <span class="font-medium">{{ formatPrice(subtotal) }}</span>
+                <span class="text-gray-600 dark:text-gray-400">{{ t('checkout.subtotal') }}</span>
+                <span class="font-medium text-gray-900 dark:text-white">{{ formatPrice(subtotal) }}</span>
               </div>
               <div class="flex justify-between">
-                <span class="text-gray-600">{{ t('checkout.shipping') }}</span>
-                <span class="font-medium">{{ shippingCost === 0 ? t('checkout.free') : formatPrice(shippingCost) }}</span>
+                <span class="text-gray-600 dark:text-gray-400">{{ t('checkout.shipping') }}</span>
+                <span class="font-medium text-gray-900 dark:text-white">{{ shippingCost === 0 ? t('checkout.free') : formatPrice(shippingCost) }}</span>
               </div>
               <div class="flex justify-between text-lg font-semibold">
                 <span>{{ t('checkout.total') }}</span>
@@ -161,7 +161,7 @@
         </div>
       </div>
     </div>
-  </div>
+  </main>
 </template>
 
 <script setup>

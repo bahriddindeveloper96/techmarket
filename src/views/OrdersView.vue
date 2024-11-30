@@ -1,16 +1,16 @@
 <template>
-  <div class="min-h-screen bg-white">
+  <div class="min-h-screen bg-white dark:bg-gray-900">
     <!-- Orders Header -->
     <div class="flex items-center justify-between mb-6">
-      <h1 class="text-2xl font-bold text-gray-900">{{ $t('orders.title') }}</h1>
+      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $t('orders.title') }}</h1>
     </div>
 
     <!-- Orders Filters -->
-    <div class="bg-white rounded-2xl p-6 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-6">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Search -->
         <div class="relative">
-          <span class="absolute inset-y-0 left-3 flex items-center text-gray-400">
+          <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-500">
             <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
             </svg>
@@ -19,7 +19,7 @@
             v-model="searchQuery"
             type="text"
             :placeholder="$t('orders.filters.search')"
-            class="w-full pl-10 pr-4 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            class="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:text-white dark:placeholder-gray-400"
           >
         </div>
 
@@ -27,7 +27,7 @@
         <div class="relative">
           <select
             v-model="statusFilter"
-            class="appearance-none pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            class="appearance-none pl-4 pr-10 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:text-white"
           >
             <option value="">{{ $t('orders.filters.status.all') }}</option>
             <option value="pending">{{ $t('orders.filters.status.pending') }}</option>
@@ -36,7 +36,7 @@
             <option value="delivered">{{ $t('orders.filters.status.delivered') }}</option>
             <option value="cancelled">{{ $t('orders.filters.status.cancelled') }}</option>
           </select>
-          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
+          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 dark:text-gray-500 pointer-events-none">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
@@ -47,14 +47,14 @@
         <div class="relative">
           <select
             v-model="periodFilter"
-            class="appearance-none pl-4 pr-10 py-2 bg-gray-50 border border-gray-200 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent"
+            class="appearance-none pl-4 pr-10 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:text-white"
           >
             <option value="">{{ $t('orders.filters.period.all') }}</option>
             <option value="today">{{ $t('orders.filters.period.today') }}</option>
             <option value="week">{{ $t('orders.filters.period.week') }}</option>
             <option value="month">{{ $t('orders.filters.period.month') }}</option>
           </select>
-          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 pointer-events-none">
+          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 dark:text-gray-500 pointer-events-none">
             <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
             </svg>
@@ -65,12 +65,12 @@
 
     <!-- Orders List -->
     <div class="space-y-4">
-      <div v-for="order in filteredOrders" :key="order.id" class="bg-gray-50 rounded-2xl p-4">
+      <div v-for="order in filteredOrders" :key="order.id" class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4">
         <!-- Order Header -->
         <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
           <div class="space-y-1">
-            <p class="text-sm text-gray-500">{{ $t('orders.order.number') }}: <span class="font-medium text-gray-900">#{{ order.number }}</span></p>
-            <p class="text-sm text-gray-500">{{ $t('orders.order.date') }}: <span class="font-medium text-gray-900">{{ formatDate(order.date) }}</span></p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.number') }}: <span class="font-medium text-gray-900 dark:text-white">#{{ order.number }}</span></p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.date') }}: <span class="font-medium text-gray-900 dark:text-white">{{ formatDate(order.date) }}</span></p>
           </div>
           <div :class="getStatusClass(order.status)" class="px-3 py-1 rounded-full text-sm font-medium">
             {{ $t(`orders.filters.status.${order.status}`) }}
@@ -79,25 +79,25 @@
 
         <!-- Order Items -->
         <div class="space-y-2">
-          <div v-for="item in order.items" :key="item.id" class="flex items-center gap-4 bg-white p-4 rounded-xl">
+          <div v-for="item in order.items" :key="item.id" class="flex items-center gap-4 bg-white dark:bg-gray-700 p-4 rounded-xl">
             <img :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-lg">
             <div class="flex-1 min-w-0">
-              <h4 class="font-medium text-gray-900 truncate">{{ item.name }}</h4>
-              <p class="text-sm text-gray-500">
+              <h4 class="font-medium text-gray-900 dark:text-white truncate">{{ item.name }}</h4>
+              <p class="text-sm text-gray-500 dark:text-gray-400">
                 {{ item.quantity }} {{ $t('orders.order.quantity') }} × {{ formatPrice(item.price) }}
               </p>
             </div>
             <div class="text-right">
-              <p class="font-medium text-gray-900">{{ formatPrice(item.price * item.quantity) }}</p>
+              <p class="font-medium text-gray-900 dark:text-white">{{ formatPrice(item.price * item.quantity) }}</p>
             </div>
           </div>
         </div>
 
         <!-- Order Footer -->
-        <div class="mt-4 pt-4 border-t border-gray-200 flex flex-wrap items-center justify-between gap-4">
+        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex flex-wrap items-center justify-between gap-4">
           <div class="space-y-1">
-            <p class="text-sm text-gray-500">{{ $t('orders.order.total') }}: <span class="font-medium text-gray-900">{{ formatPrice(order.total) }}</span></p>
-            <p class="text-sm text-gray-500">{{ $t('orders.order.payment_method') }}: <span class="font-medium text-gray-900">{{ order.paymentMethod }}</span></p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.total') }}: <span class="font-medium text-gray-900 dark:text-white">{{ formatPrice(order.total) }}</span></p>
+            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.payment_method') }}: <span class="font-medium text-gray-900 dark:text-white">{{ order.paymentMethod }}</span></p>
           </div>
           <button class="px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors">
             {{ $t('common.details') }}
@@ -108,13 +108,13 @@
 
     <!-- Empty State -->
     <div v-if="filteredOrders.length === 0" class="text-center py-12">
-      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 mb-4">
-        <svg class="w-8 h-8 text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
+        <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
         </svg>
       </div>
-      <h3 class="text-lg font-medium text-gray-900 mb-1">{{ $t('orders.empty.title') }}</h3>
-      <p class="text-gray-500">{{ $t('orders.empty.description') }}</p>
+      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-1">{{ $t('orders.empty.title') }}</h3>
+      <p class="text-gray-500 dark:text-gray-400">{{ $t('orders.empty.description') }}</p>
     </div>
   </div>
 </template>

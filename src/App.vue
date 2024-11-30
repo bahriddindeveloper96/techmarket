@@ -1,5 +1,5 @@
 <template>
-  <div class="min-h-screen flex flex-col">
+  <div class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
     <Navbar class="w-full" />
     <div class="flex-1 pb-[72px] md:pb-0">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
@@ -11,7 +11,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
@@ -59,6 +59,18 @@ const addToCart = (product) => {
 const toggleFavorite = (product) => {
   product.isFavorite = !product.isFavorite
 }
+
+onMounted(() => {
+  // Initialize theme from localStorage or system preference
+  const theme = localStorage.getItem('theme') || 
+    (window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light')
+  
+  if (theme === 'dark') {
+    document.documentElement.classList.add('dark')
+  } else {
+    document.documentElement.classList.remove('dark')
+  }
+})
 </script>
 
 <style>

@@ -1,11 +1,11 @@
 <template>
-  <div class="bg-white rounded-lg shadow-sm p-6">
+  <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm p-4">
     <!-- Header -->
     <div class="flex items-center justify-between mb-6">
-      <h2 class="text-lg font-semibold">{{ $t('category.filter.title') }}</h2>
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('category.filter.title') }}</h2>
       <button 
         @click="clearAllFilters"
-        class="text-sm text-gray-500 hover:text-gray-700"
+        class="text-sm text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-500"
       >
         {{ $t('category.filter.clear') }}
       </button>
@@ -13,7 +13,7 @@
 
     <!-- Categories -->
     <div class="mb-6">
-      <h3 class="text-sm font-medium mb-3">{{ $t('category.categories.smartphones') }}</h3>
+      <h3 class="text-sm font-medium text-gray-800 dark:text-gray-200 mb-3">{{ $t('category.categories.smartphones') }}</h3>
       <div class="space-y-2">
         <label 
           v-for="category in categories" 
@@ -24,31 +24,31 @@
             type="checkbox"
             :value="category.id"
             v-model="selectedCategories"
-            class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            class="rounded border-gray-300 dark:border-gray-600 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400"
           >
-          <span class="ml-2 text-sm text-gray-600">{{ $t(`category.categories.${category.id}`) }}</span>
+          <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">{{ $t(`category.categories.${category.id}`) }}</span>
         </label>
       </div>
     </div>
 
     <!-- Price Range -->
     <div class="mb-6">
-      <h3 class="text-sm font-medium mb-3">{{ $t('category.filter.price_range') }}</h3>
+      <h3 class="font-medium text-gray-800 dark:text-gray-200 mb-3">{{ $t('category.filter.price_range') }}</h3>
       <div class="grid grid-cols-2 gap-4">
         <div>
-          <label class="text-xs text-gray-500">{{ $t('category.filter.min_price') }}</label>
+          <label class="text-xs text-gray-500 dark:text-gray-400">{{ $t('category.filter.min_price') }}</label>
           <input
             type="number"
             v-model="priceRange.min"
-            class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            class="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-gray-900 dark:text-white focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400"
           >
         </div>
         <div>
-          <label class="text-xs text-gray-500">{{ $t('category.filter.max_price') }}</label>
+          <label class="text-xs text-gray-500 dark:text-gray-400">{{ $t('category.filter.max_price') }}</label>
           <input
             type="number"
             v-model="priceRange.max"
-            class="w-full mt-1 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+            class="w-full mt-1 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-gray-900 dark:text-white focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400"
           >
         </div>
       </div>
@@ -56,12 +56,12 @@
 
     <!-- Brands -->
     <div class="mb-6">
-      <h3 class="text-sm font-medium mb-3">{{ $t('category.filter.brand') }}</h3>
+      <h3 class="font-medium text-gray-800 dark:text-gray-200 mb-3">{{ $t('category.filter.brand') }}</h3>
       <input
         type="text"
         v-model="brandSearch"
         :placeholder="$t('category.filter.brand_search')"
-        class="w-full mb-3 px-3 py-2 border border-gray-300 rounded-md text-sm focus:ring-primary-500 focus:border-primary-500"
+        class="w-full mb-3 px-3 py-2 border border-gray-300 dark:border-gray-600 rounded-md text-sm text-gray-900 dark:text-white focus:ring-primary-500 dark:focus:ring-primary-400 focus:border-primary-500 dark:focus:border-primary-400"
       >
       <div class="space-y-2 max-h-48 overflow-y-auto">
         <label 
@@ -73,23 +73,23 @@
             type="checkbox"
             :value="brand"
             v-model="selectedBrands"
-            class="rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            class="rounded border-gray-300 dark:border-gray-600 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400"
           >
-          <span class="ml-2 text-sm text-gray-600">{{ brand }}</span>
+          <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">{{ brand }}</span>
         </label>
       </div>
     </div>
 
     <!-- Colors -->
     <div class="mb-6">
-      <h3 class="text-sm font-medium mb-3">{{ $t('category.filter.color') }}</h3>
+      <h3 class="font-medium text-gray-800 dark:text-gray-200 mb-3">{{ $t('category.filter.color') }}</h3>
       <div class="flex flex-wrap gap-2">
         <button
           v-for="color in colors"
           :key="color.value"
           @click="toggleColor(color.value)"
           class="w-8 h-8 rounded-full border-2 transition-all duration-300"
-          :class="selectedColors.includes(color.value) ? 'ring-2 ring-primary-500 ring-offset-2' : ''"
+          :class="selectedColors.includes(color.value) ? 'ring-2 ring-primary-500 dark:ring-primary-400 ring-offset-2' : ''"
           :style="{ backgroundColor: color.value }"
           :title="$t(`filters.colors.${color.name}`)"
         ></button>
@@ -98,7 +98,7 @@
 
     <!-- Rating -->
     <div class="mb-6">
-      <h3 class="font-medium text-gray-900 mb-3">{{ $t('category.filter.rating') }}</h3>
+      <h3 class="font-medium text-gray-800 dark:text-gray-200 mb-3">{{ $t('category.filter.rating') }}</h3>
       <div class="space-y-2">
         <label 
           v-for="rating in [5, 4, 3, 2, 1]" 
@@ -109,9 +109,9 @@
             type="checkbox"
             :value="rating"
             v-model="selectedRatings"
-            class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400"
           >
-          <span class="ml-2 text-sm text-gray-600">
+          <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">
             {{ rating }} {{ $t('category.filter.rating_and_up') }}
           </span>
         </label>
@@ -120,15 +120,15 @@
 
     <!-- Availability -->
     <div class="mb-6">
-      <h3 class="font-medium text-gray-900 mb-3">{{ $t('category.filter.availability') }}</h3>
+      <h3 class="font-medium text-gray-800 dark:text-gray-200 mb-3">{{ $t('category.filter.availability') }}</h3>
       <div class="space-y-2">
         <label class="flex items-center">
           <input
             type="checkbox"
             v-model="inStockOnly"
-            class="h-4 w-4 rounded border-gray-300 text-primary-600 focus:ring-primary-500"
+            class="h-4 w-4 rounded border-gray-300 dark:border-gray-600 text-primary-600 dark:text-primary-500 focus:ring-primary-500 dark:focus:ring-primary-400"
           >
-          <span class="ml-2 text-sm text-gray-600">{{ $t('category.filter.in_stock') }}</span>
+          <span class="ml-2 text-sm text-gray-600 dark:text-gray-300">{{ $t('category.filter.in_stock') }}</span>
         </label>
       </div>
     </div>
@@ -136,7 +136,7 @@
     <!-- Apply Button -->
     <button
       @click="applyFilters"
-      class="w-full bg-primary-600 text-white py-2 px-4 rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-primary-500"
+      class="w-full bg-primary-500 dark:bg-primary-600 hover:bg-primary-600 dark:hover:bg-primary-700 text-white rounded-xl transition-colors duration-300"
     >
       {{ $t('category.filter.apply') }}
     </button>
