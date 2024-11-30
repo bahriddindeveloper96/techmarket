@@ -113,7 +113,10 @@
               </div>
             </div>
 
-            <button class="w-full bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 active:scale-[0.98]">
+            <button
+              @click="checkout"
+              class="bg-blue-600 text-white px-6 py-2 rounded-lg hover:bg-blue-700 transition duration-200 w-full"
+            >
               Buyurtma berish
             </button>
           </div>
@@ -139,8 +142,11 @@
 
 <script setup>
 import { ref, computed } from 'vue'
+import { useRouter } from 'vue-router'
 import Banner from './../components/Banner.vue'
 import ProductCard from '@/components/ProductCard.vue'
+
+const router = useRouter()
 
 // Cart items
 const cartItems = ref([
@@ -292,5 +298,9 @@ const removeFromCart = (item) => {
 
 const clearCart = () => {
   cartItems.value = []
+}
+
+const checkout = () => {
+  router.push({ name: 'checkout' })
 }
 </script>

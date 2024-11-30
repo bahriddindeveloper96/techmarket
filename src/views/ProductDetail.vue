@@ -214,8 +214,11 @@
 
 <script setup>
 import { ref, computed, onMounted } from 'vue'
+import { useRouter } from 'vue-router'
 import Banner from './../components/Banner.vue'
 import ProductCard from '@/components/ProductCard.vue'
+
+const router = useRouter()
 
 const product = ref({
   id: 1,
@@ -298,6 +301,7 @@ const addToCart = () => {
     size: selectedSize.value,
     quantity: quantity.value
   })
+  router.push({ name: 'cart' })
 }
 
 // O'xshash mahsulotlar
