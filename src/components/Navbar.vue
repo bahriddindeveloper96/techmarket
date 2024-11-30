@@ -138,7 +138,11 @@
             <i class="ri-store-2-line text-2xl mb-1 text-gray-600 group-hover:text-primary-600 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 group-hover:text-primary-600 transition-colors duration-300">{{ $t('nav.home') }}</span>
           </router-link>
-          <a href="#" class="group relative flex flex-col items-center justify-center py-2">
+          <a 
+            href="#" 
+            class="group relative flex flex-col items-center justify-center py-2"
+            @click.prevent="toggleMobileMenu"
+          >
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-apps-2-line text-white text-lg"></i>
             </div>
@@ -175,17 +179,29 @@
         </div>
       </div>
     </div>
+
+    <!-- Mobile Catalog Menu -->
+    <MobileCatalogMenu 
+      v-if="isMobileMenuOpen" 
+      @close="isMobileMenuOpen = false" 
+    />
   </div>
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useI18n } from 'vue-i18n'
-import CatalogMenu from './CatalogMenu.vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
+import CatalogMenu from './CatalogMenu.vue'
+import MobileCatalogMenu from './MobileCatalogMenu.vue'
 
 const { t } = useI18n()
 const isSearchOpen = ref(false)
+const isMobileMenuOpen = ref(false)
+
+const toggleMobileMenu = () => {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
 </script>
 
 <style scoped>

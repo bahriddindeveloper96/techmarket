@@ -256,8 +256,10 @@ const messages = {
 }
 
 export default createI18n({
-  legacy: false,
-  locale: localStorage.getItem('language') || 'uz',
-  fallbackLocale: 'uz',
-  messages
+  legacy: false, 
+  locale: localStorage.getItem('language') || 'uz', 
+  fallbackLocale: 'uz', 
+  messages,
+  globalInjection: true, 
+  silentTranslationWarn: true 
 })

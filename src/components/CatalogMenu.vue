@@ -2,52 +2,106 @@
   <div class="relative group">
     <!-- Catalog Button -->
     <button
-      class="flex items-center space-x-2 px-4 py-2 bg-primary-600 text-white rounded-lg hover:bg-primary-700 transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2"
-      @click="isOpen = !isOpen"
+      class="flex items-center space-x-2 px-4 sm:px-6 py-2 sm:py-3 bg-purple-600 text-white rounded-xl hover:bg-purple-700 transition-all duration-300 focus:outline-none focus:ring-2 focus:ring-purple-500 focus:ring-offset-2 shadow-lg shadow-purple-200"
+      @click="toggleMenu"
     >
-      <i class="fas fa-bars text-lg"></i>
-      <span class="font-medium">Katalog</span>
+      <i class="ri-menu-line text-lg sm:text-xl"></i>
+      <span class="text-sm sm:text-base font-medium">{{ $t('nav.catalog') }}</span>
+      <i :class="['ri-arrow-down-s-line transition-transform', { 'rotate-180': isOpen }]"></i>
     </button>
 
     <!-- Dropdown Menu -->
     <div
       v-show="isOpen"
-      class="absolute z-50 w-64 mt-2 bg-white rounded-lg shadow-xl border border-gray-100 transition-all duration-200 transform origin-top"
-      @mouseleave="isOpen = false"
+      class="fixed top-[96px] left-1/2 -translate-x-1/2 z-50 mt-8 bg-white rounded-2xl shadow-xl border border-gray-100 w-[95%] sm:w-[90%] md:w-[95%] lg:w-[1280px] max-h-[80vh] sm:max-h-[650px] overflow-hidden"
     >
-      <div class="p-2">
-        <div
-          v-for="category in categories"
-          :key="category.id"
-          class="group/item relative"
-          @mouseenter="activeCategory = category"
-        >
-          <!-- Category Item -->
-          <a
-            :href="category.link"
-            class="flex items-center justify-between px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600"
-          >
-            <div class="flex items-center space-x-3">
-              <i :class="category.icon" class="text-gray-400 group-hover/item:text-primary-500"></i>
-              <span>{{ category.name }}</span>
-            </div>
-            <i v-if="category.subcategories" class="fas fa-chevron-right text-sm"></i>
-          </a>
-
-          <!-- Subcategories -->
+      <!-- Content -->
+      <div class="flex flex-col sm:flex-row h-full">
+        <!-- Main Categories -->
+        <div class="w-full sm:w-72 bg-gray-50 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-100 hover:scrollbar-thumb-purple-600 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none">
           <div
-            v-if="category.subcategories && activeCategory === category"
-            class="absolute left-full top-0 w-64 ml-0.5 bg-white rounded-lg shadow-lg border border-gray-100"
+            v-for="category in categories"
+            :key="category.id"
+            class="relative"
+            @mouseenter="activeCategory = category"
+            @click="handleCategoryClick(category)"
           >
-            <div class="p-2">
-              <a
-                v-for="subcategory in category.subcategories"
-                :key="subcategory.id"
-                :href="subcategory.link"
-                class="block px-4 py-2 text-sm text-gray-700 rounded-lg hover:bg-primary-50 hover:text-primary-600"
+            <div
+              class="flex items-center px-4 py-3 cursor-pointer"
+              :class="{ 'bg-white': activeCategory === category }"
+            >
+              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 mr-3">
+                <i :class="[category.icon, 'text-lg']"></i>
+              </div>
+              <span class="font-medium text-gray-700">{{ category.name }}</span>
+              <i class="ri-arrow-right-s-line ml-auto text-gray-400"></i>
+            </div>
+          </div>
+        </div>
+
+        <!-- Subcategories Panel -->
+        <div 
+          v-if="activeCategory" 
+          class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 scrollbar-track-gray-100 hover:scrollbar-thumb-purple-600 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
+        >
+          <div class="max-w-full sm:max-w-4xl">
+            <!-- Category Header -->
+            <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100">
+              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900">{{ activeCategory.name }}</h3>
+              <router-link
+                :to="activeCategory.link"
+                class="text-purple-600 hover:text-purple-700 font-medium text-sm sm:text-base"
               >
-                {{ subcategory.name }}
-              </a>
+                {{ $t('nav.see_all') }}
+              </router-link>
+            </div>
+
+            <!-- Subcategories Grid -->
+            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-x-12 sm:gap-y-8">
+              <div v-for="subcategory in activeCategory.subcategories" :key="subcategory.id">
+                <!-- Subcategory Header -->
+                <router-link
+                  :to="subcategory.link"
+                  class="block mb-3 sm:mb-4 text-base sm:text-lg font-medium text-gray-900 hover:text-purple-600"
+                >
+                  {{ subcategory.name }}
+                </router-link>
+                
+                <!-- Subcategory Items -->
+                <ul v-if="subcategory.items" class="space-y-2 sm:space-y-3">
+                  <li v-for="item in subcategory.items" :key="item.id">
+                    <router-link
+                      :to="item.link"
+                      class="text-sm sm:text-base text-gray-600 hover:text-purple-600 transition-colors"
+                    >
+                      {{ item.name }}
+                    </router-link>
+                  </li>
+                </ul>
+              </div>
+            </div>
+
+            <!-- Featured Products -->
+            <div v-if="activeCategory.featured" class="mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-gray-100">
+              <h4 class="text-base sm:text-lg font-medium text-gray-900 mb-4 sm:mb-6">{{ $t('nav.featured') }}</h4>
+              <div class="grid grid-cols-2 sm:grid-cols-3 md:grid-cols-4 gap-4 sm:gap-6">
+                <router-link
+                  v-for="product in activeCategory.featured"
+                  :key="product.id"
+                  :to="product.link"
+                  class="group block"
+                >
+                  <div class="aspect-square rounded-xl bg-gray-100 mb-2 sm:mb-3 overflow-hidden">
+                    <img
+                      :src="product.image"
+                      :alt="product.name"
+                      class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
+                    />
+                  </div>
+                  <p class="text-xs sm:text-sm text-gray-900 group-hover:text-purple-600 transition-colors line-clamp-2">{{ product.name }}</p>
+                  <p class="text-xs sm:text-sm font-medium text-purple-600 mt-1">{{ product.price }}</p>
+                </router-link>
+              </div>
             </div>
           </div>
         </div>
@@ -58,98 +112,182 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const isOpen = ref(false)
 const activeCategory = ref(null)
 
+const toggleMenu = () => {
+  isOpen.value = !isOpen.value
+  if (!isOpen.value) {
+    activeCategory.value = null
+  }
+}
+
+const handleCategoryClick = (category) => {
+  // Mobil qurilmalarda kategoriyani bosganda aktivlashtirish
+  if (window.innerWidth < 640) {
+    activeCategory.value = category
+  }
+}
+
+// Categories data
 const categories = [
   {
     id: 1,
-    name: 'Kompyuterlar',
-    icon: 'fas fa-laptop',
-    link: '#',
+    name: t('categories.electronics'),
+    icon: 'ri-computer-line',
+    link: '/category/electronics',
     subcategories: [
-      { id: 1, name: 'Noutbuklar', link: '#' },
-      { id: 2, name: 'Monobloklar', link: '#' },
-      { id: 3, name: 'Kompyuter jihozlari', link: '#' }
+      {
+        id: 1,
+        name: t('categories.computers'),
+        link: '/category/computers',
+        items: [
+          { id: 1, name: t('categories.laptops'), link: '/category/laptops' },
+          { id: 2, name: t('categories.desktops'), link: '/category/desktops' },
+          { id: 3, name: t('categories.accessories'), link: '/category/computer-accessories' }
+        ]
+      },
+      {
+        id: 2,
+        name: t('categories.phones'),
+        link: '/category/phones',
+        items: [
+          { id: 1, name: 'iPhone', link: '/category/iphone' },
+          { id: 2, name: 'Samsung', link: '/category/samsung' },
+          { id: 3, name: 'Xiaomi', link: '/category/xiaomi' }
+        ]
+      }
+    ],
+    featured: [
+      {
+        id: 1,
+        name: 'MacBook Pro 14"',
+        price: '$1,999',
+        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1671304673229',
+        link: '/product/macbook-pro-14'
+      },
+      {
+        id: 2,
+        name: 'iPhone 14 Pro',
+        price: '$999',
+        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-model-unselect-gallery-2-202209?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1660753617559',
+        link: '/product/iphone-14-pro'
+      }
     ]
   },
   {
     id: 2,
-    name: 'Smartfonlar',
-    icon: 'fas fa-mobile-alt',
-    link: '#',
+    name: t('categories.appliances'),
+    icon: 'ri-home-gear-line',
+    link: '/category/appliances',
     subcategories: [
-      { id: 1, name: 'Apple', link: '#' },
-      { id: 2, name: 'Samsung', link: '#' },
-      { id: 3, name: 'Xiaomi', link: '#' }
+      {
+        id: 1,
+        name: t('categories.kitchen'),
+        link: '/category/kitchen',
+        items: [
+          { id: 1, name: t('categories.refrigerators'), link: '/category/refrigerators' },
+          { id: 2, name: t('categories.ovens'), link: '/category/ovens' },
+          { id: 3, name: t('categories.dishwashers'), link: '/category/dishwashers' }
+        ]
+      },
+      {
+        id: 2,
+        name: t('categories.climate'),
+        link: '/category/climate',
+        items: [
+          { id: 1, name: t('categories.air_conditioners'), link: '/category/air-conditioners' },
+          { id: 2, name: t('categories.heaters'), link: '/category/heaters' },
+          { id: 3, name: t('categories.fans'), link: '/category/fans' }
+        ]
+      }
+    ],
+    featured: [
+      {
+        id: 1,
+        name: 'Samsung Neo QLED 4K',
+        price: '$1,499',
+        image: 'https://images.samsung.com/is/image/samsung/p6pim/levant/qe55qn85catxzn/gallery/levant-neo-qled-qn85c-qe55qn85catxzn-537812395?$1300_1038_PNG$',
+        link: '/product/samsung-neo-qled'
+      }
     ]
   },
   {
     id: 3,
-    name: 'Televizorlar',
-    icon: 'fas fa-tv',
-    link: '#',
+    name: t('categories.tv_audio'),
+    icon: 'ri-tv-2-line',
+    link: '/category/tv-audio',
     subcategories: [
-      { id: 1, name: 'Samsung', link: '#' },
-      { id: 2, name: 'LG', link: '#' },
-      { id: 3, name: 'Sony', link: '#' }
-    ]
-  },
-  {
-    id: 4,
-    name: 'Foto va Video',
-    icon: 'fas fa-camera',
-    link: '#',
-    subcategories: [
-      { id: 1, name: 'Fotoapparatlar', link: '#' },
-      { id: 2, name: 'Videokameralar', link: '#' },
-      { id: 3, name: 'Aksessuarlar', link: '#' }
-    ]
-  },
-  {
-    id: 5,
-    name: 'Audio Texnika',
-    icon: 'fas fa-headphones',
-    link: '#',
-    subcategories: [
-      { id: 1, name: 'Quloqchinlar', link: '#' },
-      { id: 2, name: 'Kolonkalar', link: '#' },
-      { id: 3, name: 'Mikrofonlar', link: '#' }
-    ]
-  },
-  {
-    id: 6,
-    name: 'Soatlar',
-    icon: 'fas fa-clock',
-    link: '#',
-    subcategories: [
-      { id: 1, name: 'Apple Watch', link: '#' },
-      { id: 2, name: 'Samsung Watch', link: '#' },
-      { id: 3, name: 'Fitnes Brasletlar', link: '#' }
-    ]
-  },
-  {
-    id: 7,
-    name: 'Uy Texnikasi',
-    icon: 'fas fa-home',
-    link: '#',
-    subcategories: [
-      { id: 1, name: 'Muzlatkichlar', link: '#' },
-      { id: 2, name: 'Kir Yuvish Mashinalari', link: '#' },
-      { id: 3, name: 'Konditsionerlar', link: '#' }
-    ]
-  },
-  {
-    id: 8,
-    name: 'Aksessuarlar',
-    icon: 'fas fa-microchip',
-    link: '#',
-    subcategories: [
-      { id: 1, name: 'Quvvatlagichlar', link: '#' },
-      { id: 2, name: 'G\'iloflar', link: '#' },
-      { id: 3, name: 'Xotira Kartalari', link: '#' }
+      {
+        id: 1,
+        name: t('categories.tv'),
+        link: '/category/tv',
+        items: [
+          { id: 1, name: 'Samsung', link: '/category/samsung-tv' },
+          { id: 2, name: 'LG', link: '/category/lg-tv' },
+          { id: 3, name: 'Sony', link: '/category/sony-tv' }
+        ]
+      },
+      {
+        id: 2,
+        name: t('categories.audio'),
+        link: '/category/audio',
+        items: [
+          { id: 1, name: t('categories.speakers'), link: '/category/speakers' },
+          { id: 2, name: t('categories.headphones'), link: '/category/headphones' },
+          { id: 3, name: t('categories.home_theater'), link: '/category/home-theater' }
+        ]
+      }
+    ],
+    featured: [
+      {
+        id: 1,
+        name: 'Samsung Neo QLED 4K',
+        price: '$1,499',
+        image: 'https://images.samsung.com/is/image/samsung/p6pim/levant/qe55qn85catxzn/gallery/levant-neo-qled-qn85c-qe55qn85catxzn-537812395?$1300_1038_PNG$',
+        link: '/product/samsung-neo-qled'
+      }
     ]
   }
 ]
 </script>
+
+<style scoped>
+/* Custom scrollbar styles */
+.scrollbar-thin::-webkit-scrollbar {
+  width: 6px;
+}
+
+.scrollbar-thin::-webkit-scrollbar-track {
+  @apply bg-gray-100 rounded-full;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb {
+  @apply bg-purple-500 rounded-full transition-colors duration-200;
+}
+
+.scrollbar-thin::-webkit-scrollbar-thumb:hover {
+  @apply bg-purple-600;
+}
+
+/* Hide scrollbar for Firefox */
+.scrollbar-thin {
+  scrollbar-width: thin;
+  scrollbar-color: #8B5CF6 #F3F4F6;
+}
+
+/* Hide scrollbar for IE and Edge */
+.scrollbar-thin {
+  -ms-overflow-style: none;
+}
+
+.line-clamp-2 {
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+</style>

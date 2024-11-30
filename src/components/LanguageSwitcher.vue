@@ -45,25 +45,30 @@ const currentLanguageLabel = computed(() => {
   return lang ? lang.label : "O'zbek"
 })
 
-const toggleDropdown = () => {
-  isOpen.value = !isOpen.value
-}
-
 const changeLanguage = (langCode) => {
   locale.value = langCode
   localStorage.setItem('language', langCode)
   isOpen.value = false
+  window.location.reload() // Sahifani qayta yuklash
 }
 
-// Close dropdown when clicking outside
+const toggleDropdown = () => {
+  isOpen.value = !isOpen.value
+}
+
 const handleClickOutside = (event) => {
-  if (isOpen.value && !event.target.closest('.relative')) {
+  if (!event.target.closest('.relative')) {
     isOpen.value = false
   }
 }
 
 onMounted(() => {
   document.addEventListener('click', handleClickOutside)
+  // Saqlangan tilni yuklash
+  const savedLanguage = localStorage.getItem('language')
+  if (savedLanguage) {
+    locale.value = savedLanguage
+  }
 })
 
 onUnmounted(() => {
