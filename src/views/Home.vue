@@ -79,107 +79,158 @@ const categories = ref([
 const popularProducts = ref([
   {
     id: 1,
-    name: 'Apple iPhone 14 Pro 256GB Space Black',
-    price: 15_000_000,
-    oldPrice: 16_500_000,
-    image: 'https://picsum.photos/400?random=1',
+    name: 'iPhone 13 Pro Max',
+    price: 13_999_000,
+    oldPrice: 15_999_000,
     rating: 4.8,
     reviews: 245,
-    isFavorite: false
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=2',
+      'https://picsum.photos/400/400?random=3'
+    ]
   },
   {
     id: 2,
-    name: 'Samsung Galaxy S23 Ultra 512GB Black',
-    price: 13_500_000,
-    oldPrice: 14_800_000,
-    image: 'https://picsum.photos/400?random=2',
+    name: 'Samsung Galaxy S21 Ultra',
+    price: 12_999_000,
+    oldPrice: 14_499_000,
     rating: 4.7,
     reviews: 189,
-    isFavorite: false
-  },
-  {
-    id: 3,
-    name: 'MacBook Pro 14" M2 Pro 512GB Space Gray',
-    price: 25_000_000,
-    oldPrice: 27_000_000,
-    image: 'https://picsum.photos/400?random=3',
-    rating: 4.9,
-    reviews: 156,
-    isFavorite: false
-  },
-  {
-    id: 4,
-    name: 'Sony PlayStation 5 Digital Edition',
-    price: 7_500_000,
-    oldPrice: 8_200_000,
-    image: 'https://picsum.photos/400?random=4',
-    rating: 4.8,
-    reviews: 312,
-    isFavorite: false
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=4',
+      'https://picsum.photos/400/400?random=5',
+      'https://picsum.photos/400/400?random=6'
+    ]
   },
   {
     id: 5,
-    name: 'Apple Watch Series 8 45mm',
-    price: 5_800_000,
-    oldPrice: 6_500_000,
-    image: 'https://picsum.photos/400?random=5',
-    rating: 4.7,
-    reviews: 178,
-    isFavorite: false
+    name: 'MacBook Pro 16"',
+    price: 15_999_000,
+    oldPrice: null,
+    rating: 5.0,
+    reviews: 87,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=8',
+      'https://picsum.photos/400/400?random=7'
+    ]
+  },
+  {
+    id: 6,
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
+  },
+  {
+    id: 8,
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
   }
 ])
 
 const newProducts = ref([
   {
+    id: 3,
+    name: 'MacBook Pro 14"',
+    price: 18_999_000,
+    oldPrice: null,
+    rating: 5.0,
+    reviews: 87,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=7',
+      'https://picsum.photos/400/400?random=8',
+      'https://picsum.photos/400/400?random=9'
+    ]
+  },
+  {
+    id: 4,
+    name: 'iPad Pro 12.9"',
+    price: 11_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=10',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=12'
+    ]
+  },
+  {
+    id: 5,
+    name: 'MacBook Pro 16"',
+    price: 15_999_000,
+    oldPrice: null,
+    rating: 5.0,
+    reviews: 87,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=8',
+      'https://picsum.photos/400/400?random=7'
+    ]
+  },
+  {
     id: 6,
-    name: 'Apple AirPods Pro 2nd Generation',
-    price: 3_200_000,
-    oldPrice: 3_500_000,
-    image: 'https://picsum.photos/400?random=6',
-    rating: 4.8,
-    reviews: 134,
-    isFavorite: false
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
   },
   {
     id: 7,
-    name: 'Samsung Galaxy Tab S9 Ultra 256GB',
-    price: 12_500_000,
-    oldPrice: 13_800_000,
-    image: 'https://picsum.photos/400?random=7',
-    rating: 4.6,
-    reviews: 89,
-    isFavorite: false
-  },
-  {
-    id: 8,
-    name: 'DJI Mini 3 Pro Drone',
-    price: 8_900_000,
-    oldPrice: 9_500_000,
-    image: 'https://picsum.photos/400?random=8',
-    rating: 4.7,
-    reviews: 67,
-    isFavorite: false
-  },
-  {
-    id: 9,
-    name: 'Sony WH-1000XM5 Wireless Headphones',
-    price: 4_800_000,
-    oldPrice: 5_200_000,
-    image: 'https://picsum.photos/400?random=9',
-    rating: 4.8,
-    reviews: 145,
-    isFavorite: false
-  },
-  {
-    id: 10,
-    name: 'GoPro HERO11 Black',
-    price: 6_300_000,
-    oldPrice: 6_800_000,
-    image: 'https://picsum.photos/400?random=10',
-    rating: 4.7,
-    reviews: 92,
-    isFavorite: false
+    name: 'MacBook Pro 16"',
+    price: 15_999_000,
+    oldPrice: null,
+    rating: 5.0,
+    reviews: 87,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=8',
+      'https://picsum.photos/400/400?random=7'
+    ]
   }
+  
 ])
 
 // Methods

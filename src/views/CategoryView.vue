@@ -112,45 +112,80 @@ const category = ref({
 })
 
 const products = ref([
-  {
+{
     id: 1,
     name: 'iPhone 13 Pro Max',
-    price: 12000000,
-    originalPrice: 13000000,
-    image: 'https://picsum.photos/400/500',
-    discount: true,
+    price: 13_999_000,
+    oldPrice: 15_999_000,
+    rating: 4.8,
+    reviews: 245,
+    isFavorite: false,
     installment: true,
-    isFavorite: false
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=2',
+      'https://picsum.photos/400/400?random=3'
+    ]
   },
   {
     id: 2,
     name: 'Samsung Galaxy S21 Ultra',
-    price: 11000000,
-    originalPrice: 12000000,
-    image: 'https://picsum.photos/300/300',
-    discount: true,
+    price: 12_999_000,
+    oldPrice: 14_499_000,
+    rating: 4.7,
+    reviews: 189,
+    isFavorite: false,
     installment: true,
-    isFavorite: false
+    images: [
+      'https://picsum.photos/400/400?random=4',
+      'https://picsum.photos/400/400?random=5',
+      'https://picsum.photos/400/400?random=6'
+    ]
   },
   {
-    id: 3,
-    name: 'Xiaomi Mi 11',
-    price: 8000000,
-    originalPrice: 9000000,
-    image: 'https://picsum.photos/300/300',
-    discount: true,
+    id: 5,
+    name: 'MacBook Pro 16"',
+    price: 15_999_000,
+    oldPrice: null,
+    rating: 5.0,
+    reviews: 87,
+    isFavorite: false,
     installment: true,
-    isFavorite: false
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=8',
+      'https://picsum.photos/400/400?random=7'
+    ]
   },
   {
-    id: 4,
-    name: 'Huawei P40 Pro',
-    price: 9000000,
-    originalPrice: 10000000,
-    image: 'https://picsum.photos/300/300',
-    discount: true,
+    id: 6,
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
     installment: true,
-    isFavorite: false
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
+  },
+  {
+    id: 8,
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
   }
 ])
 

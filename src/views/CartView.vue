@@ -168,35 +168,80 @@ const cartItems = ref([
 
 // Similar products
 const similarProducts = ref([
-  {
-    id: 3,
-    name: 'Google Pixel 8 Pro 256GB',
-    price: 12500000,
-    oldPrice: 13800000,
-    image: 'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
-    rating: 4.7,
-    reviews: 156,
-    isFavorite: false
+{
+    id: 1,
+    name: 'iPhone 13 Pro Max',
+    price: 13_999_000,
+    oldPrice: 15_999_000,
+    rating: 4.8,
+    reviews: 245,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=2',
+      'https://picsum.photos/400/400?random=3'
+    ]
   },
   {
-    id: 4,
-    name: 'Xiaomi 13T Pro 512GB',
-    price: 9999000,
-    oldPrice: 11200000,
-    image: 'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg',
-    rating: 4.5,
-    reviews: 98,
-    isFavorite: false
+    id: 2,
+    name: 'Samsung Galaxy S21 Ultra',
+    price: 12_999_000,
+    oldPrice: 14_499_000,
+    rating: 4.7,
+    reviews: 189,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=4',
+      'https://picsum.photos/400/400?random=5',
+      'https://picsum.photos/400/400?random=6'
+    ]
   },
   {
     id: 5,
-    name: 'OnePlus 11 256GB',
-    price: 11500000,
-    oldPrice: 12800000,
-    image: 'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg',
-    rating: 4.6,
-    reviews: 145,
-    isFavorite: false
+    name: 'MacBook Pro 16"',
+    price: 15_999_000,
+    oldPrice: null,
+    rating: 5.0,
+    reviews: 87,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=1',
+      'https://picsum.photos/400/400?random=8',
+      'https://picsum.photos/400/400?random=7'
+    ]
+  },
+  {
+    id: 6,
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
+  },
+  {
+    id: 8,
+    name: 'iPad Pro 10.9"',
+    price: 10_999_000,
+    oldPrice: 13_499_000,
+    rating: 4.9,
+    reviews: 156,
+    isFavorite: false,
+    installment: true,
+    images: [
+      'https://picsum.photos/400/400?random=15',
+      'https://picsum.photos/400/400?random=11',
+      'https://picsum.photos/400/400?random=14'
+    ]
   }
 ])
 

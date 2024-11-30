@@ -19,34 +19,38 @@
       </i>
     </button>
 
-    <!-- Quick View Button -->
-    <div class="absolute inset-0 flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity duration-300 z-20">
-      <router-link 
-        :to="'/product/' + product.id"
-        class="bg-white/90 backdrop-blur-sm text-gray-900 px-4 py-2 rounded-full
-               shadow-lg hover:shadow-xl transition-all duration-300
-               transform translate-y-4 group-hover:translate-y-0"
-      >
-        <i class="fas fa-eye mr-2"></i>
-        Batafsil ko'rish
-      </router-link>
-    </div>
-
     <!-- Product Image -->
-    <div class="aspect-square overflow-hidden bg-gray-50">
-      <router-link :to="'/product/' + product.id">
-        <img 
-          :src="product.image" 
-          :alt="product.name"
-          class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500"
-        />
+    <div class="aspect-square overflow-hidden bg-gray-50 relative">
+      <router-link :to="{ name: 'product', params: { id: product.id }}">
+        <swiper
+          :modules="[SwiperAutoplay, SwiperPagination]"
+          :autoplay="{
+            delay: 3000,
+            disableOnInteraction: false
+          }"
+          :pagination="{
+            clickable: true,
+            el: '.swiper-pagination'
+          }"
+          :loop="true"
+          class="h-full product-swiper"
+        >
+          <swiper-slide v-for="(image, index) in product.images" :key="index" class="h-full">
+            <img 
+              :src="image" 
+              :alt="product.name + ' ' + (index + 1)"
+              class="w-full h-full object-contain transform group-hover:scale-105 transition-transform duration-500"
+            />
+          </swiper-slide>
+          <div class="swiper-pagination"></div>
+        </swiper>
       </router-link>
     </div>
 
     <!-- Product Info -->
     <div class="p-4">
       <!-- Title -->
-      <router-link :to="'/product/' + product.id" class="block group-hover:text-primary-600 transition-colors duration-300">
+      <router-link :to="{ name: 'product', params: { id: product.id }}" class="block group-hover:text-primary-600 transition-colors duration-300">
         <h3 class="font-medium text-gray-900 text-sm sm:text-base line-clamp-2 mb-2">
           {{ product.name }}
         </h3>
@@ -80,7 +84,7 @@
             @click="addToCartAndNavigate"
             class="p-2 text-primary-600 hover:text-primary-700 hover:bg-primary-50 rounded-full transition-colors duration-300"
           >
-            <i class="fas fa-shopping-cart"></i>
+            <i class="fas fa-shopping-cart text-lg"></i>
           </button>
         </div>
       </div>
@@ -97,40 +101,63 @@
 <script setup>
 import { defineProps } from 'vue'
 import { useRouter } from 'vue-router'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Pagination } from 'swiper/modules'
+
+// Import Swiper styles
+import 'swiper/css'
+import 'swiper/css/pagination'
+import 'swiper/css/autoplay'
 
 const router = useRouter()
 const props = defineProps({
   product: {
     type: Object,
-    required: true
+    required: true,
+    default: () => ({
+      id: '',
+      name: '',
+      price: 0,
+      oldPrice: null,
+      rating: 0,
+      reviews: 0,
+      isFavorite: false,
+      installment: false,
+      images: [] // array of image URLs
+    })
   }
 })
 
-// Methods
+// Swiper modules
+const SwiperAutoplay = Autoplay
+const SwiperPagination = Pagination
+
+// Format price with thousand separators
 const formatPrice = (price) => {
   return price.toString().replace(/\B(?=(\d{3})+(?!\d))/g, " ")
 }
 
+// Calculate discount percentage
 const calculateDiscount = (price, oldPrice) => {
   return Math.round(((oldPrice - price) / oldPrice) * 100)
 }
 
+// Calculate monthly installment payment
 const calculateMonthlyPayment = (price) => {
   return Math.round(price / 12)
 }
 
+// Toggle favorite status
 const toggleFavorite = (event) => {
-  event.preventDefault()
-  props.product.isFavorite = !props.product.isFavorite
+  event.stopPropagation()
+  // Add your favorite toggle logic here
 }
 
+// Add to cart and navigate to cart view
 const addToCartAndNavigate = (event) => {
-  event.preventDefault()
   event.stopPropagation()
-  // Add to cart logic here
-  console.log('Adding to cart:', props.product)
-  // Navigate to cart page
-  router.push('/cart')
+  // Add your cart logic here
+  router.push({ name: 'cart' })
 }
 </script>
 
@@ -140,5 +167,46 @@ const addToCartAndNavigate = (event) => {
   -webkit-line-clamp: 2;
   -webkit-box-orient: vertical;
   overflow: hidden;
+}
+
+.product-swiper {
+  position: relative;
+  height: 100%;
+  width: 100%;
+}
+
+.product-swiper .swiper-slide {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+  width: 100%;
+}
+
+.product-swiper img {
+  width: 100%;
+  height: 100%;
+  object-fit: contain;
+}
+
+.product-swiper .swiper-pagination {
+  position: absolute;
+  top: 70% !important;
+  left: 0;
+  right: 0;
+  z-index: 10;
+}
+
+.product-swiper .swiper-pagination-bullet {
+  width: 8px;
+  height: 8px;
+  background: #000;
+  opacity: 0.3;
+  margin: 0 4px;
+}
+
+.product-swiper .swiper-pagination-bullet-active {
+  background: #000;
+  opacity: 0.8;
 }
 </style>
