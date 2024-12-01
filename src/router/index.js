@@ -8,6 +8,7 @@ import Profile from '../components/Profile.vue'
 import Favorites from '../components/Favorites.vue'
 import OrdersView from '../views/OrdersView.vue'
 import Settings from '../components/Settings.vue'
+import PersonalInfo from '@/components/PersonalInfo.vue'
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
@@ -51,6 +52,12 @@ const router = createRouter({
       path: '/orders',
       name: 'orders',
       component: OrdersView
+    },
+    {
+      path: '/profile/personal',
+      name: 'personal',
+      name: 'personal',
+      component: PersonalInfo
     },
     {
       path: '/settings',
