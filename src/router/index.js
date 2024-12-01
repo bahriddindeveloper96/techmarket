@@ -54,9 +54,9 @@ const router = createRouter({
       component: OrdersView
     },
     {
-      path: '/profile/personal',
-      name: 'personal',
-      name: 'personal',
+      path: '/profile/personal-info',
+      name: 'personal-info',
+      
       component: PersonalInfo
     },
     {
