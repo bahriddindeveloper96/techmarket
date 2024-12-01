@@ -88,99 +88,11 @@
             <div v-else-if="activeTab === 'settings'">
               <Settings />
             </div>
+            <div v-else-if="activeTab === 'personal'">
+              <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" />
+            </div>
             <div v-else>
-              <h2 class="text-2xl font-bold text-gray-800 dark:text-white mb-6">{{ $t('profile.personal_info') }}</h2>
               
-              <!-- Form Grid -->
-              <div class="grid grid-cols-2 gap-6">
-                <!-- First Name -->
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.first_name') }}</label>
-                  <input 
-                    v-model="userData.firstName"
-                    type="text" 
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    :placeholder="$t('profile.placeholders.first_name')" 
-                  />
-                </div>
-
-                <!-- Last Name -->
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.last_name') }}</label>
-                  <input 
-                    v-model="userData.lastName"
-                    type="text" 
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    :placeholder="$t('profile.placeholders.last_name')" 
-                  />
-                </div>
-
-                <!-- Email -->
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.email') }}</label>
-                  <input 
-                    v-model="userData.email"
-                    type="email" 
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    :placeholder="$t('profile.placeholders.email')" 
-                  />
-                </div>
-
-                <!-- Phone -->
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.phone') }}</label>
-                  <input 
-                    v-model="userData.phone"
-                    type="tel" 
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    :placeholder="$t('profile.placeholders.phone')" 
-                  />
-                </div>
-
-                <!-- Birthday -->
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.birthday') }}</label>
-                  <input 
-                    v-model="userData.birthday"
-                    type="date" 
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                  />
-                </div>
-
-                <!-- Gender -->
-                <div class="space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.gender') }}</label>
-                  <select 
-                    v-model="userData.gender"
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
-                  >
-                    <option value="">{{ $t('profile.select') }}</option>
-                    <option value="male">{{ $t('profile.male') }}</option>
-                    <option value="female">{{ $t('profile.female') }}</option>
-                  </select>
-                </div>
-
-                <!-- Address -->
-                <div class="col-span-2 space-y-2">
-                  <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.address') }}</label>
-                  <textarea 
-                    v-model="userData.address"
-                    class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
-                    rows="3" 
-                    :placeholder="$t('profile.placeholders.address')"
-                  ></textarea>
-                </div>
-
-                <!-- Save Button -->
-                <div class="col-span-2 flex justify-end">
-                  <button 
-                    @click="saveUserData"
-                    class="px-6 py-2 bg-primary-600 dark:bg-primary-900 text-white rounded-xl hover:bg-primary-700 dark:hover:bg-primary-800 transition-colors"
-                  >
-                    {{ $t('profile.save') }}
-                  </button>
-                </div>
-              </div>
             </div>
           </div>
         </div>
@@ -193,15 +105,25 @@
             <div class="w-16 h-16 rounded-full overflow-hidden">
               <img src="https://ui-avatars.com/api/?name=John+Doe&background=6466f1&color=fff" alt="Profile" class="w-full h-full object-cover">
             </div>
-            <div>
-              <button @click="activeTab = 'personal'" class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('profile.personal_info') }}</button>
+            <div class="flex-1">
+              <div class="flex items-center justify-between">
+                <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('profile.personal_info') }}</h3>
+                <button @click="activeTab = 'personal'" class="p-2 text-gray-400 hover:text-primary-500 transition-colors">
+                  <i class="fas fa-edit text-xl"></i>
+                </button>
+              </div>
               <p class="text-sm text-gray-500 dark:text-gray-400">+998 90 123 45 67</p>
             </div>
           </div>
         </div>
 
+        <!-- Show PersonalInfo component when activeTab is 'personal' -->
+        <div v-if="activeTab === 'personal'" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+          <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" />
+        </div>
+
         <!-- Menu Items -->
-        <div class="space-y-4">
+        <div v-else class="space-y-4">
           <!-- Orders -->
           <router-link to="/orders" class="block bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
             <div class="p-4 flex items-center">
@@ -266,6 +188,7 @@ import { ref } from 'vue'
 import Banner from './../components/Banner.vue'
 import OrdersView from './../views/OrdersView.vue'
 import Settings from './../components/Settings.vue'
+import PersonalInfo from './../components/PersonalInfo.vue'
 
 // State
 const activeTab = ref('orders')
