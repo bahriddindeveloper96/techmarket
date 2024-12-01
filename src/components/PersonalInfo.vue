@@ -119,7 +119,7 @@ import { ref } from 'vue';
 
 const emit = defineEmits(['update:active-tab']);
 
-defineProps({
+const props = defineProps({
   activeTab: {
     type: String,
     required: true

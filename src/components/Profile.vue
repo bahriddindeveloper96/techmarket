@@ -20,12 +20,12 @@
                 <img src="https://ui-avatars.com/api/?name=John+Doe&background=6466f1&color=fff" alt="Profile" class="w-full h-full object-cover">
               </div>
               <div class="text-center">
-                <button @click="activeTab = 'personal'" class="text-lg font-semibold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400">{{ $t('profile.personal_info') }}</button>
+                <button @click="handleTabChange('personal')" class="text-lg font-semibold text-gray-900 dark:text-white hover:text-primary-600 dark:hover:text-primary-400">{{ $t('profile.personal_info') }}</button>
                 <p class="text-sm text-gray-500 dark:text-gray-400">+998 90 123 45 67</p>
               </div>
               <div class="w-full pt-4 border-t dark:border-gray-700">
                 <nav class="space-y-2">
-                  <button @click="activeTab = 'personal'" 
+                  <button @click="handleTabChange('personal')" 
                     :class="[
                       'w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl transition-colors',
                       activeTab === 'personal' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400' : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
@@ -36,7 +36,7 @@
                     <span class="font-medium">{{ $t('profile.personal_info') }}</span>
                   </button>
 
-                  <button @click="activeTab = 'orders'"
+                  <button @click="handleTabChange('orders')"
                     :class="[
                       'w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl transition-colors',
                       activeTab === 'orders' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400' : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
@@ -54,7 +54,7 @@
                     <span>{{ $t('profile.favorites') }}</span>
                   </a>
 
-                  <button @click="activeTab = 'settings'" 
+                  <button @click="handleTabChange('settings')" 
                     :class="[
                       'w-full flex items-center space-x-3 px-4 py-2.5 rounded-xl transition-colors',
                       activeTab === 'settings' ? 'bg-primary-50 dark:bg-primary-900/50 text-primary-600 dark:text-primary-400' : 'hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300'
@@ -108,7 +108,7 @@
             <div class="flex-1">
               <div class="flex items-center justify-between">
                 <h3 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('profile.personal_info') }}</h3>
-                <button @click="activeTab = 'personal'" class="p-2 text-gray-400 hover:text-primary-500 transition-colors">
+                <button @click="handleTabChange('personal')" class="p-2 text-gray-400 hover:text-primary-500 transition-colors">
                   <i class="fas fa-edit text-xl"></i>
                 </button>
               </div>
@@ -192,95 +192,12 @@ import Banner from '../components/Banner.vue';
 
 // State
 const activeTab = ref('home');
-const searchQuery = ref('')
-const statusFilter = ref('')
-const dateFilter = ref('all')
-const userData = ref({
-  firstName: '',
-  lastName: '',
-  email: '',
-  phone: '',
-  birthday: '',
-  gender: '',
-  address: ''
-})
+const searchQuery = ref('');
+const statusFilter = ref('');
+const dateFilter = ref('all');
 
-// Mock data
-const orders = ref([
-  {
-    id: 1,
-    number: '1234',
-    date: '2024-01-15',
-    status: 'processing',
-    total: 2500000,
-    paymentMethod: 'Click',
-    items: [
-      {
-        id: 1,
-        name: 'iPhone 13 Pro',
-        quantity: 1,
-        price: 1500000,
-        image: '/images/products/iphone.jpg'
-      },
-      {
-        id: 2,
-        name: 'AirPods Pro',
-        quantity: 1,
-        price: 1000000,
-        image: '/images/products/airpods.jpg'
-      }
-    ]
-  },
-  {
-    id: 2,
-    number: '1235',
-    date: '2024-01-14',
-    status: 'delivered',
-    total: 3500000,
-    paymentMethod: 'Payme',
-    items: [
-      {
-        id: 3,
-        name: 'MacBook Air M2',
-        quantity: 1,
-        price: 3500000,
-        image: '/images/products/macbook.jpg'
-      }
-    ]
-  }
-])
-
-// Computed
-const filteredOrders = ref([])
-
-// Utility functions
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString('uz-UZ', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat('uz-UZ', {
-    style: 'currency',
-    currency: 'UZS'
-  }).format(price)
-}
-
-const getStatusClass = (status) => {
-  const classes = {
-    pending: 'bg-yellow-50 dark:bg-yellow-900/50 text-yellow-700 dark:text-yellow-400',
-    processing: 'bg-blue-50 dark:bg-blue-900/50 text-blue-700 dark:text-blue-400',
-    shipped: 'bg-purple-50 dark:bg-purple-900/50 text-purple-700 dark:text-purple-400',
-    delivered: 'bg-green-50 dark:bg-green-900/50 text-green-700 dark:text-green-400',
-    cancelled: 'bg-red-50 dark:bg-red-900/50 text-red-700 dark:text-red-400'
-  }
-  return classes[status] || 'bg-gray-50 dark:bg-gray-700 text-gray-700 dark:text-gray-300'
-}
-
-const saveUserData = () => {
-  console.log(userData.value)
-}
+// Methods
+const handleTabChange = (tab) => {
+  activeTab.value = tab;
+};
 </script>
