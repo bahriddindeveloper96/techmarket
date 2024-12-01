@@ -8,13 +8,13 @@
         </router-link>
         <h1 class="text-xl font-semibold text-gray-900 dark:text-white">{{ $t('settings.title') }}</h1>
       </div>
-      <LanguageSwitcher class="mobile-language-switcher" />
+      
     </div>
 
     <!-- Desktop Header -->
     <div class="hidden sm:flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $t('settings.title') }}</h2>
-      <LanguageSwitcher />
+     
     </div>
 
     <!-- Settings Sections -->
@@ -29,11 +29,12 @@
               <h4 class="font-medium text-gray-800 dark:text-white">{{ $t('settings.account.language.title') }}</h4>
               <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.account.language.description') }}</p>
             </div>
-            <select v-model="settings.language" class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
+            <LanguageSwitcher class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" />
+            <!-- <select v-model="settings.language" class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
               <option value="uz">O'zbek</option>
               <option value="ru">Русский</option>
               <option value="en">English</option>
-            </select>
+            </select> -->
           </div>
 
           <!-- Theme -->
