@@ -184,14 +184,14 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
-import Banner from './../components/Banner.vue'
-import OrdersView from './../views/OrdersView.vue'
-import Settings from './../components/Settings.vue'
-import PersonalInfo from './../components/PersonalInfo.vue'
+import { ref } from 'vue';
+import Settings from './Settings.vue';
+import PersonalInfo from './PersonalInfo.vue';
+import OrdersView from '../views/OrdersView.vue';
+import Banner from '../components/Banner.vue';
 
 // State
-const activeTab = ref('orders')
+const activeTab = ref('home');
 const searchQuery = ref('')
 const statusFilter = ref('')
 const dateFilter = ref('all')

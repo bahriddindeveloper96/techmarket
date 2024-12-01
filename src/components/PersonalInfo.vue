@@ -117,14 +117,14 @@
 <script setup>
 import { ref } from 'vue';
 
+const emit = defineEmits(['update:active-tab']);
+
 defineProps({
   activeTab: {
     type: String,
     required: true
   }
 });
-
-defineEmits(['update:active-tab']);
 
 const userData = ref({
   firstName: '',
