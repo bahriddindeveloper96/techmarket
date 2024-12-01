@@ -7,8 +7,8 @@
     <!-- Popular Products -->
     <div class="mb-12">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Ommabop mahsulotlar</h2>
-        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
+        <h2 class="text-2xl font-bold">{{ $t('home.popular_products') }}</h2>
+        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">{{ $t('home.view_all') }}</a>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ProductCard 
@@ -22,8 +22,8 @@
     <!-- New Products -->
     <div class="mb-12">
       <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">Yangi mahsulotlar</h2>
-        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">Barchasini ko'rish</a>
+        <h2 class="text-2xl font-bold">{{ $t('home.new_products') }}</h2>
+        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">{{ $t('home.view_all') }}</a>
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ProductCard 
@@ -38,40 +38,43 @@
 
 <script setup>
 import { ref } from 'vue'
+import { useI18n } from 'vue-i18n'
 import Banner from './../components/Banner.vue'
 import CategoryCard from './../components/CategoryCard.vue'
 import ProductCard from './../components/ProductCard.vue'
+
+const { t } = useI18n()
 
 // Sample data
 const categories = ref([
   {
     id: 1,
-    name: 'Elektronika',
+    name: t('categories.electronics'),
     image: 'https://picsum.photos/200?random=1'
   },
   {
     id: 2,
-    name: 'Maishiy texnika',
+    name: t('categories.appliances'),
     image: 'https://picsum.photos/200?random=2'
   },
   {
     id: 3,
-    name: 'Kiyimlar',
+    name: t('categories.clothing'),
     image: 'https://picsum.photos/200?random=3'
   },
   {
     id: 4,
-    name: 'Poyabzallar',
+    name: t('categories.footwear'),
     image: 'https://picsum.photos/200?random=4'
   },
   {
     id: 5,
-    name: 'Aksessuarlar',
+    name: t('categories.accessories'),
     image: 'https://picsum.photos/200?random=5'
   },
   {
     id: 6,
-    name: 'Go\'zallik',
+    name: t('categories.beauty'),
     image: 'https://picsum.photos/200?random=6'
   }
 ])

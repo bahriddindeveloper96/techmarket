@@ -66,13 +66,13 @@
                     <span class="font-medium">{{ $t('profile.settings') }}</span>
                   </button>
 
-                  <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors">
+                  <!-- <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors">
                     <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M10.325 4.317c.426-1.756 2.924-1.756 3.35 0a1.724 1.724 0 002.573 1.066c1.543-.94 3.31.826 2.37 2.37a1.724 1.724 0 001.065 2.572c1.756.426 1.756 2.924 0 3.35a1.724 1.724 0 00-1.066 2.573c.94 1.543-.826 3.31-2.37 2.37a1.724 1.724 0 00-2.572 1.065c-.426 1.756-2.924 1.756-3.35 0a1.724 1.724 0 00-2.573-1.066c-1.543.94-3.31-.826-2.37-2.37a1.724 1.724 0 00-1.065-2.572c-1.756-.426-1.756-2.924 0-3.35a1.724 1.724 0 001.066-2.573c-.94-1.543.826-3.31 2.37-2.37.996.608 2.296.07 2.572-1.065z" />
                       <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 12a3 3 0 11-6 0 3 3 0 016 0z" />
                     </svg>
                     <span>{{ $t('profile.settings') }}</span>
-                  </a>
+                  </a> -->
                 </nav>
               </div>
             </div>
@@ -89,7 +89,8 @@
               <Settings />
             </div>
             <div v-else-if="activeTab === 'personal'">
-              <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" />
+              <!-- <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" /> -->
+              <PersonalInfo />
             </div>
             <div v-else>
               
@@ -120,6 +121,7 @@
         <!-- Show PersonalInfo component when activeTab is 'personal' -->
         <div v-if="activeTab === 'personal'" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
           <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" />
+          
         </div>
 
         <!-- Menu Items -->
@@ -135,7 +137,7 @@
             </div>
           </router-link>
 
-          <!-- Favorites -->
+          <!-- Favorites
           <a href="#" class="block bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
             <div class="p-4 flex items-center">
               <div class="w-10 h-10 rounded-xl bg-primary-50 dark:bg-primary-900/50 flex items-center justify-center text-primary-600 dark:text-primary-400">
@@ -144,7 +146,7 @@
               <span class="ml-4 text-gray-900 dark:text-white font-medium">{{ $t('profile.favorites') }}</span>
               <i class="ri-arrow-right-s-line text-xl text-gray-400 dark:text-gray-500 ml-auto"></i>
             </div>
-          </a>
+          </a> -->
 
           <!-- Settings -->
           <router-link to="/settings" class="block bg-white dark:bg-gray-800 rounded-2xl shadow-sm">

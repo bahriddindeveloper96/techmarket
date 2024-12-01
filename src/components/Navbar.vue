@@ -116,6 +116,18 @@
             <i class="ri-flashlight-line"></i>
             <span>{{ $t('nav.new') }}</span>
           </a>
+          <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
+            <i class="ri-flashlight-line"></i>
+            <span>{{ $t('nav.new') }}</span>
+          </a>
+          <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
+            <i class="ri-flashlight-line"></i>
+            <span>{{ $t('nav.new') }}</span>
+          </a>
+          <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
+            <i class="ri-flashlight-line"></i>
+            <span>{{ $t('nav.new') }}</span>
+          </a>
         </nav>
       </div>
     </div>

@@ -33,6 +33,8 @@ const messages = {
       orders: 'My Orders',
       favorites: 'Favorites',
       settings: 'Settings',
+      help: 'Help Center',
+      logout: 'Log Out',
       first_name: 'First Name',
       last_name: 'Last Name',
       email: 'Email',
@@ -188,7 +190,19 @@ const messages = {
       },
       copyright: ' 2024 TechMarket. All rights reserved.'
     },
-    
+    home: {
+      popular_products: 'Popular Products',
+      new_products: 'New Products',
+      view_all: 'View All'
+    },
+    categories: {
+      electronics: 'Electronics',
+      appliances: 'Home Appliances',
+      clothing: 'Clothing',
+      footwear: 'Footwear',
+      accessories: 'Accessories',
+      beauty: 'Beauty'
+    },
     category: {
       title: 'Categories',
       filter: {
@@ -459,6 +473,8 @@ const messages = {
       orders: 'Мои заказы',
       favorites: 'Избранное',
       settings: 'Настройки',
+      help: 'Центр помощи',
+      logout: 'Выйти',
       first_name: 'Имя',
       last_name: 'Фамилия',
       email: 'Email',
@@ -613,6 +629,19 @@ const messages = {
         success: 'Спасибо за подписку!'
       },
       copyright: ' 2024 TechMarket. Все права защищены.'
+    },
+    home: {
+      popular_products: 'Популярные товары',
+      new_products: 'Новые товары',
+      view_all: 'Смотреть все'
+    },
+    categories: {
+      electronics: 'Электроника',
+      appliances: 'Бытовая техника',
+      clothing: 'Одежда',
+      footwear: 'Обувь',
+      accessories: 'Аксессуары',
+      beauty: 'Красота'
     },
     category: {
       title: 'Категории',
@@ -884,6 +913,8 @@ const messages = {
       orders: 'Mening buyurtmalarim',
       favorites: 'Sevimlilar',
       settings: 'Sozlamalar',
+      help: 'Yordam markazi',
+      logout: 'Chiqish',
       first_name: 'Ism',
       last_name: 'Familiya',
       email: 'Email',
@@ -1038,6 +1069,19 @@ const messages = {
         success: 'Obuna bo\'lganingiz uchun rahmat!'
       },
       copyright: ' 2024 TechMarket. Barcha huquqlar himoyalangan.'
+    },
+    home: {
+      popular_products: 'Ommabop mahsulotlar',
+      new_products: 'Yangi mahsulotlar',
+      view_all: 'Barchasini ko\'rish'
+    },
+    categories: {
+      electronics: 'Elektronika',
+      appliances: 'Maishiy texnika',
+      clothing: 'Kiyimlar',
+      footwear: 'Poyabzallar',
+      accessories: 'Aksessuarlar',
+      beauty: 'Go\'zallik'
     },
     category: {
       title: 'Kategoriyalar',
