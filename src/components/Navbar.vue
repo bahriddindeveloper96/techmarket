@@ -24,10 +24,10 @@
         <div class="hidden md:flex items-center justify-between h-20">
           <div class="flex items-center space-x-4">
             <!-- Logo -->
-            <a href="/" class="flex items-center space-x-2">
+            <router-link to="/" class="flex items-center space-x-2">
               <span class="text-2xl font-bold text-primary-600 dark:text-primary-400">Tech</span>
               <span class="text-2xl font-bold text-accent-600 dark:text-accent-400">Market</span>
-            </a>
+            </router-link>
             <!-- Catalog Menu -->
             <CatalogMenu />
           </div>
@@ -52,9 +52,13 @@
               <i class="ri-heart-3-line text-2xl"></i>
               <span class="text-xs mt-1">{{ $t('nav.favorites') }}</span>
             </router-link>
-            <router-link to="/profile" class="flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">
+            <!-- Profile button -->
+            <router-link 
+              to="/profile" 
+              class="flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors"
+            >
               <i class="ri-user-3-line text-2xl"></i>
-              <span class="text-xs mt-1">{{ $t('nav.profile') }}</span>
+              <span class="text-xs mt-1">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
             </router-link>
             <router-link to="/cart" class="flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">
               <div class="relative">
@@ -72,10 +76,10 @@
           <!-- Top Section -->
           <div class="flex items-center justify-between p-4">
             <!-- Logo -->
-            <a href="/" class="flex items-center space-x-2">
+            <router-link to="/" class="flex items-center space-x-2">
               <span class="text-xl font-bold text-primary-600 dark:text-primary-400">Tech</span>
               <span class="text-xl font-bold text-accent-600 dark:text-accent-400">Market</span>
-            </a>
+            </router-link>
             
             <!-- Search Button -->
             <button 
@@ -95,36 +99,24 @@
               <input
                 type="text"
                 :placeholder="$t('header.search')"
-                class="w-full h-12 pl-12 pr-4 text-base border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-primary-500 dark:focus:border-primary-400 focus:ring-2 focus:ring-primary-100 dark:focus:ring-primary-400"
+                class="w-full h-12 pl-12 pr-4 text-base border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-primary-500 dark:focus:border-primary-400"
               />
               <span class="absolute left-4 top-1/2 -translate-y-1/2">
-                <i class="ri-search-2-line text-xl text-gray-400 dark:text-gray-600"></i>
+                <i class="ri-search-2-line text-lg text-gray-400 dark:text-gray-600"></i>
               </span>
             </div>
           </div>
         </div>
+      </div>
 
-        <!-- Desktop Bottom menu -->
-        <div class="hidden md:flex items-center justify-center w-full py-4 bg-white dark:bg-gray-900">
-          <nav class="flex items-center space-x-8">
-            <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
-              <i class="ri-flashlight-line"></i>
-              <span>{{ $t('nav.new') }}</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
-              <i class="ri-price-tag-3-line"></i>
-              <span>{{ $t('nav.sales') }}</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
-              <i class="ri-fire-line"></i>
-              <span>{{ $t('nav.hot_deals') }}</span>
-            </a>
-            <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
-              <i class="ri-gift-2-line"></i>
-              <span>{{ $t('nav.promotions') }}</span>
-            </a>
-          </nav>
-        </div>
+      <!-- Categories Navigation -->
+      <div class="hidden md:flex items-center justify-center w-full py-4 bg-white dark:bg-gray-900">
+        <nav class="flex items-center space-x-8">
+          <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
+            <i class="ri-flashlight-line"></i>
+            <span>{{ $t('nav.new') }}</span>
+          </a>
+        </nav>
       </div>
     </div>
 
@@ -139,8 +131,8 @@
             <i class="ri-store-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.home') }}</span>
           </router-link>
-          <a 
-            href="#" 
+
+          <button 
             class="group relative flex flex-col items-center justify-center py-2"
             @click.prevent="toggleMobileMenu"
           >
@@ -149,7 +141,8 @@
             </div>
             <i class="ri-apps-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.catalog') }}</span>
-          </a>
+          </button>
+
           <router-link to="/favorites" class="group relative flex flex-col items-center justify-center py-2">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-heart-3-line text-white text-lg"></i>
@@ -157,6 +150,7 @@
             <i class="ri-heart-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
             <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.favorites') }}</span>
           </router-link>
+
           <router-link to="/cart" class="group relative flex flex-col items-center justify-center py-2">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-shopping-cart-2-line text-white text-lg"></i>
@@ -167,15 +161,13 @@
             </div>
             <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.cart') }}</span>
           </router-link>
-          <router-link 
-            to="/profile" 
-            class="group relative flex flex-col items-center justify-center py-2"
-          >
+
+          <router-link to="/profile" class="group relative flex flex-col items-center justify-center py-2">
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-user-3-line text-white text-lg"></i>
             </div>
             <i class="ri-user-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.profile') }}</span>
+            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
           </router-link>
         </div>
       </div>
@@ -184,37 +176,49 @@
     <!-- Mobile Catalog Menu -->
     <MobileCatalogMenu 
       v-if="isMobileMenuOpen" 
-      @close="isMobileMenuOpen = false" 
+      @close="toggleMobileMenu"
+    />
+
+    <!-- Auth Modal -->
+    <PhoneAuth 
+      v-model:isOpen="showAuthModal"
+      @onLogin="handleLogin"
     />
   </div>
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { auth } from '../firebase/config'
 import LanguageSwitcher from './LanguageSwitcher.vue'
+import ThemeToggle from './ThemeToggle.vue'
 import CatalogMenu from './CatalogMenu.vue'
 import MobileCatalogMenu from './MobileCatalogMenu.vue'
-import ThemeToggle from './ThemeToggle.vue'
+import PhoneAuth from './PhoneAuth.vue'
 
 const { t } = useI18n()
+const router = useRouter()
+
 const isSearchOpen = ref(false)
 const isMobileMenuOpen = ref(false)
+const showAuthModal = ref(false)
+
+const isLoggedIn = computed(() => !!auth.currentUser)
 
 const toggleMobileMenu = () => {
   isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+const handleLogin = (user) => {
+  showAuthModal.value = false;
+  router.push('/profile');
 }
 </script>
 
 <style scoped>
 .shadow-t-lg {
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
-}
-
-/* Add padding to the main content to prevent overlap with fixed bottom nav on mobile */
-@media (max-width: 768px) {
-  :root {
-    padding-bottom: 4rem;
-  }
 }
 </style>

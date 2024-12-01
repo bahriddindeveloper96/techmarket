@@ -1,12 +1,13 @@
 <template>
   <div class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">
+    
     <Navbar class="w-full" />
     <div class="flex-1 pb-[72px] md:pb-0">
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
         <router-view></router-view>
       </div>
     </div>
-    <Footer class="w-full" />
+    <Footer class="mt-auto" />
   </div>
 </template>
 
@@ -15,6 +16,7 @@ import { ref, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
+
 
 // Sample data
 const categories = ref([
