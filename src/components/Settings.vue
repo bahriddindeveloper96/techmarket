@@ -1,9 +1,9 @@
 <template>
   <div class="settings-container p-4 sm:p-6 max-w-4xl mx-auto">
     <!-- Mobile Header -->
-    <div class="sm:hidden flex items-center justify-between mb-4">
-      <div class="flex items-center">
-        <router-link to="/profile" class="p-2 -ml-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+    <div class="flex items-center justify-between p-4 md:hidden border-b border-gray-200 dark:border-gray-800">
+      <div class="flex items-center space-x-4">
+        <router-link to="/profile" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
           <i class="ri-arrow-left-s-line text-2xl"></i>
         </router-link>
         <h1 class="text-xl font-semibold text-gray-900 dark:text-white">{{ $t('settings.title') }}</h1>
@@ -14,7 +14,7 @@
     <!-- Desktop Header -->
     <div class="hidden sm:flex items-center justify-between mb-6">
       <h2 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $t('settings.title') }}</h2>
-     
+      <LanguageSwitcher class="px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" />
     </div>
 
     <!-- Settings Sections -->
@@ -24,17 +24,13 @@
         <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">{{ $t('settings.account.title') }}</h3>
         <div class="space-y-4">
           <!-- Language -->
-          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
+          <div class="flex items-center justify-between p-4 space-x-4 border-b border-gray-200 dark:border-gray-700">
             <div>
               <h4 class="font-medium text-gray-800 dark:text-white">{{ $t('settings.account.language.title') }}</h4>
               <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.account.language.description') }}</p>
-            </div>
-            <LanguageSwitcher class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" />
-            <!-- <select v-model="settings.language" class="px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all">
-              <option value="uz">O'zbek</option>
-              <option value="ru">Русский</option>
-              <option value="en">English</option>
-            </select> -->
+            </div>           
+            <LanguageSwitcher class="block md:hidden mobile-language-switcher px-3 py-2 bg-gray-100 dark:bg-gray-800 rounded-lg shadow-sm hover:bg-gray-200 dark:hover:bg-gray-700 transition-colors" />
+            
           </div>
 
           <!-- Theme -->
