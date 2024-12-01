@@ -74,13 +74,7 @@
               >
                 <i class="fas fa-trash"></i>
               </button>
-              <button 
-                @click="saveForLater(item)"
-                class="text-gray-400 dark:text-gray-600 hover:text-purple-500 dark:hover:text-purple-400"
-                :title="$t('cart.save_for_later')"
-              >
-                <i class="fas fa-bookmark"></i>
-              </button>
+              
             </div>
           </div>
 
