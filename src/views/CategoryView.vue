@@ -1,10 +1,7 @@
 <template>
-  <main class="py-8">
-    <div class="container mx-auto px-4 max-w-7xl w-full">
-      
-
+  <main class="py-4">
       <!-- Breadcrumb -->
-      <div class="mb-6 sm:mb-12">
+      <div class="mb-4 sm:mb-4">
         <nav class="flex" aria-label="Breadcrumb">
           <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
             <li class="inline-flex items-center">
@@ -23,9 +20,8 @@
           </ol>
         </nav>
       </div>
-
       <!-- Main Content -->
-      <div class="flex flex-col lg:flex-row gap-6">
+      <div class="flex flex-col lg:flex-row gap-4">
         <!-- Filters Sidebar -->
         <div class="w-full lg:w-1/4 lg:sticky lg:top-4">
           <FilterSidebar @apply-filters="handleFilters" />
@@ -34,7 +30,7 @@
         <!-- Products Section -->
         <div class="w-full lg:w-3/4">
           <!-- Sort Options -->
-          <div class="bg-white rounded-lg shadow-sm p-4 mb-6">
+          <div class="bg-white rounded-lg shadow-sm p-4 mb-4">
             <div class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4">
               <h1 class="text-lg sm:text-xl font-semibold text-gray-900">{{ $t(`${category.name.toLowerCase()}`) }}</h1>
               <div class="flex items-center gap-2 w-full sm:w-auto">
@@ -60,7 +56,7 @@
           </div>
 
           <!-- Pagination -->
-          <div class="flex justify-center mt-8">
+          <div class="flex justify-center mt-4">
             <nav class="flex items-center gap-1 sm:gap-2">
               <button 
                 :disabled="currentPage === 1"
@@ -93,7 +89,7 @@
           </div>
         </div>
       </div>
-    </div>
+    
   </main>
 </template>
 

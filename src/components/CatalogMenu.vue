@@ -47,17 +47,6 @@
               class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
             >
               <div class="max-w-full sm:max-w-4xl">
-                <!-- Category Header -->
-                <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
-                  <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{{ $t(activeCategory.name) }}</h3>
-                  <router-link
-                    :to="activeCategory.link"
-                    class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium text-sm sm:text-base"
-                  >
-                    {{ $t('nav.see_all') }}
-                  </router-link>
-                </div>
-
                 <!-- Subcategories Grid -->
                 <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-x-12 sm:gap-y-8">
                   <div v-for="subcategory in activeCategory.subcategories" :key="subcategory.id">

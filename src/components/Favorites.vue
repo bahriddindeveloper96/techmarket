@@ -1,8 +1,8 @@
 <template>
-  <main class="py-8">
-    <div class="container mx-auto px-4 py-8">
+  <main class="py-4">
+    
       <!-- Favorites Header -->
-      <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center justify-between mb-4">
         <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent">
           {{ $t('nav.favorites') }}
         </h1>
@@ -12,18 +12,18 @@
       </div>
 
       <!-- Empty Favorites -->
-      <div v-if="!favorites.length" class="text-center py-16">
+      <div v-if="!favorites.length" class="text-center py-8">
         <div class="w-24 h-24 mx-auto mb-6 text-gray-300 dark:text-gray-600">
           <i class="ri-heart-3-line text-6xl"></i>
         </div>
-        <p class="text-gray-500 dark:text-gray-400 mb-6">{{ $t('favorites.empty_description') }}</p>
+        <p class="text-gray-500 dark:text-gray-400 mb-4">{{ $t('favorites.empty_description') }}</p>
         <router-link to="/" class="inline-flex items-center gap-2 bg-gradient-to-r from-purple-600 to-purple-700 text-white rounded-xl px-6 py-3 font-medium hover:from-purple-700 hover:to-purple-800 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 dark:hover:shadow-purple-900 active:scale-[0.98]">
           <i class="ri-store-2-line"></i>
           {{ $t('favorites.browse_products') }}
         </router-link>
       </div>
 
-      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <!-- Favorites Items -->
         <div class="lg:col-span-2 space-y-4">
           <div v-for="item in favorites" :key="item.id" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
@@ -98,7 +98,7 @@
           </div>
         </div>
       </div>
-    </div>
+    
   </main>
 </template>
 

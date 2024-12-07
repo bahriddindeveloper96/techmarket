@@ -1,8 +1,7 @@
 <template>
-  <main class="py-8">  
-    <div class="container mx-auto px-4 py-8">
+  <main class="py-4">      
       <!-- Cart Header -->
-      <div class="flex items-center justify-between mb-8">
+      <div class="flex items-center justify-between mb-4">
         <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
           {{ $t('cart.title') }}
         </h1>
@@ -12,7 +11,7 @@
       </div>
 
       <!-- Empty Cart -->
-      <div v-if="!cartItems.length" class="text-center py-16">
+      <div v-if="!cartItems.length" class="text-center py-8">
         <div class="w-24 h-24 mx-auto mb-6 text-gray-300 dark:text-gray-600">
           <i class="fas fa-shopping-cart text-6xl"></i>
         </div>
@@ -22,7 +21,7 @@
         </router-link>
       </div>
 
-      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+      <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <!-- Cart Items -->
         <div class="lg:col-span-2 space-y-4">
           <div v-for="item in cartItems" :key="item.id" 
@@ -125,11 +124,11 @@
       </div>
 
       <!-- Similar Products -->
-      <div class="mt-16">
-        <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
+      <div class="mt-2">
+        <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
           {{ $t('cart.similar_products') }}
         </h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-6">
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
           <ProductCard 
             v-for="product in similarProducts" 
             :key="product.id"
@@ -137,7 +136,6 @@
           />
         </div>
       </div>
-    </div>
   </main>
 </template>
 

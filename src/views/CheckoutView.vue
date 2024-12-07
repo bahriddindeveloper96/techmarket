@@ -1,12 +1,11 @@
 <template>
-  <main class="py-8">   
-    <div class="container mx-auto px-4">
-      <h1 class="text-2xl font-bold mb-8">{{ $t('checkout.title') }}</h1>
+  <main class="py-4">
+      <h1 class="text-2xl font-bold mb-4">{{ $t('checkout.title') }}</h1>
       
-      <div class="flex flex-col lg:flex-row gap-8">
+      <div class="flex flex-col lg:flex-row gap-4">
         <!-- Checkout form -->
         <div class="lg:w-2/3">
-          <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6 mb-6">
+          <div class="bg-white dark:bg-gray-900 rounded-2xl shadow-sm p-6 mb-4">
             <h2 class="text-xl font-semibold mb-6">{{ $t('checkout.personal_info') }}</h2>
             
             <form @submit.prevent="submitOrder" class="space-y-6">
@@ -159,7 +158,6 @@
           </div>
         </div>
       </div>
-    </div>
   </main>
 </template>
 

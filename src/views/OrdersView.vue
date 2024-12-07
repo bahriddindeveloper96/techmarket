@@ -1,12 +1,12 @@
 <template>
   <div class="min-h-screen bg-white dark:bg-gray-900">
     <!-- Orders Header -->
-    <div class="flex items-center justify-between mb-6">
+    <div class="flex items-center justify-between mb-4">
       <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $t('orders.title') }}</h1>
     </div>
 
     <!-- Orders Filters -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-6">
+    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-4">
       <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
         <!-- Search -->
         <div class="relative">

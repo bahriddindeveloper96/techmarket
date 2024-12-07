@@ -1,14 +1,13 @@
 <template>
-  <main class="py-8">
+  <main class="py-4">
     <!-- Banner Section -->
-    <div class="mb-12">
+    <div class="mb-4">
       <Banner />
     </div>
     <!-- Popular Products -->
-    <div class="mb-12">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">{{ $t('home.popular_products') }}</h2>
-        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">{{ $t('home.view_all') }}</a>
+    <div class="mb-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">{{ $t('home.popular_products') }}</h2>       
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ProductCard 
@@ -20,10 +19,9 @@
     </div>
 
     <!-- New Products -->
-    <div class="mb-12">
-      <div class="flex justify-between items-center mb-6">
-        <h2 class="text-2xl font-bold">{{ $t('home.new_products') }}</h2>
-        <a href="#" class="text-purple-600 hover:text-purple-700 font-medium">{{ $t('home.view_all') }}</a>
+    <div class="mb-4">
+      <div class="flex justify-between items-center mb-4">
+        <h2 class="text-2xl font-bold">{{ $t('home.new_products') }}</h2>       
       </div>
       <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
         <ProductCard 
