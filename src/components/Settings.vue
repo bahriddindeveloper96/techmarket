@@ -1,5 +1,5 @@
 <template>
-  <div class="settings-container p-4 sm:p-6 max-w-4xl mx-auto">
+  
     <!-- Mobile Header -->
     <div class="flex items-center justify-between p-4 md:hidden border-b border-gray-200 dark:border-gray-800">
       <div class="flex items-center space-x-4">
@@ -112,7 +112,7 @@
         </button>
       </div>
     </div>
-  </div>
+ 
 </template>
 
 <script setup>
