@@ -13,73 +13,77 @@
     <!-- Dropdown Menu -->
     <div
       v-show="isOpen"
-      class="fixed top-[96px] left-1/2 -translate-x-1/2 z-50 mt-8 bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 w-[95%] sm:w-[90%] md:w-[95%] lg:w-[1280px] max-h-[80vh] sm:max-h-[650px] overflow-hidden"
+      class="fixed top-[96px] left-0 right-0 z-50 mt-8"
     >
-      <!-- Content -->
-      <div class="flex flex-col sm:flex-row h-full">
-        <!-- Main Categories -->
-        <div class="w-full sm:w-72 bg-gray-50 dark:bg-gray-900 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none">
-          <div
-            v-for="category in categories"
-            :key="category.id"
-            class="relative"
-            @mouseenter="activeCategory = category"
-            @click="handleCategoryClick(category)"
-          >
-            <div
-              class="flex items-center px-4 py-3 cursor-pointer"
-              :class="{ 'bg-white dark:bg-gray-800': activeCategory === category }"
-            >
-              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700 mr-3">
-                <i :class="[category.icon, 'text-lg dark:text-gray-300']"></i>
-              </div>
-              <span class="font-medium text-gray-700 dark:text-gray-200">{{ $t(category.name) }}</span>
-              <i class="ri-arrow-right-s-line ml-auto text-gray-400 dark:text-gray-500"></i>
-            </div>
-          </div>
-        </div>
-
-        <!-- Subcategories Panel -->
-        <div 
-          v-if="activeCategory" 
-          class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
-        >
-          <div class="max-w-full sm:max-w-4xl">
-            <!-- Category Header -->
-            <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
-              <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{{ $t(activeCategory.name) }}</h3>
-              <router-link
-                :to="activeCategory.link"
-                class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium text-sm sm:text-base"
+      <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 max-h-[80vh] sm:max-h-[650px] overflow-hidden">
+          <!-- Content -->
+          <div class="flex flex-col sm:flex-row h-full" >
+            <!-- Main Categories -->
+            <div class="w-full sm:w-72 bg-gray-50 dark:bg-gray-900 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none">
+              <div
+                v-for="category in categories"
+                :key="category.id"
+                class="relative"
+                @mouseenter="activeCategory = category"
+                @click="handleCategoryClick(category)"
               >
-                {{ $t('nav.see_all') }}
-              </router-link>
+                <div
+                  class="flex items-center px-4 py-3 cursor-pointer"
+                  :class="{ 'bg-white dark:bg-gray-800': activeCategory === category }"
+                >
+                  <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700 mr-3">
+                    <i :class="[category.icon, 'text-lg dark:text-gray-300']"></i>
+                  </div>
+                  <span class="font-medium text-gray-700 dark:text-gray-200">{{ $t(category.name) }}</span>
+                  <i class="ri-arrow-right-s-line ml-auto text-gray-400 dark:text-gray-500"></i>
+                </div>
+              </div>
             </div>
 
-            <!-- Subcategories Grid -->
-            <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-x-12 sm:gap-y-8">
-              <div v-for="subcategory in activeCategory.subcategories" :key="subcategory.id">
-                <!-- Subcategory Header -->
-                <router-link
-                  :to="subcategory.link"
-                  class="block mb-3 sm:mb-4 text-base sm:text-lg font-medium text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400"
-                  @click="isOpen = false"
-                >
-                  {{ $t(subcategory.name) }}
-                </router-link>
-                
-                <!-- Subcategory Items -->
-                <ul class="space-y-2">
-                  <li v-for="item in subcategory.items" :key="item.id">
+            <!-- Subcategories Panel -->
+            <div 
+              v-if="activeCategory" 
+              class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
+            >
+              <div class="max-w-full sm:max-w-4xl">
+                <!-- Category Header -->
+                <div class="flex items-center justify-between mb-4 sm:mb-8 pb-4 border-b border-gray-100 dark:border-gray-700">
+                  <h3 class="text-xl sm:text-2xl font-semibold text-gray-900 dark:text-white">{{ $t(activeCategory.name) }}</h3>
+                  <router-link
+                    :to="activeCategory.link"
+                    class="text-purple-600 dark:text-purple-400 hover:text-purple-700 dark:hover:text-purple-300 font-medium text-sm sm:text-base"
+                  >
+                    {{ $t('nav.see_all') }}
+                  </router-link>
+                </div>
+
+                <!-- Subcategories Grid -->
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-x-12 sm:gap-y-8">
+                  <div v-for="subcategory in activeCategory.subcategories" :key="subcategory.id">
+                    <!-- Subcategory Header -->
                     <router-link
-                      :to="item.link"
-                      class="text-sm sm:text-base text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                      :to="subcategory.link"
+                      class="block mb-3 sm:mb-4 text-base sm:text-lg font-medium text-gray-900 dark:text-white hover:text-purple-600 dark:hover:text-purple-400"
                       @click="isOpen = false"
                     >
-                      {{ $t(item.name) }}
+                      {{ $t(subcategory.name) }}
                     </router-link>
-                  </li>
-                </ul>
+                    
+                    <!-- Subcategory Items -->
+                    <ul class="space-y-2">
+                      <li v-for="item in subcategory.items" :key="item.id">
+                        <router-link
+                          :to="item.link"
+                          class="text-sm sm:text-base text-gray-600 dark:text-gray-400 hover:text-purple-600 dark:hover:text-purple-400 transition-colors"
+                          @click="isOpen = false"
+                        >
+                          {{ $t(item.name) }}
+                        </router-link>
+                      </li>
+                    </ul>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
@@ -90,7 +94,7 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 
@@ -98,6 +102,24 @@ const { t } = useI18n()
 const router = useRouter()
 const isOpen = ref(false)
 const activeCategory = ref(null)
+
+// Add scroll event listener
+onMounted(() => {
+  window.addEventListener('scroll', handleScroll)
+})
+
+// Clean up event listener
+onUnmounted(() => {
+  window.removeEventListener('scroll', handleScroll)
+})
+
+// Handle scroll event
+const handleScroll = () => {
+  if (isOpen.value) {
+    isOpen.value = false
+    activeCategory.value = null
+  }
+}
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value
