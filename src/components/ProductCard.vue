@@ -53,50 +53,50 @@
     </div>
 
     <!-- Product Info -->
-    <div class="p-5">
+    <div class="p-3">
       <!-- Title -->
       <router-link :to="{ name: 'product', params: { id: product.id }}" class="block group-hover:text-primary-600 transition-colors duration-300">
-        <h3 class="font-medium text-gray-900 dark:text-white text-sm sm:text-base line-clamp-2 mb-3 tracking-wide">
+        <h3 class="font-medium text-gray-900 dark:text-white text-sm line-clamp-1 mb-2">
           {{ $t(`products.${product.id}.name`, product.name) }}
         </h3>
       </router-link>
 
       <!-- Rating -->
-      <div class="flex items-center mb-4">
+      <div class="flex items-center mb-2">
         <div class="flex items-center space-x-0.5">
           <i v-for="i in 5" :key="i" 
             :class="[
-              'fas fa-star text-xs sm:text-sm transition-colors duration-300',
+              'fas fa-star text-xs transition-colors duration-300',
               i <= product.rating ? 'text-amber-400 dark:text-amber-300' : 'text-gray-300 dark:text-gray-600'
             ]"
           ></i>
         </div>
-        <span class="text-xs text-gray-500 dark:text-gray-400 ml-2 font-medium">({{ product.reviews }})</span>
+        <span class="text-xs text-gray-500 dark:text-gray-400 ml-1.5 font-medium">({{ product.reviews }})</span>
       </div>
 
       <!-- Price -->
-      <div class="space-y-2">
-        <div v-if="product.oldPrice" class="flex items-center gap-2">
-          <span class="text-sm text-gray-500 dark:text-gray-400 line-through font-medium">
+      <div class="space-y-1">
+        <div v-if="product.oldPrice" class="flex items-center gap-1.5">
+          <span class="text-xs text-gray-500 dark:text-gray-400 line-through font-medium">
             {{ formatPrice(product.oldPrice) }} {{ $t('currency') }}
           </span>
         </div>
         <div class="flex items-center justify-between">
-          <span class="font-bold text-lg text-gray-900 dark:text-white tracking-tight">
+          <span class="font-bold text-base text-gray-900 dark:text-white tracking-tight">
             {{ formatPrice(product.price) }} {{ $t('currency') }}
           </span>
           <button 
             @click="addToCartAndNavigate"
-            class="p-3 text-primary-600 hover:text-white hover:bg-primary-600 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary-600/20"
+            class="p-2 text-primary-600 hover:text-white hover:bg-primary-600 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary-600/20"
           >
-            <i class="fas fa-shopping-cart text-lg"></i>
+            <i class="fas fa-shopping-cart text-base"></i>
           </button>
         </div>
       </div>
 
       <!-- Installment Badge -->
-      <div v-if="product.installment" class="mt-4 flex items-center text-xs font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 rounded-xl p-2.5 backdrop-blur-sm">
-        <i class="fas fa-credit-card mr-2"></i>
+      <div v-if="product.installment" class="mt-2 flex items-center text-[11px] font-medium text-emerald-600 dark:text-emerald-400 bg-emerald-50 dark:bg-emerald-900/30 rounded-lg p-1.5 backdrop-blur-sm">
+        <i class="fas fa-credit-card mr-1.5"></i>
         <span>{{ formatPrice(calculateMonthlyPayment(product.price)) }} {{ $t('currency') }} x 12 {{ $t('month') }}</span>
       </div>
     </div>
