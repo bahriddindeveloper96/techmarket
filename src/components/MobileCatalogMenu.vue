@@ -138,12 +138,12 @@ const categories = [
     id: 1,
     name: t('mobileCatalog.categories.smartphones'),
     icon: 'ri-smartphone-line',
-    link: '/smartphones',
+    link: '/category/smartphones',
     subcategories: [
       {
         id: 1,
         name: t('mobileCatalog.brands'),
-        link: '/smartphones/brands',
+        link: '/category/smartphones/brands',
         items: [
           { id: 1, name: 'Apple', link: '/smartphones/brands/apple' },
           { id: 2, name: 'Samsung', link: '/smartphones/brands/samsung' },
@@ -154,54 +154,54 @@ const categories = [
       {
         id: 2,
         name: t('mobileCatalog.byPrice'),
-        link: '/smartphones/price',
+        link: '/category/smartphones/price',
         items: [
           { 
             id: 1, 
             name: t('mobileCatalog.price.under_1m'), 
-            link: '/smartphones/price/under-1m' 
+            link: '/category/smartphones/price/under-1m' 
           },
           { 
             id: 2, 
             name: t('mobileCatalog.price.from_1m_to_3m'), 
-            link: '/smartphones/price/1m-3m' 
+            link: '/category/smartphones/price/1m-3m' 
           },
           { 
             id: 3, 
             name: t('mobileCatalog.price.from_3m_to_5m'), 
-            link: '/smartphones/price/3m-5m' 
+            link: '/category/smartphones/price/3m-5m' 
           },
           { 
             id: 4, 
             name: t('mobileCatalog.price.over_5m'), 
-            link: '/smartphones/price/over-5m' 
+            link: '/category/smartphones/price/over-5m' 
           }
         ]
       },
       {
         id: 3,
         name: t('mobileCatalog.ram'),
-        link: '/smartphones/ram',
+        link: '/category/smartphones/ram',
         items: [
           { 
             id: 1, 
             name: t('mobileCatalog.ram_options.gb_4'), 
-            link: '/smartphones/ram/4gb' 
+            link: '/category/smartphones/ram/4gb' 
           },
           { 
             id: 2, 
             name: t('mobileCatalog.ram_options.gb_6'), 
-            link: '/smartphones/ram/6gb' 
+            link: '/category/smartphones/ram/6gb' 
           },
           { 
             id: 3, 
             name: t('mobileCatalog.ram_options.gb_8'), 
-            link: '/smartphones/ram/8gb' 
+            link: '/category/smartphones/ram/8gb' 
           },
           { 
             id: 4, 
             name: t('mobileCatalog.ram_options.gb_12_plus'), 
-            link: '/smartphones/ram/over-12gb' 
+            link: '/category/smartphones/ram/over-12gb' 
           }
         ]
       }
@@ -212,14 +212,14 @@ const categories = [
         name: 'iPhone 14 Pro Max 256GB Space Black',
         price: '15 999 000 so\'m',
         image: '/images/products/iphone-14-pro-max.jpg',
-        link: '/product/iphone-14-pro-max'
+        link: '/category/product/iphone-14-pro-max'
       },
       {
         id: 2,
         name: 'Samsung Galaxy S23 Ultra 512GB Green',
         price: '13 999 000 so\'m',
         image: '/images/products/samsung-s23-ultra.jpg',
-        link: '/product/samsung-s23-ultra'
+        link: '/category/product/samsung-s23-ultra'
       }
     ]
   },
@@ -227,12 +227,12 @@ const categories = [
     id: 2,
     name: t('mobileCatalog.categories.tablets'),
     icon: 'ri-tablet-line',
-    link: '/tablets',
+    link: '/category/tablets',
     subcategories: [
       {
         id: 1,
         name: t('mobileCatalog.brands'),
-        link: '/tablets/brands',
+        link: '/category/tablets/brands',
         items: [
           { id: 1, name: 'Apple iPad', link: '/tablets/brands/apple' },
           { id: 2, name: 'Samsung Galaxy Tab', link: '/tablets/brands/samsung' },
@@ -243,22 +243,22 @@ const categories = [
       {
         id: 2,
         name: t('mobileCatalog.screenSize'),
-        link: '/tablets/screen-size',
+        link: '/category/tablets/screen-size',
         items: [
           { 
             id: 1, 
             name: t('mobileCatalog.screen_size.under_8'), 
-            link: '/tablets/screen-size/under-8' 
+            link: '/category/tablets/screen-size/under-8' 
           },
           { 
             id: 2, 
             name: t('mobileCatalog.screen_size.from_8_to_10'), 
-            link: '/tablets/screen-size/8-10' 
+            link: '/category/tablets/screen-size/8-10' 
           },
           { 
             id: 3, 
             name: t('mobileCatalog.screen_size.over_10'), 
-            link: '/tablets/screen-size/over-10' 
+            link: '/category/tablets/screen-size/over-10' 
           }
         ]
       }
@@ -268,7 +268,7 @@ const categories = [
     id: 3,
     name: t('mobileCatalog.categories.tablet_accessories'),
     icon: 'ri-keyboard-box-line',
-    link: '/tablet-accessories'
+    link: '/category/tablet-accessories'
   }
 ]
 </script>
