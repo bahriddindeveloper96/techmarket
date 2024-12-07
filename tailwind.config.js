@@ -1,31 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 export default {
-  darkMode: 'class',
   content: [
     "./index.html",
     "./src/**/*.{vue,js,ts,jsx,tsx}",
   ],
+  darkMode: 'class',
   theme: {
     extend: {
-      animation: {
-        'float': 'float 3s ease-in-out infinite',
-        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
-        'spin-slow': 'spin 3s linear infinite',
-      },
-      keyframes: {
-        float: {
-          '0%, 100%': { transform: 'translateY(0)' },
-          '50%': { transform: 'translateY(-10px)' },
-        }
-      },
-      backdropBlur: {
-        xs: '2px',
-      },
-      boxShadow: {
-        'neo': '0.5rem 0.5rem #000',
-        'neo-sm': '0.25rem 0.25rem #000',
-        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
-      },
       colors: {
         primary: {
           50: '#f0f9ff',
@@ -38,6 +19,7 @@ export default {
           700: '#0369a1',
           800: '#075985',
           900: '#0c4a6e',
+          950: '#082f49',
         },
         secondary: {
           50: '#fdf4ff',
@@ -63,6 +45,30 @@ export default {
           800: '#5b21b6',
           900: '#4c1d95',
         }
+      },
+      animation: {
+        'float': 'float 3s ease-in-out infinite',
+        'gradient': 'gradient 8s ease infinite',
+        'pulse-slow': 'pulse 4s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+        'spin-slow': 'spin 3s linear infinite',
+      },
+      keyframes: {
+        float: {
+          '0%, 100%': { transform: 'translateY(0)' },
+          '50%': { transform: 'translateY(-10px)' },
+        },
+        gradient: {
+          '0%, 100%': { backgroundPosition: '0% 50%' },
+          '50%': { backgroundPosition: '100% 50%' },
+        },
+      },
+      backdropBlur: {
+        xs: '2px',
+      },
+      boxShadow: {
+        'neo': '0.5rem 0.5rem #000',
+        'neo-sm': '0.25rem 0.25rem #000',
+        'glass': '0 8px 32px 0 rgba(31, 38, 135, 0.37)',
       },
     },
   },

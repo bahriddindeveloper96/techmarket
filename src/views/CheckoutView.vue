@@ -1,6 +1,5 @@
 <template>
-  <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800 py-8">
-   
+  <main class="py-8">   
     <div class="container mx-auto px-4">
       <h1 class="text-2xl font-bold mb-8">{{ $t('checkout.title') }}</h1>
       

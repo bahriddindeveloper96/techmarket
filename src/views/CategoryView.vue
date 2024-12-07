@@ -1,5 +1,5 @@
 <template>
-  <main class="flex-grow flex justify-center items-start py-4 sm:py-8">
+  <main class="py-8">
     <div class="container mx-auto px-4 max-w-7xl w-full">
       
 

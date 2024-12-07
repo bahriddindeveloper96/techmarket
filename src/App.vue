@@ -1,12 +1,7 @@
 <template>
-  <div id="app-main" class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">
-    
-    <Navbar class="w-full" />
-    <div class="flex-1 pb-[72px] md:pb-0">
-      <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <router-view></router-view>
-      </div>
-    </div>
+  <div id="app-main" class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">    
+    <Navbar class="w-full" />    
+        <router-view></router-view>      
     <Footer class="mt-auto" />
   </div>
 </template>
