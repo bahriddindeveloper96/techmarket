@@ -31,11 +31,11 @@
           <div class="md:col-span-3 space-y-6">
             <!-- Main Images -->
             <div class="grid grid-cols-2 gap-2 relative group">
-              <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 p-2">
-                <img :src="selectedImage" :alt="product.name" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
+              <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 cursor-pointer relative" @click="openImageModal(selectedImage)">
+                <img :src="selectedImage" :alt="product.name" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
-              <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 p-2">
-                <img :src="nextImage" :alt="product.name" class="w-full h-full object-contain hover:scale-105 transition-transform duration-300" />
+              <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 cursor-pointer relative" @click="openImageModal(nextImage)">
+                <img :src="nextImage" :alt="product.name" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
 
               <!-- Navigation Buttons -->
@@ -64,10 +64,10 @@
                 v-for="(image, index) in product.images" 
                 :key="index"
                 @click="selectedImageIndex = index"
-                class="aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 p-1 hover:shadow-lg transition-all duration-300"
+                class="aspect-square rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 relative hover:shadow-lg transition-all duration-300"
                 :class="selectedImageIndex === index ? 'ring-2 ring-purple-500 dark:ring-purple-400 shadow-lg' : ''"
               >
-                <img :src="image" :alt="product.name" class="w-full h-full object-contain" />
+                <img :src="image" :alt="product.name" class="absolute inset-0 w-full h-full object-cover" />
               </button>
             </div>
           </div>
@@ -82,12 +82,16 @@
             <div class="flex items-center gap-4">
               <div class="flex items-center gap-2">
                 <div class="flex items-center">
-                  <i v-for="i in 5" :key="i" 
+                  <svg v-for="i in 5" :key="i" 
                     :class="[
-                      'fas fa-star text-sm',
+                      'w-4 h-4',
                       i <= product.rating ? 'text-yellow-400' : 'text-gray-300 dark:text-gray-600'
                     ]"
-                  ></i>
+                    fill="currentColor"
+                    viewBox="0 0 20 20"
+                  >
+                    <path d="M9.049 2.927c.3-.921 1.603-.921 1.902 0l1.07 3.292a1 1 0 00.95.69h3.462c.969 0 1.371 1.24.588 1.81l-2.8 2.034a1 1 0 00-.364 1.118l1.07 3.292c.3.921-.755 1.688-1.54 1.118l-2.8-2.034a1 1 0 00-1.175 0l-2.8 2.034c-.784.57-1.838-.197-1.539-1.118l1.07-3.292a1 1 0 00-.364-1.118L2.98 8.72c-.783-.57-.38-1.81.588-1.81h3.461a1 1 0 00.951-.69l1.07-3.292z" />
+                  </svg>
                 </div>
                 <span class="text-sm text-gray-600 dark:text-gray-400">{{ product.rating }} {{ $t('product.rating') }}</span>
               </div>
@@ -152,14 +156,18 @@
                   @click="quantity > 1 && quantity--"
                   class="w-8 h-8 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
                 >
-                  <i class="fas fa-minus text-gray-600 dark:text-gray-400"></i>
+                  <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M20 12H4" />
+                  </svg>
                 </button>
                 <span class="text-lg font-medium w-8 text-center text-gray-900 dark:text-white">{{ quantity }}</span>
                 <button
                   @click="quantity++"
                   class="w-8 h-8 rounded-lg border border-gray-200 dark:border-gray-700 flex items-center justify-center hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
                 >
-                  <i class="fas fa-plus text-gray-600 dark:text-gray-400"></i>
+                  <svg class="w-4 h-4 text-gray-600 dark:text-gray-400" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4" />
+                  </svg>
                 </button>
               </div>
             </div>
@@ -193,6 +201,39 @@
         </div>
       </div>
 
+      <!-- Image Modal -->
+      <div v-if="showModal" class="fixed inset-0 z-50 flex items-center justify-center p-4 bg-black/80" @click="closeImageModal">
+        <div class="relative max-w-5xl w-full h-full flex items-center justify-center" @click.stop>
+          <!-- Close button -->
+          <button @click="closeImageModal" class="absolute top-4 right-4 text-white hover:text-gray-300 z-10">
+            <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12" />
+            </svg>
+          </button>
+          
+          <!-- Previous button -->
+          <button @click="showPrevImage" class="absolute left-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 z-10">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7" />
+            </svg>
+          </button>
+          
+          <!-- Next button -->
+          <button @click="showNextImage" class="absolute right-4 top-1/2 -translate-y-1/2 text-white hover:text-gray-300 z-10">
+            <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+            </svg>
+          </button>
+          
+          <!-- Modal image -->
+          <img 
+            :src="modalImage" 
+            :alt="product.name" 
+            class="w-full h-full object-contain"
+          />
+        </div>
+      </div>
+
       <!-- Similar Products -->
       <div class="mt-4">
         <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 dark:from-gray-100 dark:to-purple-400 bg-clip-text text-transparent">
@@ -212,98 +253,41 @@
 </template>
 
 <script setup>
-import { ref, computed, onMounted } from 'vue'
+import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
-import Banner from './../components/Banner.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
 const router = useRouter()
 
 const product = ref({
   id: 1,
-  name: 'iPhone 15 Pro Max',
-  price: 15999000,
-  oldPrice: 17999000,
+  name: "iPhone 14 Pro",
+  category: "Telefonlar",
+  images: [
+    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-1inch-deeppurple?wid=2560&hei=1440&fmt=jpeg&qlt=95&.v=1663703840578',
+    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-1inch-gold?wid=2560&hei=1440&fmt=jpeg&qlt=95&.v=1663703840519',
+    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-1inch-silver?wid=2560&hei=1440&fmt=jpeg&qlt=95&.v=1663703840488',
+    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-finish-select-202209-6-1inch-spaceblack?wid=2560&hei=1440&fmt=jpeg&qlt=95&.v=1663703840418',
+    'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-model-unselect-gallery-2-202209?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1660753617559'
+  ],
+  price: 14_999_000,
+  oldPrice: 15_999_000,
   rating: 4.8,
   reviews: 256,
   orders: 1200,
-  images: [
-    'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-    'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
-    'https://fakestoreapi.com/img/71li-ujtlUL._AC_UX679_.jpg',
-    'https://fakestoreapi.com/img/71YXzeOuslL._AC_UY879_.jpg',
-    'https://fakestoreapi.com/img/71pWzhdJNwL._AC_UL640_QL65_ML3_.jpg'
-  ],
-  colors: ['#A6A6A6', '#4F4F4F', '#2B2B2B', '#4169E1'],
+  colors: ['#574F6F', '#F4E8CE', '#F1F3F2', '#53514F'],
   sizes: ['128GB', '256GB', '512GB', '1TB'],
-  description: 'iPhone 15 Pro Max - eng zo\'r flagman smartfon. Dynamic Island, yangi 3nm A17 Pro protsessor, titanli korpus, 48MP asosiy kamera.',
+  description: "iPhone 14 Pro - eng zo'r flagman smartfon. Dynamic Island, yangi A16 Bionic protsessor, 48MP asosiy kamera.",
   specifications: [
-    { name: 'Protsessor', value: 'A17 Pro' },
-    { name: 'Ekran', value: '6.7" Super Retina XDR OLED' },
+    { name: 'Protsessor', value: 'A16 Bionic' },
+    { name: 'Ekran', value: '6.1" Super Retina XDR OLED' },
     { name: 'Kamera', value: '48MP + 12MP + 12MP' },
-    { name: 'Batareya', value: '4422 mAh' }
+    { name: 'Batareya', value: '3200 mAh' },
+    { name: 'RAM', value: '6GB' }
   ]
 })
 
-const selectedImageIndex = ref(0)
-const selectedColor = ref(product.value.colors[0])
-const selectedSize = ref(product.value.sizes[0])
-const quantity = ref(1)
-
-// Slider uchun computed properties
-const selectedImage = computed(() => product.value.images[selectedImageIndex.value])
-const nextImage = computed(() => {
-  const nextIndex = (selectedImageIndex.value + 1) % product.value.images.length
-  return product.value.images[nextIndex]
-})
-
-// Slider funksiyalari
-const previousImage = () => {
-  selectedImageIndex.value = selectedImageIndex.value === 0 
-    ? product.value.images.length - 1 
-    : selectedImageIndex.value - 1
-}
-
-const nextImageSlide = () => {
-  selectedImageIndex.value = (selectedImageIndex.value + 1) % product.value.images.length
-}
-
-// Avtomatik slayd
-let slideInterval
-onMounted(() => {
-  slideInterval = setInterval(nextImageSlide, 5000) // Har 5 sekundda
-})
-
-// Boshqa funksiyalar
-const formatPrice = (price) => {
-  return new Intl.NumberFormat('uz-UZ').format(price)
-}
-
-const calculateDiscount = (price, oldPrice) => {
-  return Math.round(((oldPrice - price) / oldPrice) * 100)
-}
-
-const incrementQuantity = () => {
-  quantity.value++
-}
-
-const decrementQuantity = () => {
-  if (quantity.value > 1) {
-    quantity.value--
-  }
-}
-
-const addToCart = () => {
-  console.log('Adding to cart:', {
-    product: product.value.name,
-    color: selectedColor.value,
-    size: selectedSize.value,
-    quantity: quantity.value
-  })
-  router.push({ name: 'cart' })
-}
-
-// O'xshash mahsulotlar
+// Similar Products data
 const similarProducts = ref([
 {
     id: 1,
@@ -381,6 +365,107 @@ const similarProducts = ref([
     ]
   }
 ])
+
+// Image slider logic
+const selectedImageIndex = ref(0)
+const selectedImage = computed(() => product.value.images[selectedImageIndex.value])
+const nextImage = computed(() => {
+  const nextIndex = (selectedImageIndex.value + 1) % product.value.images.length
+  return product.value.images[nextIndex]
+})
+
+const previousImage = () => {
+  selectedImageIndex.value = (selectedImageIndex.value - 1 + product.value.images.length) % product.value.images.length
+}
+
+const nextImageSlide = () => {
+  selectedImageIndex.value = (selectedImageIndex.value + 1) % product.value.images.length
+}
+
+// Modal functionality
+const showModal = ref(false)
+const modalImage = ref('')
+const currentImageIndex = ref(0)
+
+const openImageModal = (image) => {
+  modalImage.value = image
+  currentImageIndex.value = product.value.images.indexOf(image)
+  showModal.value = true
+  document.body.style.overflow = 'hidden'
+}
+
+const closeImageModal = () => {
+  showModal.value = false
+  document.body.style.overflow = ''
+}
+
+const showPrevImage = () => {
+  currentImageIndex.value = (currentImageIndex.value - 1 + product.value.images.length) % product.value.images.length
+  modalImage.value = product.value.images[currentImageIndex.value]
+}
+
+const showNextImage = () => {
+  currentImageIndex.value = (currentImageIndex.value + 1) % product.value.images.length
+  modalImage.value = product.value.images[currentImageIndex.value]
+}
+
+// Keyboard navigation
+onMounted(() => {
+  window.addEventListener('keydown', handleKeydown)
+})
+
+onUnmounted(() => {
+  window.removeEventListener('keydown', handleKeydown)
+})
+
+const handleKeydown = (e) => {
+  if (!showModal.value) return
+  
+  switch(e.key) {
+    case 'Escape':
+      closeImageModal()
+      break
+    case 'ArrowLeft':
+      showPrevImage()
+      break
+    case 'ArrowRight':
+      showNextImage()
+      break
+  }
+}
+
+// State variables
+const selectedColor = ref(product.value.colors[0])
+const selectedSize = ref(product.value.sizes[0])
+const quantity = ref(1)
+
+// Add to cart functionality
+const addToCart = () => {
+  // Add to cart logic here
+  const cartItem = {
+    id: product.value.id,
+    name: product.value.name,
+    price: product.value.price,
+    image: product.value.images[0],
+    color: selectedColor.value,
+    size: selectedSize.value,
+    quantity: quantity.value
+  }
+  
+  console.log('Adding to cart:', cartItem)
+  
+  // Navigate to cart page
+  router.push('/cart')
+}
+
+// Helper functions
+const formatPrice = (price) => {
+  return new Intl.NumberFormat('uz-UZ').format(price)
+}
+
+const calculateDiscount = (price, oldPrice) => {
+  return Math.round(((oldPrice - price) / oldPrice) * 100)
+}
 </script>
 
 <style scoped>
