@@ -23,7 +23,7 @@
     </button>
 
     <!-- Product Image -->
-    <div class="h-[300px] w-full overflow-hidden bg-gray-50 dark:bg-gray-900 relative rounded-t-2xl">
+    <div class="relative h-[200px] sm:h-[250px] md:h-[300px] w-full overflow-hidden bg-gray-50 dark:bg-gray-900 rounded-t-2xl">
       <router-link :to="{ name: 'product', params: { id: product.id }}" class="block h-full">
         <swiper
           :modules="[SwiperAutoplay, SwiperPagination]"
@@ -36,14 +36,14 @@
             el: '.swiper-pagination'
           }"
           :loop="true"
-          class="h-full w-full product-swiper"
+          class="product-swiper !h-full"
         >
-          <swiper-slide v-for="(image, index) in product.images" :key="index" class="h-full w-full">
-            <div class="w-full h-full">
+          <swiper-slide v-for="(image, index) in product.images" :key="index" class="!h-full">
+            <div class="image-container">
               <img 
                 :src="image" 
                 :alt="product.name + ' ' + (index + 1)"
-                class="w-full h-full object-cover transform group-hover:scale-105 transition-transform duration-500"
+                class="product-image"
               />
             </div>
           </swiper-slide>
@@ -103,8 +103,39 @@
   </div>
 </template>
 
+<script>
+// Sample product images (high quality, square format 800x800)
+const sampleImages = {
+  laptop: [
+    'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1661961110372-8a7682543120?q=80&w=800&h=800&fit=crop'
+  ],
+  smartphone: [
+    'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?q=80&w=800&h=800&fit=crop'
+  ],
+  headphones: [
+    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?q=80&w=800&h=800&fit=crop'
+  ],
+  watch: [
+    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=800&h=800&fit=crop'
+  ],
+  tablet: [
+    'https://images.unsplash.com/photo-1561154464-82e9adf32764?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&h=800&fit=crop',
+    'https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?q=80&w=800&h=800&fit=crop'
+  ]
+}
+</script>
+
 <script setup>
-import { defineProps } from 'vue'
+import { defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination } from 'swiper/modules'
@@ -128,7 +159,11 @@ const props = defineProps({
       reviews: 0,
       isFavorite: false,
       installment: false,
-      images: [] // array of image URLs
+      images: [
+        'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?q=80&w=800&h=800&fit=crop',
+        'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&h=800&fit=crop',
+        'https://images.unsplash.com/photo-1661961110372-8a7682543120?q=80&w=800&h=800&fit=crop'
+      ]
     })
   }
 })
@@ -175,59 +210,81 @@ const addToCartAndNavigate = (event) => {
 }
 
 .product-swiper {
-  position: relative;
-  height: 100% !important;
-  width: 100% !important;
+  width: 100%;
+  height: 100%;
 }
 
-.product-swiper .swiper-slide {
+.product-swiper :deep(.swiper-wrapper) {
   display: flex;
-  justify-content: center;
+  align-items: stretch;
+  height: 100%;
+}
+
+.product-swiper :deep(.swiper-slide) {
+  display: flex;
   align-items: center;
-  height: 100% !important;
-  width: 100% !important;
+  justify-content: center;
+  height: 100%;
+  width: 100%;
+  background: #fff;
+}
+
+.dark .product-swiper :deep(.swiper-slide) {
+  background: #1f2937;
+}
+
+.image-container {
+  position: relative;
+  width: 100%;
+  height: 100%;
   overflow: hidden;
 }
 
-.product-swiper img {
-  width: 100% !important;
-  height: 100% !important;
+.product-image {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
   object-fit: cover;
-  object-position: center;
+  transition: transform 0.5s ease;
 }
 
-.product-swiper .swiper-wrapper {
-  height: 100% !important;
+.group:hover .product-image {
+  transform: scale(1.05);
 }
 
-.product-swiper .swiper-pagination {
+.product-swiper :deep(.swiper-pagination) {
   position: absolute;
   bottom: 10px !important;
   left: 0;
   right: 0;
   z-index: 10;
+  display: flex;
+  justify-content: center;
+  gap: 4px;
 }
 
-.product-swiper .swiper-pagination-bullet {
+.product-swiper :deep(.swiper-pagination-bullet) {
   width: 6px;
   height: 6px;
   background: rgba(255, 255, 255, 0.6);
   opacity: 1;
   transition: all 0.3s ease;
-  margin: 0 4px;
+  margin: 0;
 }
 
-.product-swiper .swiper-pagination-bullet-active {
+.product-swiper :deep(.swiper-pagination-bullet-active) {
   background: #ffffff;
   width: 20px;
   border-radius: 4px;
 }
 
-.dark .product-swiper .swiper-pagination-bullet {
+.dark .product-swiper :deep(.swiper-pagination-bullet) {
   background: rgba(255, 255, 255, 0.4);
 }
 
-.dark .product-swiper .swiper-pagination-bullet-active {
+.dark .product-swiper :deep(.swiper-pagination-bullet-active) {
   background: #ffffff;
 }
 </style>
