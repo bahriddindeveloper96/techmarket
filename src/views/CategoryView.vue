@@ -1,10 +1,7 @@
 <template>
   <main class="flex-grow flex justify-center items-start py-4 sm:py-8">
     <div class="container mx-auto px-4 max-w-7xl w-full">
-      <!-- Banner Section -->
-      <div class="mb-6 sm:mb-12">
-        <CategoryBanner />
-      </div>
+      
 
       <!-- Breadcrumb -->
       <div class="mb-6 sm:mb-12">
@@ -102,7 +99,6 @@
 
 <script setup>
 import { ref } from 'vue'
-import CategoryBanner from '../components/CategoryBanner.vue'
 import FilterSidebar from '../components/FilterSidebar.vue'
 import ProductCard from '../components/ProductCard.vue'
 

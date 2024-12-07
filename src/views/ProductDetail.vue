@@ -1,6 +1,6 @@
 <template>
   <main class="min-h-screen bg-gradient-to-b from-gray-50 to-white dark:from-gray-900 dark:to-gray-800">
-    <Banner />
+    
     <!-- Breadcrumb -->
     <div class="bg-white/80 dark:bg-gray-900/80 backdrop-blur-sm border-b dark:border-gray-800 sticky top-0 z-10">
       <div class="container mx-auto px-4 py-3">

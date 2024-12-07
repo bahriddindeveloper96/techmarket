@@ -110,7 +110,7 @@
       </div>
 
       <!-- Categories Navigation -->
-      <div class="hidden md:flex items-center justify-center w-full py-4 bg-white dark:bg-gray-900">
+      <!-- <div class="hidden md:flex items-center justify-center w-full py-4 bg-white dark:bg-gray-900">
         <nav class="flex items-center space-x-8">
           <a href="#" class="flex items-center space-x-2 text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 px-4 py-2 rounded-lg hover:bg-gray-50 dark:hover:bg-gray-800 transition-all duration-200">
             <i class="ri-flashlight-line"></i>
@@ -129,7 +129,7 @@
             <span>{{ $t('nav.new') }}</span>
           </a>
         </nav>
-      </div>
+      </div> -->
     </div>
 
     <!-- Mobile Bottom Navigation Bar -->
