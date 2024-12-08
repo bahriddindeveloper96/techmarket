@@ -175,6 +175,7 @@
             <!-- Add to Cart -->
             <div class="flex gap-2">
               <button 
+                id="addToCartButton"
                 @click="addToCart"
                 class="flex-1 bg-gradient-to-r from-purple-600 to-purple-700 dark:from-purple-500 dark:to-purple-600 text-white rounded-lg px-4 py-2 text-sm font-medium hover:from-purple-700 hover:to-purple-800 dark:hover:from-purple-600 dark:hover:to-purple-700 transition-all duration-300 hover:shadow-lg hover:shadow-purple-200 dark:hover:shadow-purple-900 active:scale-[0.98]"
               >
@@ -234,6 +235,21 @@
         </div>
       </div>
 
+      <!-- Flying item animation -->
+      <div 
+        v-show="showFlyingItem" 
+        ref="flyingItem"
+        class="fixed w-32 h-32 rounded-full bg-white shadow-xl z-50 pointer-events-none"
+        :style="{ 
+          left: flyingItemPosition.x + 'px', 
+          top: flyingItemPosition.y + 'px',
+          transform: `scale(${flyingItemScale})`,
+          opacity: flyingItemOpacity
+        }"
+      >
+        <img :src="selectedImage" class="w-full h-full object-cover rounded-full border-4 border-primary-500/50" />
+      </div>
+
       <!-- Similar Products -->
       <div class="mt-4">
         <h2 class="text-2xl font-bold mb-6 bg-gradient-to-r from-gray-900 to-purple-900 dark:from-gray-100 dark:to-purple-400 bg-clip-text text-transparent">
@@ -255,8 +271,10 @@
 <script setup>
 import { ref, computed, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cartStore'
 import ProductCard from '@/components/ProductCard.vue'
 
+const cartStore = useCartStore()
 const router = useRouter()
 
 const product = ref({
@@ -439,10 +457,15 @@ const selectedColor = ref(product.value.colors[0])
 const selectedSize = ref(product.value.sizes[0])
 const quantity = ref(1)
 
-// Add to cart functionality
-const addToCart = () => {
-  // Add to cart logic here
-  const cartItem = {
+// Flying animation
+const flyingItem = ref(null)
+const showFlyingItem = ref(false)
+const flyingItemPosition = ref({ x: 0, y: 0 })
+const flyingItemScale = ref(1)
+const flyingItemOpacity = ref(1)
+
+const addToCart = async () => {
+  const item = {
     id: product.value.id,
     name: product.value.name,
     price: product.value.price,
@@ -451,11 +474,97 @@ const addToCart = () => {
     size: selectedSize.value,
     quantity: quantity.value
   }
-  
-  console.log('Adding to cart:', cartItem)
-  
-  // Navigate to cart page
-  router.push('/cart')
+
+  // Check if mobile view
+  const isMobile = window.innerWidth < 768
+
+  // Add to cart immediately for notification
+  cartStore.addToCart(item)
+
+  // Get button position
+  const button = document.querySelector('#addToCartButton')
+  const buttonRect = button.getBoundingClientRect()
+
+  // Get cart icon position based on device
+  const cartIcon = isMobile ? 
+    document.querySelector('#mobileCartWrapper') : 
+    document.querySelector('#cartIcon')
+  const cartRect = cartIcon.getBoundingClientRect()
+
+  // Set initial position with offset for larger size
+  flyingItemPosition.value = {
+    x: buttonRect.left - 32,
+    y: buttonRect.top - 32
+  }
+  flyingItemScale.value = 1
+  flyingItemOpacity.value = 1
+  showFlyingItem.value = true
+
+  if (!isMobile) {
+    // Desktop: Scroll to top with slower speed
+    window.scrollTo({
+      top: 0,
+      behavior: 'smooth'
+    })
+  }
+
+  // Animate to cart
+  await new Promise(resolve => {
+    requestAnimationFrame(async () => {
+      // Add transition with longer duration and more dramatic curve
+      flyingItem.value.style.transition = 'all 1.8s cubic-bezier(0.25, 0.1, 0.25, 1.5)'
+      
+      if (isMobile) {
+        // Mobile: Two-step animation with downward arc
+        // Step 1: Move slightly up first
+        flyingItemPosition.value = {
+          x: buttonRect.left,
+          y: buttonRect.top - 50 // Move up first
+        }
+        await new Promise(resolve => setTimeout(resolve, 600))
+
+        // Step 2: Arc down to cart in navbar
+        flyingItemPosition.value = {
+          x: cartRect.left + (cartRect.width / 2) - 16,
+          y: cartRect.top + (cartRect.height / 2) - 16
+        }
+      } else {
+        // Desktop: Direct path to navbar cart
+        flyingItemPosition.value = {
+          x: cartRect.left + (cartRect.width / 2) - 16,
+          y: cartRect.top + (cartRect.height / 2) - 16
+        }
+      }
+      
+      flyingItemScale.value = 0.3
+      flyingItemOpacity.value = 0.9
+
+      await new Promise(resolve => setTimeout(resolve, 1200))
+      resolve()
+    })
+  })
+
+  showFlyingItem.value = false
+
+  // Show notification on mobile cart icon
+  if (isMobile) {
+    const cartWrapper = document.querySelector('#mobileCartWrapper')
+    const cartCount = document.querySelector('#cartCount')
+    
+    if (cartWrapper && cartCount) {
+      // Add notification animation to wrapper
+      cartWrapper.classList.add('mobile-cart-notification')
+      
+      // Add count animation
+      cartCount.classList.add('count-update')
+      
+      // Remove animation classes after animation completes
+      setTimeout(() => {
+        cartWrapper.classList.remove('mobile-cart-notification')
+        cartCount.classList.remove('count-update')
+      }, 2000)
+    }
+  }
 }
 
 // Helper functions

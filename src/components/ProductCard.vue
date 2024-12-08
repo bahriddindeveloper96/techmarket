@@ -86,6 +86,7 @@
             {{ formatPrice(product.price) }} {{ $t('currency') }}
           </span>
           <button 
+            id="addToCartButton"
             @click="addToCartAndNavigate"
             class="p-2 text-primary-600 hover:text-white hover:bg-primary-600 rounded-full transition-all duration-300 hover:shadow-lg hover:shadow-primary-600/20"
           >
@@ -99,6 +100,21 @@
         <i class="fas fa-credit-card mr-1.5"></i>
         <span>{{ formatPrice(calculateMonthlyPayment(product.price)) }} {{ $t('currency') }} x 12 {{ $t('month') }}</span>
       </div>
+    </div>
+
+    <!-- Flying item animation -->
+    <div 
+      v-show="showFlyingItem" 
+      ref="flyingItem"
+      class="fixed w-32 h-32 rounded-full bg-white shadow-xl z-50 pointer-events-none"
+      :style="{ 
+        left: flyingItemPosition.x + 'px', 
+        top: flyingItemPosition.y + 'px',
+        transform: `scale(${flyingItemScale})`,
+        opacity: flyingItemOpacity
+      }"
+    >
+      <img :src="product.images[0]" class="w-full h-full object-cover rounded-full border-4 border-primary-500/50" />
     </div>
   </div>
 </template>
@@ -137,6 +153,7 @@ const sampleImages = {
 <script setup>
 import { defineProps, ref } from 'vue'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cartStore'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination } from 'swiper/modules'
 
@@ -146,6 +163,8 @@ import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 
 const router = useRouter()
+const cartStore = useCartStore()
+
 const props = defineProps({
   product: {
     type: Object,
@@ -193,11 +212,96 @@ const toggleFavorite = (event) => {
   // Add your favorite toggle logic here
 }
 
-// Add to cart and navigate to cart view
-const addToCartAndNavigate = (event) => {
+// Flying animation states
+const flyingItem = ref(null)
+const showFlyingItem = ref(false)
+const flyingItemPosition = ref({ x: 0, y: 0 })
+const flyingItemScale = ref(1)
+const flyingItemOpacity = ref(1)
+
+// Add to cart with animation
+const addToCartAndNavigate = async (event) => {
   event.stopPropagation()
-  // Add your cart logic here
-  router.push({ name: 'cart' })
+
+  const item = {
+    id: props.product.id,
+    name: props.product.name,
+    price: props.product.price,
+    image: props.product.images[0],
+    quantity: 1
+  }
+
+  // Add to cart immediately for notification
+  cartStore.addToCart(item)
+
+  // Get button position
+  const button = event.currentTarget
+  const buttonRect = button.getBoundingClientRect()
+
+  // Get cart icon position
+  const cartIcon = document.querySelector('#cartIcon')
+  const cartRect = cartIcon.getBoundingClientRect()
+
+  // Set initial position with offset for larger size
+  flyingItemPosition.value = {
+    x: buttonRect.left - 32,
+    y: buttonRect.top - 32
+  }
+  flyingItemScale.value = 1
+  flyingItemOpacity.value = 1
+  showFlyingItem.value = true
+
+  // Calculate the midpoint for the arc
+  const startX = buttonRect.left
+  const startY = buttonRect.top
+  const endX = cartRect.left + (cartRect.width / 2)
+  const endY = cartRect.top + (cartRect.height / 2)
+  
+  // Create upward arc by making midpoint higher
+  const midX = startX + (endX - startX) * 0.5  // 0.5 = o'rtadan
+  const midY = Math.min(startY, endY) - 300    // -300 = balandlik
+
+  // Scroll to top with slower speed
+  window.scrollTo({
+    top: 0,
+    behavior: 'smooth'
+  })
+
+  // Animate to cart
+  await new Promise(resolve => {
+    requestAnimationFrame(async () => {
+      // Add transition with longer duration and more dramatic curve
+      flyingItem.value.style.transition = 'all 2s cubic-bezier(0.25, 0.1, 0.25, 1.5)'
+      
+      // Animate in two steps for arc effect
+      const animate = async () => {
+        // Step 1: Move to mid point (up)
+        flyingItemPosition.value = {
+          x: midX,
+          y: midY
+        }
+        flyingItemScale.value = 0.6
+        flyingItemOpacity.value = 1
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
+
+        // Step 2: Move to cart (down)
+        flyingItemPosition.value = {
+          x: endX - 16,
+          y: endY - 16
+        }
+        flyingItemScale.value = 0.3
+        flyingItemOpacity.value = 0.9
+
+        await new Promise(resolve => setTimeout(resolve, 1000))
+      }
+
+      await animate()
+      resolve()
+    })
+  })
+
+  showFlyingItem.value = false
 }
 </script>
 
