@@ -30,11 +30,11 @@
           <!-- Left Column - Product Images (3 column) -->
           <div class="md:col-span-3 space-y-6">
             <!-- Main Images -->
-            <div class="grid grid-cols-2 gap-2 relative group">
+            <div class="grid md:grid-cols-2 grid-cols-1 gap-2 relative group">
               <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 cursor-pointer relative" @click="openImageModal(selectedImage)">
                 <img :src="selectedImage" :alt="product.name" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
-              <div class="aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 cursor-pointer relative" @click="openImageModal(nextImage)">
+              <div class="hidden md:block aspect-square rounded-2xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-purple-900/20 dark:to-gray-800 cursor-pointer relative" @click="openImageModal(nextImage)">
                 <img :src="nextImage" :alt="product.name" class="absolute inset-0 w-full h-full object-cover hover:scale-105 transition-transform duration-300" />
               </div>
 
