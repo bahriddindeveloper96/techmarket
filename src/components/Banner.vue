@@ -17,94 +17,26 @@
       :navigation="true"
       class="h-[300px] md:h-[400px]"
     >
-      <!-- Slide 1 -->
-      <swiper-slide>
+      <swiper-slide v-for="banner in banners" :key="banner.id">
         <div class="relative h-full w-full">
           <div class="absolute inset-0 bg-gradient-to-r from-primary-900/80 to-transparent"></div>
           <img
-            src="/images/banner1.jpg"
-            alt="Banner 1"
+            :src="banner.image"
+            :alt="banner.title"
             class="h-full w-full object-cover"
           />
           <div class="absolute inset-0 flex items-center">
             <div class="container mx-auto px-4">
               <div class="max-w-lg">
                 <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float">
-                  iPhone 15 Pro Max
+                  {{ banner.title }}
                 </h2>
                 <p class="text-lg text-white/90 mb-8">
-                  Eng so'nggi texnologiyalar bilan jihozlangan smartfon endi TechMarketda
+                  {{ banner.description }}
                 </p>
                 <div class="flex space-x-4">
                   <button class="px-8 py-3 bg-white text-primary-600 rounded-full font-semibold hover:bg-primary-50 transition-colors">
-                    Sotib olish
-                  </button>
-                  <button class="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm">
-                    Batafsil
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </swiper-slide>
-
-      <!-- Slide 2 -->
-      <swiper-slide>
-        <div class="relative h-full w-full">
-          <div class="absolute inset-0 bg-gradient-to-r from-accent-900/80 to-transparent"></div>
-          <img
-            src="/images/banner2.jpg"
-            alt="Banner 2"
-            class="h-full w-full object-cover"
-          />
-          <div class="absolute inset-0 flex items-center">
-            <div class="container mx-auto px-4">
-              <div class="max-w-lg">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float">
-                  MacBook Pro M3
-                </h2>
-                <p class="text-lg text-white/90 mb-8">
-                  Professional darajadagi noutbuk endi yanada kuchliroq
-                </p>
-                <div class="flex space-x-4">
-                  <button class="px-8 py-3 bg-white text-accent-600 rounded-full font-semibold hover:bg-accent-50 transition-colors">
-                    Sotib olish
-                  </button>
-                  <button class="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm">
-                    Batafsil
-                  </button>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-      </swiper-slide>
-
-      <!-- Slide 3 -->
-      <swiper-slide>
-        <div class="relative h-full w-full">
-          <div class="absolute inset-0 bg-gradient-to-r from-secondary-900/80 to-transparent"></div>
-          <img
-            src="/images/banner3.jpg"
-            alt="Banner 3"
-            class="h-full w-full object-cover"
-          />
-          <div class="absolute inset-0 flex items-center">
-            <div class="container mx-auto px-4">
-              <div class="max-w-lg">
-                <h2 class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float">
-                  Samsung Neo QLED 8K
-                </h2>
-                <p class="text-lg text-white/90 mb-8">
-                  Yangi avlod televizorlari bilan dunyoni yangicha kashf eting
-                </p>
-                <div class="flex space-x-4">
-                  <button class="px-8 py-3 bg-white text-secondary-600 rounded-full font-semibold hover:bg-secondary-50 transition-colors">
-                    Sotib olish
-                  </button>
-                  <button class="px-8 py-3 bg-white/10 text-white rounded-full font-semibold hover:bg-white/20 transition-colors backdrop-blur-sm">
-                    Batafsil
+                    {{ banner.button_text }}
                   </button>
                 </div>
               </div>
@@ -122,16 +54,18 @@
 
 <script setup>
 import { Swiper, SwiperSlide } from 'swiper/vue'
-import { Autoplay, EffectFade, Pagination, Navigation } from 'swiper/modules'
+import { Autoplay as SwiperAutoplay, EffectFade as SwiperEffectFade, Pagination as SwiperPagination, Navigation as SwiperNavigation } from 'swiper/modules'
 import 'swiper/css'
 import 'swiper/css/effect-fade'
 import 'swiper/css/pagination'
 import 'swiper/css/navigation'
 
-const SwiperAutoplay = Autoplay
-const SwiperEffectFade = EffectFade
-const SwiperPagination = Pagination
-const SwiperNavigation = Navigation
+defineProps({
+  banners: {
+    type: Array,
+    default: () => []
+  }
+})
 </script>
 
 <style scoped>

@@ -193,6 +193,8 @@ const messages = {
     home: {
       popular_products: 'Popular Products',
       new_products: 'New Products',
+      featured_products: 'Featured Products',
+      categories: 'Categories',
       view_all: 'View All'
     },
     categories: {
@@ -633,6 +635,8 @@ const messages = {
     home: {
       popular_products: 'Популярные товары',
       new_products: 'Новые товары',
+      featured_products: 'Представленные товары',
+      categories: 'Категории',
       view_all: 'Смотреть все'
     },
     categories: {
@@ -1073,6 +1077,8 @@ const messages = {
     home: {
       popular_products: 'Ommabop mahsulotlar',
       new_products: 'Yangi mahsulotlar',
+      featured_products: 'Taqdim etilgan mahsulotlar',
+      categories: 'Kategoriyalar',
       view_all: 'Barchasini ko\'rish'
     },
     categories: {

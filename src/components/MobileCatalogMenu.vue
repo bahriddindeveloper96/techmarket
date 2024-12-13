@@ -110,15 +110,91 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, onMounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const { t } = useI18n()
 const router = useRouter()
 const activeCategory = ref(null)
+const categories = ref([])
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const token = '2|FW1tyT2zEfCfdJvcFhvXPpSrgBVAsW0kNxq9LwrK57f3ae6b'
 
 const emit = defineEmits(['close'])
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/homepage`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
+    if (response.data.success) {
+      categories.value = response.data.data.categories
+        .filter(category => category.active)
+        .map(category => ({
+          id: category.id,
+          name: category.name,
+          icon: getCategoryIcon(category.slug),
+          link: `/category/${category.slug}`,
+          subcategories: getDefaultSubcategories(category),
+          description: category.description,
+          image: category.image.startsWith('http') ? category.image : `${baseUrl}${category.image}`,
+          featured: category.featured,
+          order: category.order
+        }))
+        .sort((a, b) => {
+          // Sort by featured first, then by order
+          if (a.featured !== b.featured) return b.featured - a.featured
+          return a.order - b.order
+        })
+    }
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  }
+}
+
+const getCategoryIcon = (slug) => {
+  const icons = {
+    'smartphones': 'ri-smartphone-line',
+    'laptops': 'ri-laptop-line',
+    'tablets': 'ri-tablet-line',
+    'accessories': 'ri-headphone-line',
+    'smart-watches': 'ri-watch-line'
+  }
+  return icons[slug] || 'ri-apps-line'
+}
+
+const getDefaultSubcategories = (category) => {
+  return [
+    {
+      id: 1,
+      name: t('mobileCatalog.brands'),
+      link: `/category/${category.slug}`,
+      items: [
+        { id: 1, name: 'Apple', link: `/category/${category.slug}/apple` },
+        { id: 2, name: 'Samsung', link: `/category/${category.slug}/samsung` },
+        { id: 3, name: 'Xiaomi', link: `/category/${category.slug}/xiaomi` },
+        { id: 4, name: 'Huawei', link: `/category/${category.slug}/huawei` }
+      ]
+    },
+    {
+      id: 2,
+      name: t('mobileCatalog.byPrice'),
+      link: `/category/${category.slug}`,
+      items: [
+        { id: 1, name: t('mobileCatalog.price.under_1m'), link: `/category/${category.slug}/price-under-1m` },
+        { id: 2, name: t('mobileCatalog.price.from_1m_to_3m'), link: `/category/${category.slug}/price-1m-3m` },
+        { id: 3, name: t('mobileCatalog.price.from_3m_to_5m'), link: `/category/${category.slug}/price-3m-5m` },
+        { id: 4, name: t('mobileCatalog.price.over_5m'), link: `/category/${category.slug}/price-over-5m` }
+      ]
+    }
+  ]
+}
 
 const handleCategoryClick = (category) => {
   if (category.subcategories && category.subcategories.length > 0) {
@@ -132,155 +208,20 @@ const handleCategoryClick = (category) => {
 const handleSubcategoryClick = () => {
   emit('close')
 }
-// Categories data
-const categories = [
-  {
-    id: 1,
-    name: t('mobileCatalog.categories.smartphones'),
-    icon: 'ri-smartphone-line',
-    link: '/category/1',
-    subcategories: [
-      {
-        id: 1,
-        name: t('mobileCatalog.brands'),
-        link: '/category/1',
-        items: [
-          { id: 1, name: 'Apple', link: '/category/1' },
-          { id: 2, name: 'Samsung', link: '/category/1' },
-          { id: 3, name: 'Xiaomi', link: '/category/1' },
-          { id: 4, name: 'Huawei', link: '/category/1' }
-        ]
-      },
-      {
-        id: 2,
-        name: t('mobileCatalog.byPrice'),
-        link: '/category/1',
-        items: [
-          { 
-            id: 1, 
-            name: t('mobileCatalog.price.under_1m'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 2, 
-            name: t('mobileCatalog.price.from_1m_to_3m'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 3, 
-            name: t('mobileCatalog.price.from_3m_to_5m'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 4, 
-            name: t('mobileCatalog.price.over_5m'), 
-            link: '/category/1' 
-          }
-        ]
-      },
-      {
-        id: 3,
-        name: t('mobileCatalog.ram'),
-        link: '/category/1',
-        items: [
-          { 
-            id: 1, 
-            name: t('mobileCatalog.ram_options.gb_4'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 2, 
-            name: t('mobileCatalog.ram_options.gb_6'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 3, 
-            name: t('mobileCatalog.ram_options.gb_8'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 4, 
-            name: t('mobileCatalog.ram_options.gb_12_plus'), 
-            link: '/category/1' 
-          }
-        ]
-      }
-    ],
-    featured: [
-      {
-        id: 1,
-        name: 'iPhone 14 Pro Max 256GB Space Black',
-        price: '15 999 000 so\'m',
-        image: '/images/products/iphone-14-pro-max.jpg',
-        link: '/category/1'
-      },
-      {
-        id: 2,
-        name: 'Samsung Galaxy S23 Ultra 512GB Green',
-        price: '13 999 000 so\'m',
-        image: '/images/products/samsung-s23-ultra.jpg',
-        link: '/category/1'
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: t('mobileCatalog.categories.tablets'),
-    icon: 'ri-tablet-line',
-    link: '/category/1',
-    subcategories: [
-      {
-        id: 1,
-        name: t('mobileCatalog.brands'),
-        link: '/category/1',
-        items: [
-          { id: 1, name: 'Apple iPad', link: '/category/1' },
-          { id: 2, name: 'Samsung Galaxy Tab', link: '/category/1' },
-          { id: 3, name: 'Xiaomi Pad', link: '/category/1' },
-          { id: 4, name: 'Huawei MatePad', link: '/category/1' }
-        ]
-      },
-      {
-        id: 2,
-        name: t('mobileCatalog.screenSize'),
-        link: '/category/1',
-        items: [
-          { 
-            id: 1, 
-            name: t('mobileCatalog.screen_size.under_8'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 2, 
-            name: t('mobileCatalog.screen_size.from_8_to_10'), 
-            link: '/category/1' 
-          },
-          { 
-            id: 3, 
-            name: t('mobileCatalog.screen_size.over_10'), 
-            link: '/category/1' 
-          }
-        ]
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: t('mobileCatalog.categories.tablet_accessories'),
-    icon: 'ri-keyboard-box-line',
-    link: '/category/1'
-  }
-]
+
+onMounted(() => {
+  fetchCategories()
+})
 </script>
 
 <style scoped>
 /* Custom scrollbar styles */
 .scrollbar-thin::-webkit-scrollbar {
-  width: 4px;
+  width: 6px;
 }
 
 .scrollbar-thin::-webkit-scrollbar-track {
-  @apply bg-gray-100 dark:bg-gray-800;
+  @apply bg-gray-100 dark:bg-gray-800 rounded-full;
 }
 
 .scrollbar-thin::-webkit-scrollbar-thumb {

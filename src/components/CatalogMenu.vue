@@ -86,15 +86,69 @@
 import { ref, onMounted, onUnmounted } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
+import axios from 'axios'
 
 const { t } = useI18n()
 const router = useRouter()
 const isOpen = ref(false)
 const activeCategory = ref(null)
+const categories = ref([])
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const token = '2|FW1tyT2zEfCfdJvcFhvXPpSrgBVAsW0kNxq9LwrK57f3ae6b'
+
+const fetchCategories = async () => {
+  try {
+    const response = await axios.get(`${baseUrl}/api/homepage`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
+    if (response.data.success) {
+      categories.value = response.data.data.categories
+        .filter(category => category.active)
+        .map(category => ({
+          id: category.id,
+          name: category.name,
+          icon: getCategoryIcon(category.slug),
+          link: `/category/${category.slug}`,
+          subcategories: [],
+          description: category.description,
+          image: category.image.startsWith('http') ? category.image : `${baseUrl}${category.image}`,
+          featured: category.featured,
+          order: category.order
+        }))
+        .sort((a, b) => {
+          // Sort by featured first, then by order
+          if (a.featured !== b.featured) return b.featured - a.featured
+          return a.order - b.order
+        })
+        
+      if (categories.value.length > 0) {
+        activeCategory.value = categories.value[0]
+      }
+    }
+  } catch (error) {
+    console.error('Error fetching categories:', error)
+  }
+}
+
+const getCategoryIcon = (slug) => {
+  const icons = {
+    'smartphones': 'ri-smartphone-line',
+    'laptops': 'ri-laptop-line',
+    'tablets': 'ri-tablet-line',
+    'accessories': 'ri-headphone-line',
+    'smart-watches': 'ri-watch-line'
+  }
+  return icons[slug] || 'ri-apps-line'
+}
 
 // Add scroll event listener
 onMounted(() => {
   window.addEventListener('scroll', handleScroll)
+  fetchCategories()
 })
 
 // Clean up event listener
@@ -104,146 +158,22 @@ onUnmounted(() => {
 
 // Handle scroll event
 const handleScroll = () => {
-  if (isOpen.value) {
+  if (window.scrollY > 0) {
     isOpen.value = false
-    activeCategory.value = null
   }
 }
 
 const toggleMenu = () => {
   isOpen.value = !isOpen.value
-  if (!isOpen.value) {
-    activeCategory.value = null
+  if (isOpen.value && categories.value.length > 0) {
+    activeCategory.value = categories.value[0]
   }
 }
 
 const handleCategoryClick = (category) => {
-  activeCategory.value = category
-  isOpen.value = false
   router.push(category.link)
+  isOpen.value = false
 }
-
-// Categories data
-const categories = [
-  {
-    id: 1,
-    name: 'electronics',
-    icon: 'ri-computer-line',
-    link: '/category/electronics',
-    subcategories: [
-      {
-        id: 1,
-        name: 'computers',
-        link: '/category/computers',
-        items: [
-          { id: 1, name: 'laptops', link: '/category/laptops' },
-          { id: 2, name: 'desktops', link: '/category/desktops' },
-          { id: 3, name: 'accessories', link: '/category/computer-accessories' }
-        ]
-      },
-      {
-        id: 2,
-        name: 'phones',
-        link: '/category/phones',
-        items: [
-          { id: 1, name: 'iPhone', link: '/category/iphone' },
-          { id: 2, name: 'Samsung', link: '/category/samsung' },
-          { id: 3, name: 'Xiaomi', link: '/category/xiaomi' }
-        ]
-      }
-    ],
-    featured: [
-      {
-        id: 1,
-        name: 'macbook_pro',
-        price: '$1,999',
-        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1671304673229',
-        link: '/product/macbook-pro-14'
-      },
-      {
-        id: 2,
-        name: 'iphone_14_pro',
-        price: '$999',
-        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-14-pro-model-unselect-gallery-2-202209?wid=5120&hei=2880&fmt=p-jpg&qlt=80&.v=1660753617559',
-        link: '/product/iphone-14-pro'
-      }
-    ]
-  },
-  {
-    id: 2,
-    name: 'appliances',
-    icon: 'ri-home-gear-line',
-    link: '/category/appliances',
-    subcategories: [
-      {
-        id: 1,
-        name: 'kitchen',
-        link: '/category/kitchen',
-        items: [
-          { id: 1, name: 'refrigerators', link: '/category/refrigerators' },
-          { id: 2, name: 'ovens', link: '/category/ovens' },
-          { id: 3, name: 'dishwashers', link: '/category/dishwashers' }
-        ]
-      },
-      {
-        id: 2,
-        name: 'climate',
-        link: '/category/climate',
-        items: [
-          { id: 1, name: 'air_conditioners', link: '/category/air-conditioners' },
-          { id: 2, name: 'heaters', link: '/category/heaters' },
-          { id: 3, name: 'fans', link: '/category/fans' }
-        ]
-      }
-    ],
-    featured: [
-      {
-        id: 1,
-        name: 'samsung_neo_qled',
-        price: '$1,499',
-        image: 'https://images.samsung.com/is/image/samsung/p6pim/levant/qe55qn85catxzn/gallery/levant-neo-qled-qn85c-qe55qn85catxzn-537812395?$1300_1038_PNG$',
-        link: '/product/samsung-neo-qled'
-      }
-    ]
-  },
-  {
-    id: 3,
-    name: 'tv_audio',
-    icon: 'ri-tv-2-line',
-    link: '/category/tv-audio',
-    subcategories: [
-      {
-        id: 1,
-        name: 'tv',
-        link: '/category/tv',
-        items: [
-          { id: 1, name: 'Samsung', link: '/category/samsung-tv' },
-          { id: 2, name: 'LG', link: '/category/lg-tv' },
-          { id: 3, name: 'Sony', link: '/category/sony-tv' }
-        ]
-      },
-      {
-        id: 2,
-        name: 'audio',
-        link: '/category/audio',
-        items: [
-          { id: 1, name: 'speakers', link: '/category/speakers' },
-          { id: 2, name: 'headphones', link: '/category/headphones' },
-          { id: 3, name: 'home_theater', link: '/category/home-theater' }
-        ]
-      }
-    ],
-    featured: [
-      {
-        id: 1,
-        name: 'samsung_neo_qled',
-        price: '$1,499',
-        image: 'https://images.samsung.com/is/image/samsung/p6pim/levant/qe55qn85catxzn/gallery/levant-neo-qled-qn85c-qe55qn85catxzn-537812395?$1300_1038_PNG$',
-        link: '/product/samsung-neo-qled'
-      }
-    ]
-  }
-]
 </script>
 
 <style scoped>
