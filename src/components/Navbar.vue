@@ -61,18 +61,31 @@
               <span class="text-xs mt-1">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
             </router-link>
             <div class="relative">
-              <router-link to="/cart" class="relative flex items-center space-x-1 text-gray-700 dark:text-gray-300 hover:text-primary-600 dark:hover:text-primary-400">
-                <i id="cartIcon" 
-                   class="ri-shopping-cart-2-line text-2xl transition-transform duration-300"
-                   :class="{'scale-125': cartStore.showNotification}">
-                </i>
-                <transition name="notification" mode="out-in">
-                  <span v-if="cartStore.cartItems.length > 0" 
-                    :class="{'animate-pop-up': cartStore.showNotification}"
-                    class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full w-5 h-5 flex items-center justify-center">
-                    {{ cartStore.cartItems.length }}
-                  </span>
-                </transition>
+              <!-- <router-link to="/cart" class="relative flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">
+                <div class="relative">
+                  <i class="ri-shopping-cart-2-line text-2xl" :class="{'scale-125 text-primary-600': cartStore.showNotification}"></i>
+                  <transition name="bounce">
+                    <span v-if="cartStore.itemsCount > 0"
+                      class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1"
+                      :class="{'animate-bounce': cartStore.showNotification}">
+                      {{ cartStore.itemsCount }}
+                    </span>
+                  </transition>
+                </div>
+                <span class="text-xs mt-1">{{ $t('nav.cart') }}</span>
+              </router-link> -->
+              <router-link to="/cart" class="relative flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">
+                <div class="relative">
+                  <i class="ri-shopping-cart-2-line text-2xl" :class="{'scale-125 text-primary-600': cartStore.showNotification}"></i>
+                  <transition name="bounce">
+                    <span v-if="cartStore.itemsCount > 0"
+                      class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1"
+                      :class="{'animate-bounce': cartStore.showNotification}">
+                      {{ cartStore.itemsCount }}
+                    </span>
+                  </transition>
+                </div>
+                <span class="text-xs mt-1">{{ $t('nav.cart') }}</span>
               </router-link>
             </div>
             <ThemeToggle />
@@ -175,17 +188,17 @@
             <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
               <i class="ri-shopping-cart-2-line text-white text-lg"></i>
             </div>
-            <div id="mobileCartWrapper" class="relative">
+            <div class="relative">
               <i class="ri-shopping-cart-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-              <transition name="notification" mode="out-in">
-                <span v-if="cartStore.cartItems.length > 0" 
-                  :class="{'animate-pop-up': cartStore.showNotification}"
-                  class="absolute -top-1 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full w-4 h-4 flex items-center justify-center">
-                  {{ cartStore.cartItems.length }}
+              <transition name="bounce">
+                <span v-if="cartStore.itemsCount > 0"
+                  class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1"
+                  :class="{'animate-bounce': cartStore.showNotification}">
+                  {{ cartStore.itemsCount }}
                 </span>
               </transition>
             </div>
-            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.cart') }}</span>
+            <span class="text-xs">{{ $t('nav.cart') }}</span>
           </router-link>
 
           <router-link to="/profile" class="group relative flex flex-col items-center justify-center py-2">
@@ -193,7 +206,7 @@
               <i class="ri-user-3-line text-white text-lg"></i>
             </div>
             <i class="ri-user-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
+            <span class="text-xs">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
           </router-link>
         </div>
       </div>
@@ -213,21 +226,34 @@
   </div>
 </template>
 
-<script setup>
+<!-- <script setup>
+
+
+import { useCartStore } from '@/stores/cartStore'
+import { auth } from '../firebase/config'
+
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
-import { auth } from '../firebase/config'
-import { useCartStore } from '../stores/cartStore'
+import { getAuth } from 'firebase/auth'
+import { useCartStore } from '@/stores/cartStore'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import ThemeToggle from './ThemeToggle.vue'
 import CatalogMenu from './CatalogMenu.vue'
 import MobileCatalogMenu from './MobileCatalogMenu.vue'
 import PhoneAuth from './PhoneAuth.vue'
 
+const auth = getAuth()
+const cartStore = useCartStore()
 const { t } = useI18n()
 const router = useRouter()
+
 const cartStore = useCartStore()
+const { t } = useI18n()
+const router = useRouter()
+
+const isSearchOpen = ref(false)
+const isMobileMenuOpen = ref(false)
 
 const isSearchOpen = ref(false)
 const isMobileMenuOpen = ref(false)
@@ -243,11 +269,56 @@ const handleLogin = (user) => {
   showAuthModal.value = false;
   router.push('/profile');
 }
+</script> -->
+<script setup>
+import { ref, computed } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore'
+import { auth } from '../firebase/config'
+import CatalogMenu from './CatalogMenu.vue'
+import MobileCatalogMenu from './MobileCatalogMenu.vue'
+import LanguageSwitcher from './LanguageSwitcher.vue'
+import ThemeToggle from './ThemeToggle.vue'
+
+const cartStore = useCartStore()
+const { t } = useI18n()
+const router = useRouter()
+
+const isSearchOpen = ref(false)
+const isMobileMenuOpen = ref(false)
+const showAuthModal = ref(false)
+
+function toggleMobileMenu() {
+  isMobileMenuOpen.value = !isMobileMenuOpen.value
+}
+
+function handleLogin(user) {
+  showAuthModal.value = false
+}
 </script>
 
 <style scoped>
 .shadow-t-lg {
   box-shadow: 0 -4px 6px -1px rgba(0, 0, 0, 0.1), 0 -2px 4px -1px rgba(0, 0, 0, 0.06);
+}
+
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
 }
 
 @keyframes pop-up {
@@ -265,6 +336,27 @@ const handleLogin = (user) => {
     transform: scale(1) translateY(0);
     opacity: 1;
   }
+}
+.bounce-enter-active {
+  animation: bounce-in 0.5s;
+}
+.bounce-leave-active {
+  animation: bounce-in 0.5s reverse;
+}
+@keyframes bounce-in {
+  0% {
+    transform: scale(0);
+  }
+  50% {
+    transform: scale(1.2);
+  }
+  100% {
+    transform: scale(1);
+  }
+}
+
+.animate-bounce {
+  animation: popUp 0.3s ease-out;
 }
 
 .animate-pop-up {
@@ -305,7 +397,7 @@ const handleLogin = (user) => {
   }
 }
 
-.animate-pop-up {
+.animate-bounce {
   animation: popUp 0.3s ease-out;
 }
 </style>

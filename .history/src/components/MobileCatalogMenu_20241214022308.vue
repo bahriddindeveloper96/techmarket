@@ -1,12 +1,8 @@
 <template>
   <div class="fixed inset-0 z-50 bg-white dark:bg-gray-900">
     <!-- Header -->
-    <div
-      class="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800"
-    >
-      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">
-        {{ $t("nav.catalog") }}
-      </h2>
+    <div class="sticky top-0 z-10 flex items-center justify-between px-4 py-3 bg-white dark:bg-gray-900 border-b border-gray-100 dark:border-gray-800">
+      <h2 class="text-lg font-semibold text-gray-900 dark:text-white">{{ $t('nav.catalog') }}</h2>
       <button
         class="p-2 text-gray-500 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-200 focus:outline-none"
         @click="$emit('close')"
@@ -16,28 +12,20 @@
     </div>
 
     <!-- Content -->
-    <div
-      class="h-[calc(100vh-56px)] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800"
-    >
+    <div class="h-[calc(100vh-56px)] overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800">
       <!-- Back Button (when subcategory is active) -->
-      <div
-        v-if="activeCategory"
-        class="px-4 py-3 border-b border-gray-100 dark:border-gray-800"
-      >
+      <div v-if="activeCategory" class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
         <button
           class="flex items-center space-x-2 text-gray-600 dark:text-gray-400"
           @click="activeCategory = null"
         >
           <i class="ri-arrow-left-s-line text-xl"></i>
-          <span>{{ $t("nav.back") }}</span>
+          <span>{{ $t('nav.back') }}</span>
         </button>
       </div>
 
       <!-- Categories List -->
-      <div
-        v-if="!activeCategory"
-        class="divide-y divide-gray-100 dark:divide-gray-800"
-      >
+      <div v-if="!activeCategory" class="divide-y divide-gray-100 dark:divide-gray-800">
         <div
           v-for="category in categories"
           :key="category.id"
@@ -48,18 +36,12 @@
             @click="handleCategoryClick(category)"
           >
             <div class="flex items-center space-x-3">
-              <div
-                class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800"
-              >
+              <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-800">
                 <i :class="[category.icon, 'text-lg dark:text-gray-300']"></i>
               </div>
-              <span class="font-medium text-gray-700 dark:text-gray-200">{{
-                category.name
-              }}</span>
+              <span class="font-medium text-gray-700 dark:text-gray-200">{{ category.name }}</span>
             </div>
-            <i
-              class="ri-arrow-right-s-line text-gray-400 dark:text-gray-500"
-            ></i>
+            <i class="ri-arrow-right-s-line text-gray-400 dark:text-gray-500"></i>
           </div>
         </div>
       </div>
@@ -68,17 +50,12 @@
       <div v-else class="pb-8">
         <!-- Category Header -->
         <div class="px-4 py-3 border-b border-gray-100 dark:border-gray-800">
-          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">
-            {{ activeCategory.name }}
-          </h3>
+          <h3 class="text-xl font-semibold text-gray-900 dark:text-white">{{ activeCategory.name }}</h3>
         </div>
 
         <!-- Subcategories -->
         <div class="px-4 py-6 space-y-8">
-          <div
-            v-for="subcategory in activeCategory.subcategories"
-            :key="subcategory.id"
-          >
+          <div v-for="subcategory in activeCategory.subcategories" :key="subcategory.id">
             <!-- Subcategory Header -->
             <router-link
               :to="subcategory.link"
@@ -87,7 +64,7 @@
             >
               {{ subcategory.name }}
             </router-link>
-
+            
             <!-- Subcategory Items -->
             <ul v-if="subcategory.items" class="space-y-3">
               <li v-for="item in subcategory.items" :key="item.id">
@@ -106,9 +83,7 @@
         <!-- Featured Products -->
         <div v-if="activeCategory.featured" class="mt-8 px-4">
           <div class="pt-6 border-t border-gray-100 dark:border-gray-800">
-            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-6">
-              {{ $t("nav.featured") }}
-            </h4>
+            <h4 class="text-lg font-medium text-gray-900 dark:text-white mb-6">{{ $t('nav.featured') }}</h4>
             <div class="grid grid-cols-2 gap-4">
               <router-link
                 v-for="product in activeCategory.featured"
@@ -116,25 +91,15 @@
                 :to="product.link"
                 class="group block"
               >
-                <div
-                  class="aspect-square rounded-xl bg-gray-100 dark:bg-gray-800 mb-2 overflow-hidden"
-                >
+                <div class="aspect-square rounded-xl bg-gray-100 dark:bg-gray-800 mb-2 overflow-hidden">
                   <img
                     :src="product.image"
                     :alt="product.name"
                     class="w-full h-full object-cover group-hover:scale-105 transition-transform duration-300"
                   />
                 </div>
-                <p
-                  class="text-sm text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2"
-                >
-                  {{ product.name }}
-                </p>
-                <p
-                  class="text-sm font-medium text-purple-600 dark:text-purple-400 mt-1"
-                >
-                  {{ product.price }}
-                </p>
+                <p class="text-sm text-gray-900 dark:text-white group-hover:text-purple-600 dark:group-hover:text-purple-400 transition-colors line-clamp-2">{{ product.name }}</p>
+                <p class="text-sm font-medium text-purple-600 dark:text-purple-400 mt-1">{{ product.price }}</p>
               </router-link>
             </div>
           </div>
@@ -145,126 +110,108 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
-import axios from "axios";
+import { ref, onMounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
-const { t } = useI18n();
-const router = useRouter();
-const activeCategory = ref(null);
-const categories = ref([]);
+const { t } = useI18n()
+const router = useRouter()
+const activeCategory = ref(null)
+const categories = ref([])
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "6|eVqt5VfQaeGJkRZXLvFmq94VFmxIAUcMftfZatk23c042d0c";
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const token = '2|FW1tyT2zEfCfdJvcFhvXPpSrgBVAsW0kNxq9LwrK57f3ae6b'
 
-const emit = defineEmits(["close"]);
+const emit = defineEmits(['close'])
 
 const fetchCategories = async () => {
   try {
     const response = await axios.get(`${baseUrl}/api/homepage`, {
       headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    });
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
     if (response.data.success) {
       categories.value = response.data.data.categories
-        .filter((category) => category.active)
-        .map((category) => ({
+        .filter(category => category.active)
+        .map(category => ({
           id: category.id,
           name: category.name,
           icon: getCategoryIcon(category.slug),
           link: `/category/${category.slug}`,
           subcategories: getDefaultSubcategories(category),
           description: category.description,
-          image: category.image.startsWith("http")
-            ? category.image
-            : `${baseUrl}${category.image}`,
+          image: category.image.startsWith('http') ? category.image : `${baseUrl}${category.image}`,
           featured: category.featured,
-          order: category.order,
+          order: category.order
         }))
         .sort((a, b) => {
           // Sort by featured first, then by order
-          if (a.featured !== b.featured) return b.featured - a.featured;
-          return a.order - b.order;
-        });
+          if (a.featured !== b.featured) return b.featured - a.featured
+          return a.order - b.order
+        })
     }
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    console.error('Error fetching categories:', error)
   }
-};
+}
 
 const getCategoryIcon = (slug) => {
   const icons = {
-    smartphones: "ri-smartphone-line",
-    laptops: "ri-laptop-line",
-    tablets: "ri-tablet-line",
-    accessories: "ri-headphone-line",
-    "smart-watches": "ri-watch-line",
-  };
-  return icons[slug] || "ri-apps-line";
-};
+    'smartphones': 'ri-smartphone-line',
+    'laptops': 'ri-laptop-line',
+    'tablets': 'ri-tablet-line',
+    'accessories': 'ri-headphone-line',
+    'smart-watches': 'ri-watch-line'
+  }
+  return icons[slug] || 'ri-apps-line'
+}
 
 const getDefaultSubcategories = (category) => {
   return [
     {
       id: 1,
-      name: t("mobileCatalog.brands"),
+      name: t('mobileCatalog.brands'),
       link: `/category/${category.slug}`,
       items: [
-        { id: 1, name: "Apple", link: `/category/${category.slug}/apple` },
-        { id: 2, name: "Samsung", link: `/category/${category.slug}/samsung` },
-        { id: 3, name: "Xiaomi", link: `/category/${category.slug}/xiaomi` },
-        { id: 4, name: "Huawei", link: `/category/${category.slug}/huawei` },
-      ],
+        { id: 1, name: 'Apple', link: `/category/${category.slug}/apple` },
+        { id: 2, name: 'Samsung', link: `/category/${category.slug}/samsung` },
+        { id: 3, name: 'Xiaomi', link: `/category/${category.slug}/xiaomi` },
+        { id: 4, name: 'Huawei', link: `/category/${category.slug}/huawei` }
+      ]
     },
     {
       id: 2,
-      name: t("mobileCatalog.byPrice"),
+      name: t('mobileCatalog.byPrice'),
       link: `/category/${category.slug}`,
       items: [
-        {
-          id: 1,
-          name: t("mobileCatalog.price.under_1m"),
-          link: `/category/${category.slug}/price-under-1m`,
-        },
-        {
-          id: 2,
-          name: t("mobileCatalog.price.from_1m_to_3m"),
-          link: `/category/${category.slug}/price-1m-3m`,
-        },
-        {
-          id: 3,
-          name: t("mobileCatalog.price.from_3m_to_5m"),
-          link: `/category/${category.slug}/price-3m-5m`,
-        },
-        {
-          id: 4,
-          name: t("mobileCatalog.price.over_5m"),
-          link: `/category/${category.slug}/price-over-5m`,
-        },
-      ],
-    },
-  ];
-};
+        { id: 1, name: t('mobileCatalog.price.under_1m'), link: `/category/${category.slug}/price-under-1m` },
+        { id: 2, name: t('mobileCatalog.price.from_1m_to_3m'), link: `/category/${category.slug}/price-1m-3m` },
+        { id: 3, name: t('mobileCatalog.price.from_3m_to_5m'), link: `/category/${category.slug}/price-3m-5m` },
+        { id: 4, name: t('mobileCatalog.price.over_5m'), link: `/category/${category.slug}/price-over-5m` }
+      ]
+    }
+  ]
+}
 
 const handleCategoryClick = (category) => {
   if (category.subcategories && category.subcategories.length > 0) {
-    activeCategory.value = category;
+    activeCategory.value = category
   } else {
-    emit("close");
-    router.push(category.link);
+    emit('close')
+    router.push(category.link)
   }
-};
+}
 
 const handleSubcategoryClick = () => {
-  emit("close");
-};
+  emit('close')
+}
 
 onMounted(() => {
-  fetchCategories();
-});
+  fetchCategories()
+})
 </script>
 
 <style scoped>
@@ -288,11 +235,11 @@ onMounted(() => {
 /* Hide scrollbar for Firefox */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: theme("colors.purple.500") theme("colors.gray.100");
+  scrollbar-color: theme('colors.purple.500') theme('colors.gray.100');
 }
 
 :global(.dark) .scrollbar-thin {
-  scrollbar-color: theme("colors.purple.400") theme("colors.gray.800");
+  scrollbar-color: theme('colors.purple.400') theme('colors.gray.800');
 }
 
 /* Hide scrollbar for IE and Edge */

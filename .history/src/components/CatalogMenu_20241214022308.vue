@@ -6,29 +6,21 @@
       @click="toggleMenu"
     >
       <i class="ri-menu-line text-lg sm:text-xl"></i>
-      <span class="text-sm sm:text-base font-medium">{{
-        $t("nav.catalog")
-      }}</span>
-      <i
-        :class="[
-          'ri-arrow-down-s-line transition-transform',
-          { 'rotate-180': isOpen },
-        ]"
-      ></i>
+      <span class="text-sm sm:text-base font-medium">{{ $t('nav.catalog') }}</span>
+      <i :class="['ri-arrow-down-s-line transition-transform', { 'rotate-180': isOpen }]"></i>
     </button>
 
     <!-- Dropdown Menu -->
-    <div v-show="isOpen" class="fixed top-[96px] left-0 right-0 z-50 mt-8">
+    <div
+      v-show="isOpen"
+      class="fixed top-[96px] left-0 right-0 z-50 mt-8"
+    >
       <div class="container mx-auto px-4 sm:px-6 lg:px-8 max-w-7xl">
-        <div
-          class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 max-h-[80vh] sm:max-h-[650px] overflow-hidden"
-        >
+        <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-xl border border-gray-100 dark:border-gray-700 max-h-[80vh] sm:max-h-[650px] overflow-hidden">
           <!-- Content -->
-          <div class="flex flex-col sm:flex-row h-full">
+          <div class="flex flex-col sm:flex-row h-full" >
             <!-- Main Categories -->
-            <div
-              class="w-full sm:w-72 bg-gray-50 dark:bg-gray-900 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none"
-            >
+            <div class="w-full sm:w-72 bg-gray-50 dark:bg-gray-900 py-4 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[300px] sm:max-h-[650px] rounded-t-2xl sm:rounded-l-2xl sm:rounded-tr-none">
               <div
                 v-for="category in categories"
                 :key="category.id"
@@ -38,41 +30,26 @@
               >
                 <div
                   class="flex items-center px-4 py-3 cursor-pointer"
-                  :class="{
-                    'bg-white dark:bg-gray-800': activeCategory === category,
-                  }"
+                  :class="{ 'bg-white dark:bg-gray-800': activeCategory === category }"
                 >
-                  <div
-                    class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700 mr-3"
-                  >
-                    <i
-                      :class="[category.icon, 'text-lg dark:text-gray-300']"
-                    ></i>
+                  <div class="w-8 h-8 flex items-center justify-center rounded-xl bg-gray-100 dark:bg-gray-700 mr-3">
+                    <i :class="[category.icon, 'text-lg dark:text-gray-300']"></i>
                   </div>
-                  <span class="font-medium text-gray-700 dark:text-gray-200">{{
-                    $t(category.name)
-                  }}</span>
-                  <i
-                    class="ri-arrow-right-s-line ml-auto text-gray-400 dark:text-gray-500"
-                  ></i>
+                  <span class="font-medium text-gray-700 dark:text-gray-200">{{ $t(category.name) }}</span>
+                  <i class="ri-arrow-right-s-line ml-auto text-gray-400 dark:text-gray-500"></i>
                 </div>
               </div>
             </div>
 
             <!-- Subcategories Panel -->
-            <div
-              v-if="activeCategory"
+            <div 
+              v-if="activeCategory" 
               class="flex-1 p-4 sm:p-8 overflow-y-auto scrollbar-thin scrollbar-thumb-purple-500 dark:scrollbar-thumb-purple-400 scrollbar-track-gray-100 dark:scrollbar-track-gray-800 hover:scrollbar-thumb-purple-600 dark:hover:scrollbar-thumb-purple-500 max-h-[calc(80vh-300px)] sm:max-h-[650px]"
             >
               <div class="max-w-full sm:max-w-4xl">
                 <!-- Subcategories Grid -->
-                <div
-                  class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-x-12 sm:gap-y-8"
-                >
-                  <div
-                    v-for="subcategory in activeCategory.subcategories"
-                    :key="subcategory.id"
-                  >
+                <div class="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3 gap-6 sm:gap-x-12 sm:gap-y-8">
+                  <div v-for="subcategory in activeCategory.subcategories" :key="subcategory.id">
                     <!-- Subcategory Header -->
                     <router-link
                       :to="subcategory.link"
@@ -81,7 +58,7 @@
                     >
                       {{ $t(subcategory.name) }}
                     </router-link>
-
+                    
                     <!-- Subcategory Items -->
                     <ul class="space-y-2">
                       <li v-for="item in subcategory.items" :key="item.id">
@@ -106,99 +83,97 @@
 </template>
 
 <script setup>
-import { ref, onMounted, onUnmounted } from "vue";
-import { useI18n } from "vue-i18n";
-import { useRouter } from "vue-router";
-import axios from "axios";
+import { ref, onMounted, onUnmounted } from 'vue'
+import { useI18n } from 'vue-i18n'
+import { useRouter } from 'vue-router'
+import axios from 'axios'
 
-const { t } = useI18n();
-const router = useRouter();
-const isOpen = ref(false);
-const activeCategory = ref(null);
-const categories = ref([]);
+const { t } = useI18n()
+const router = useRouter()
+const isOpen = ref(false)
+const activeCategory = ref(null)
+const categories = ref([])
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "6|eVqt5VfQaeGJkRZXLvFmq94VFmxIAUcMftfZatk23c042d0c";
+const baseUrl = import.meta.env.VITE_API_BASE_URL || 'http://localhost:8000'
+const token = '2|FW1tyT2zEfCfdJvcFhvXPpSrgBVAsW0kNxq9LwrK57f3ae6b'
 
 const fetchCategories = async () => {
   try {
     const response = await axios.get(`${baseUrl}/api/homepage`, {
       headers: {
-        Authorization: `Bearer ${token}`,
-        Accept: "application/json",
-      },
-    });
+        'Authorization': `Bearer ${token}`,
+        'Accept': 'application/json'
+      }
+    })
     if (response.data.success) {
       categories.value = response.data.data.categories
-        .filter((category) => category.active)
-        .map((category) => ({
+        .filter(category => category.active)
+        .map(category => ({
           id: category.id,
           name: category.name,
           icon: getCategoryIcon(category.slug),
           link: `/category/${category.slug}`,
           subcategories: [],
           description: category.description,
-          image: category.image.startsWith("http")
-            ? category.image
-            : `${baseUrl}${category.image}`,
+          image: category.image.startsWith('http') ? category.image : `${baseUrl}${category.image}`,
           featured: category.featured,
-          order: category.order,
+          order: category.order
         }))
         .sort((a, b) => {
           // Sort by featured first, then by order
-          if (a.featured !== b.featured) return b.featured - a.featured;
-          return a.order - b.order;
-        });
-
+          if (a.featured !== b.featured) return b.featured - a.featured
+          return a.order - b.order
+        })
+        
       if (categories.value.length > 0) {
-        activeCategory.value = categories.value[0];
+        activeCategory.value = categories.value[0]
       }
     }
   } catch (error) {
-    console.error("Error fetching categories:", error);
+    console.error('Error fetching categories:', error)
   }
-};
+}
 
 const getCategoryIcon = (slug) => {
   const icons = {
-    smartphones: "ri-smartphone-line",
-    laptops: "ri-laptop-line",
-    tablets: "ri-tablet-line",
-    accessories: "ri-headphone-line",
-    "smart-watches": "ri-watch-line",
-  };
-  return icons[slug] || "ri-apps-line";
-};
+    'smartphones': 'ri-smartphone-line',
+    'laptops': 'ri-laptop-line',
+    'tablets': 'ri-tablet-line',
+    'accessories': 'ri-headphone-line',
+    'smart-watches': 'ri-watch-line'
+  }
+  return icons[slug] || 'ri-apps-line'
+}
 
 // Add scroll event listener
 onMounted(() => {
-  window.addEventListener("scroll", handleScroll);
-  fetchCategories();
-});
+  window.addEventListener('scroll', handleScroll)
+  fetchCategories()
+})
 
 // Clean up event listener
 onUnmounted(() => {
-  window.removeEventListener("scroll", handleScroll);
-});
+  window.removeEventListener('scroll', handleScroll)
+})
 
 // Handle scroll event
 const handleScroll = () => {
   if (window.scrollY > 0) {
-    isOpen.value = false;
+    isOpen.value = false
   }
-};
+}
 
 const toggleMenu = () => {
-  isOpen.value = !isOpen.value;
+  isOpen.value = !isOpen.value
   if (isOpen.value && categories.value.length > 0) {
-    activeCategory.value = categories.value[0];
+    activeCategory.value = categories.value[0]
   }
-};
+}
 
 const handleCategoryClick = (category) => {
-  router.push(category.link);
-  isOpen.value = false;
-};
+  router.push(category.link)
+  isOpen.value = false
+}
 </script>
 
 <style scoped>
@@ -222,11 +197,11 @@ const handleCategoryClick = (category) => {
 /* Hide scrollbar for Firefox */
 .scrollbar-thin {
   scrollbar-width: thin;
-  scrollbar-color: theme("colors.purple.500") theme("colors.gray.100");
+  scrollbar-color: theme('colors.purple.500') theme('colors.gray.100');
 }
 
 :global(.dark) .scrollbar-thin {
-  scrollbar-color: theme("colors.purple.400") theme("colors.gray.800");
+  scrollbar-color: theme('colors.purple.400') theme('colors.gray.800');
 }
 
 /* Hide scrollbar for IE and Edge */

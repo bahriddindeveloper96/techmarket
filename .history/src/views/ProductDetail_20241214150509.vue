@@ -444,14 +444,12 @@
 </template>
 
 <script setup>
-import { useCartStore } from '@/stores/cartStore';
 import { ref, computed, onMounted, onUnmounted, watch } from "vue";
 import { useRouter, useRoute } from "vue-router";
 import axios from "axios";
 import ProductCard from "@/components/ProductCard.vue";
 
 const router = useRouter();
-const cartStore = useCartStore();
 const route = useRoute();
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
 const token = "6|eVqt5VfQaeGJkRZXLvFmq94VFmxIAUcMftfZatk23c042d0c";
@@ -641,11 +639,12 @@ const addToCart = () => {
     price: selectedVariant.value.price,
     color: selectedVariant.value.attribute_values.Color,
     size: selectedVariant.value.attribute_values.Storage,
-    quantity: quantity.value, // quantity.value ni to'g'ridan-to'g'ri ishlatamiz
+    quantity: quantity.value,
     image: selectedVariant.value.images[0],
   };
 
-  cartStore.addToCart(cartItem);
+  // Add to cart logic here
+  console.log("Adding to cart:", cartItem);
 };
 
 // Helper functions

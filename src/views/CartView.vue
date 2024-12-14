@@ -109,7 +109,7 @@
             <!-- Total -->
             <div class="flex justify-between py-2 border-t border-b dark:border-gray-800">
               <span class="font-medium text-gray-900 dark:text-white">{{ $t('cart.total') }}</span>
-              <span class="font-bold text-gray-900 dark:text-white">{{ formatPrice(total) }} {{ $t('currency') }}</span>
+              <span class="font-bold text-gray-900 dark:text-white">{{ formatPrice(subtotal) }} {{ $t('currency') }}</span>
             </div>
 
             <!-- Checkout Button -->
@@ -142,34 +142,16 @@
 <script setup>
 import { ref, computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { useCartStore } from '@/stores/cartStore'
 import Banner from './../components/Banner.vue'
 import ProductCard from '@/components/ProductCard.vue'
 
 const router = useRouter()
+const cartStore = useCartStore()
 
-// Cart items
-const cartItems = ref([
-  {
-    id: 1,
-    name: 'iPhone 15 Pro Max 256GB Natural Titanium',
-    price: 15999000,
-    oldPrice: 17500000,
-    image: 'https://fakestoreapi.com/img/81fPKd-2AYL._AC_SL1500_.jpg',
-    color: '#A6A6A6',
-    size: '256GB',
-    quantity: 1
-  },
-  {
-    id: 2,
-    name: 'Samsung Galaxy S23 Ultra 512GB Black',
-    price: 13500000,
-    oldPrice: 14800000,
-    image: 'https://fakestoreapi.com/img/71-3HjGNDUL._AC_SY879._SX._UX._SY._UY_.jpg',
-    color: '#2B2B2B',
-    size: '512GB',
-    quantity: 1
-  }
-])
+// Get cart items from store
+const cartItems = computed(() => cartStore.cartItems)
+const subtotal = computed(() => cartStore.total)
 
 // Similar products
 const similarProducts = ref([
@@ -250,53 +232,27 @@ const similarProducts = ref([
   }
 ])
 
-// Computed properties
-const totalItems = computed(() => {
-  return cartItems.value.reduce((total, item) => total + item.quantity, 0)
-})
-
-const subtotal = computed(() => {
-  return cartItems.value.reduce((total, item) => total + (item.price * item.quantity), 0)
-})
-
-const discount = computed(() => {
-  return cartItems.value.reduce((total, item) => {
-    return total + ((item.oldPrice - item.price) * item.quantity)
-  }, 0)
-})
-
-const shipping = computed(() => {
-  return totalItems.value > 0 ? 50000 : 0
-})
-
-const total = computed(() => {
-  return subtotal.value + shipping.value
-})
-
 // Methods
 const formatPrice = (price) => {
   return new Intl.NumberFormat('uz-UZ').format(price)
 }
 
-const updateQuantity = (item, quantity) => {
-  item.quantity += quantity
-  if (item.quantity < 1) {
-    item.quantity = 1
+const updateQuantity = (item, change) => {
+  const newQuantity = item.quantity + change
+  if (newQuantity > 0) {
+    cartStore.updateQuantity(item.id, newQuantity)
   }
 }
 
 const removeFromCart = (item) => {
-  const index = cartItems.value.findIndex(cartItem => cartItem.id === item.id)
-  if (index > -1) {
-    cartItems.value.splice(index, 1)
-  }
+  cartStore.removeFromCart(item.id)
 }
 
 const clearCart = () => {
-  cartItems.value = []
+  cartStore.clearCart()
 }
 
 const checkout = () => {
-  router.push({ name: 'checkout' })
+  router.push('/checkout')
 }
 </script>
