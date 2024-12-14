@@ -11,7 +11,20 @@
           <div class="flex items-center space-x-4">
             <a href="#" class="text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">{{ $t('nav.stores') }}</a>
             <a href="#" class="text-gray-600 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400">{{ $t('nav.delivery') }}</a>
-            <LanguageSwitcher />
+            <div class="relative">
+              <select 
+                v-model="currentLocale"
+                @change="changeLocale"
+                class="appearance-none bg-transparent border border-gray-300 dark:border-gray-600 rounded px-3 py-1 pr-8 focus:outline-none focus:border-purple-500 dark:text-white"
+              >
+                <option value="uz">O'zbekcha</option>
+                <option value="ru">Русский</option>
+                <option value="en">English</option>
+              </select>
+              <div class="pointer-events-none absolute inset-y-0 right-0 flex items-center px-2 text-gray-700 dark:text-gray-300">
+                <i class="fas fa-chevron-down text-xs"></i>
+              </div>
+            </div>
           </div>
         </div>
       </div>
@@ -226,50 +239,6 @@
   </div>
 </template>
 
-<!-- <script setup>
-
-
-import { useCartStore } from '@/stores/cartStore'
-import { auth } from '../firebase/config'
-
-import { ref, computed } from 'vue'
-import { useI18n } from 'vue-i18n'
-import { useRouter } from 'vue-router'
-import { getAuth } from 'firebase/auth'
-import { useCartStore } from '@/stores/cartStore'
-import LanguageSwitcher from './LanguageSwitcher.vue'
-import ThemeToggle from './ThemeToggle.vue'
-import CatalogMenu from './CatalogMenu.vue'
-import MobileCatalogMenu from './MobileCatalogMenu.vue'
-import PhoneAuth from './PhoneAuth.vue'
-
-const auth = getAuth()
-const cartStore = useCartStore()
-const { t } = useI18n()
-const router = useRouter()
-
-const cartStore = useCartStore()
-const { t } = useI18n()
-const router = useRouter()
-
-const isSearchOpen = ref(false)
-const isMobileMenuOpen = ref(false)
-
-const isSearchOpen = ref(false)
-const isMobileMenuOpen = ref(false)
-const showAuthModal = ref(false)
-
-const isLoggedIn = computed(() => !!auth.currentUser)
-
-const toggleMobileMenu = () => {
-  isMobileMenuOpen.value = !isMobileMenuOpen.value
-}
-
-const handleLogin = (user) => {
-  showAuthModal.value = false;
-  router.push('/profile');
-}
-</script> -->
 <script setup>
 import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
@@ -281,6 +250,9 @@ import MobileCatalogMenu from './MobileCatalogMenu.vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import ThemeToggle from './ThemeToggle.vue'
 
+const { locale } = useI18n()
+const currentLocale = ref(locale.value)
+
 const cartStore = useCartStore()
 const { t } = useI18n()
 const router = useRouter()
@@ -288,6 +260,11 @@ const router = useRouter()
 const isSearchOpen = ref(false)
 const isMobileMenuOpen = ref(false)
 const showAuthModal = ref(false)
+
+const changeLocale = () => {
+  locale.value = currentLocale.value
+  localStorage.setItem('locale', currentLocale.value)
+}
 
 function toggleMobileMenu() {
   isMobileMenuOpen.value = !isMobileMenuOpen.value

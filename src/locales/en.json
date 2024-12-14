@@ -1,0 +1,49 @@
+{
+  "currency": "sum",
+  "checkout": {
+    "title": "Checkout",
+    "cart_summary": "Your Order",
+    "subtotal": "Subtotal",
+    "delivery_fee": "Delivery Fee",
+    "total": "Total",
+    "place_order": "Place Order",
+    "processing": "Processing...",
+    "delivery_info": {
+      "title": "Delivery Information",
+      "full_name": "Full Name",
+      "phone": "Phone Number",
+      "region": "Region",
+      "district": "District",
+      "address": "Address",
+      "comment": "Order Comment",
+      "delivery_date": "Desired Delivery Date"
+    },
+    "delivery_method": {
+      "title": "Delivery Method",
+      "standard": "Standard Delivery",
+      "standard_description": "Delivery within 2-3 business days",
+      "express": "Express Delivery",
+      "express_description": "Next business day delivery"
+    },
+    "payment_method": {
+      "title": "Payment Method",
+      "cash": "Cash on Delivery",
+      "cash_description": "Pay with cash upon delivery",
+      "card": "Credit Card",
+      "card_description": "Pay with card upon delivery",
+      "click": "Click",
+      "click_description": "Pay with Click"
+    },
+    "errors": {
+      "please_fill_required": "Please fill all required fields",
+      "failed_to_create": "Failed to create order",
+      "something_went_wrong": "Something went wrong",
+      "invalid_phone": "Invalid phone number format",
+      "invalid_date": "Invalid date"
+    },
+    "success": {
+      "title": "Order Received",
+      "message": "Your order has been successfully received. We will contact you shortly."
+    }
+  }
+}

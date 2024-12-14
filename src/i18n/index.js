@@ -80,7 +80,7 @@ const messages = {
       recommended: 'Recommended Products',
       recommended_products: 'Recommended Products'
     },
-    currency: 'USD',
+    currency: 'sum',
     month: 'months',
     product: {
       about: 'About Product',
@@ -114,36 +114,57 @@ const messages = {
     },
     checkout: {
       title: 'Checkout',
-      personal_info: 'Personal Information',
-      first_name: 'First Name',
-      last_name: 'Last Name',
-      phone: 'Phone Number',
-      email: 'Email',
-      shipping_method: 'Shipping Method',
-      payment_method: 'Payment Method',
-      order_summary: 'Order Summary',
+      delivery_info: {
+        title: 'Delivery Information',
+        full_name: 'Full Name',
+        phone: 'Phone Number',
+        region: 'Region',
+        district: 'District',
+        address: 'Address',
+        comment: 'Order Comment',
+        delivery_date: 'Desired Delivery Date'
+      },
+      delivery_method: {
+        title: 'Delivery Method',
+        standard: 'Standard Delivery',
+        standard_description: 'Delivery within 2-3 business days',
+        express: 'Express Delivery',
+        express_description: 'Next business day delivery'
+      },
+      payment_method: {
+        title: 'Payment Method',
+        cash: 'Cash on Delivery',
+        cash_description: 'Pay with cash upon delivery',
+        card: 'Credit Card',
+        card_description: 'Pay with card upon delivery',
+        click: 'Click',
+        click_description: 'Pay with Click'
+      },
+      cart_summary: 'Your Order',
       subtotal: 'Subtotal',
-      shipping: 'Shipping',
+      delivery_fee: 'Delivery Fee',
       total: 'Total',
-      quantity: 'Quantity',
-      free: 'Free',
       place_order: 'Place Order',
-      shipping_methods: {
-        standard: {
-          title: 'Standard Delivery',
-          description: '3-5 business days',
-          free: 'Free Shipping'
-        },
-        express: {
-          title: 'Express Delivery',
-          description: '1-2 business days',
-          price: '50,000 UZS'
-        },
-        pickup: {
-          title: 'Store Pickup',
-          description: 'Available today',
-          free: 'Free'
-        }
+      processing: 'Processing...',
+      errors: {
+        please_fill_required: 'Please fill all required fields',
+        failed_to_create: 'Failed to create order',
+        something_went_wrong: 'Something went wrong',
+        invalid_phone: 'Invalid phone number format',
+        invalid_date: 'Invalid date',
+        name_required: 'Full name is required',
+        phone_required: 'Phone number is required',
+        region_required: 'Region is required',
+        district_required: 'District is required',
+        address_required: 'Address is required',
+        date_required: 'Delivery date is required',
+        delivery_method_required: 'Please select a delivery method',
+        payment_method_required: 'Please select a payment method',
+        date_past: 'Delivery date cannot be in the past'
+      },
+      success: {
+        title: 'Order Received',
+        message: 'Your order has been successfully received. We will contact you soon.'
       }
     },
     footer: {
@@ -522,7 +543,7 @@ const messages = {
       recommended: 'Рекомендуемые товары',
       recommended_products: 'Рекомендуемые товары'
     },
-    currency: 'РУБ',
+    currency: 'сум',
     month: 'мес',
     product: {
       about: 'О товаре',
@@ -556,36 +577,57 @@ const messages = {
     },
     checkout: {
       title: 'Оформление заказа',
-      personal_info: 'Личная информация',
-      first_name: 'Имя',
-      last_name: 'Фамилия',
-      phone: 'Телефон',
-      email: 'Эл. почта',
-      shipping_method: 'Способ доставки',
-      payment_method: 'Способ оплаты',
-      order_summary: 'Сводка заказа',
+      delivery_info: {
+        title: 'Информация о доставке',
+        full_name: 'ФИО',
+        phone: 'Номер телефона',
+        region: 'Регион',
+        district: 'Район',
+        address: 'Адрес',
+        comment: 'Комментарий к заказу',
+        delivery_date: 'Желаемая дата доставки'
+      },
+      delivery_method: {
+        title: 'Способ доставки',
+        standard: 'Стандартная доставка',
+        standard_description: 'Доставка в течение 2-3 рабочих дней',
+        express: 'Экспресс доставка',
+        express_description: 'Доставка на следующий рабочий день'
+      },
+      payment_method: {
+        title: 'Способ оплаты',
+        cash: 'Наличными при получении',
+        cash_description: 'Оплата наличными курьеру при получении',
+        card: 'Банковской картой',
+        card_description: 'Оплата картой при получении',
+        click: 'Click',
+        click_description: 'Оплата через Click'
+      },
+      cart_summary: 'Ваш заказ',
       subtotal: 'Подытог',
-      shipping: 'Доставка',
+      delivery_fee: 'Стоимость доставки',
       total: 'Итого',
-      quantity: 'Количество',
-      free: 'Бесплатно',
-      place_order: 'Разместить заказ',
-      shipping_methods: {
-        standard: {
-          title: 'Стандартная доставка',
-          description: 'Доставка в течение 3-5 рабочих дней',
-          free: 'Бесплатная доставка'
-        },
-        express: {
-          title: 'Экспресс-доставка',
-          description: 'Доставка в течение 1-2 рабочих дней',
-          price: 'Стоимость экспресс-доставки'
-        },
-        pickup: {
-          title: 'Самовывоз',
-          description: 'Забрать из нашего магазина',
-          free: 'Бесплатно'
-        }
+      place_order: 'Оформить заказ',
+      processing: 'Обработка...',
+      errors: {
+        please_fill_required: 'Пожалуйста, заполните все обязательные поля',
+        failed_to_create: 'Не удалось создать заказ',
+        something_went_wrong: 'Что-то пошло не так',
+        invalid_phone: 'Неверный формат номера телефона',
+        invalid_date: 'Неверная дата',
+        name_required: 'Укажите ФИО',
+        phone_required: 'Укажите номер телефона',
+        region_required: 'Укажите регион',
+        district_required: 'Укажите район',
+        address_required: 'Укажите адрес',
+        date_required: 'Укажите дату доставки',
+        delivery_method_required: 'Выберите способ доставки',
+        payment_method_required: 'Выберите способ оплаты',
+        date_past: 'Дата доставки не может быть в прошлом'
+      },
+      success: {
+        title: 'Заказ принят',
+        message: 'Ваш заказ успешно принят. Мы свяжемся с вами в ближайшее время.'
       }
     },
     footer: {
@@ -997,37 +1039,58 @@ const messages = {
       similar_products: 'Sizga yoqishi mumkin'
     },
     checkout: {
-      title: 'Checkout',
-      personal_info: 'Personal Information',
-      first_name: 'First Name',
-      last_name: 'Last Name',
-      phone: 'Phone Number',
-      email: 'Email',
-      shipping_method: 'Shipping Method',
-      payment_method: 'Payment Method',
-      order_summary: 'Order Summary',
-      subtotal: 'Subtotal',
-      shipping: 'Shipping',
-      total: 'Total',
-      quantity: 'Quantity',
-      free: 'Free',
-      place_order: 'Place Order',
-      shipping_methods: {
-        standard: {
-          title: 'Standard Delivery',
-          description: '3-5 business days',
-          free: 'Free Shipping'
-        },
-        express: {
-          title: 'Express Delivery',
-          description: '1-2 business days',
-          price: '50,000 UZS'
-        },
-        pickup: {
-          title: 'Store Pickup',
-          description: 'Available today',
-          free: 'Free'
-        }
+      title: 'Buyurtma berish',
+      delivery_info: {
+        title: 'Yetkazib berish ma\'lumotlari',
+        full_name: 'F.I.Sh',
+        phone: 'Telefon raqami',
+        region: 'Viloyat',
+        district: 'Tuman',
+        address: 'Manzil',
+        comment: 'Buyurtmaga izoh',
+        delivery_date: 'Yetkazib berish sanasi'
+      },
+      delivery_method: {
+        title: 'Yetkazib berish usuli',
+        standard: 'Standart yetkazib berish',
+        standard_description: '2-3 ish kuni ichida yetkazib berish',
+        express: 'Tezkor yetkazib berish',
+        express_description: 'Keyingi ish kunida yetkazib berish'
+      },
+      payment_method: {
+        title: 'To\'lov usuli',
+        cash: 'Naqd pul orqali',
+        cash_description: 'Yetkazib berilganda naqd pul orqali to\'lash',
+        card: 'Bank kartasi orqali',
+        card_description: 'Yetkazib berilganda karta orqali to\'lash',
+        click: 'Click',
+        click_description: 'Click orqali to\'lash'
+      },
+      cart_summary: 'Sizning buyurtmangiz',
+      subtotal: 'Oraliq summa',
+      delivery_fee: 'Yetkazib berish narxi',
+      total: 'Jami',
+      place_order: 'Buyurtma berish',
+      processing: 'Qayta ishlanmoqda...',
+      errors: {
+        please_fill_required: 'Barcha majburiy maydonlarni to\'ldiring',
+        failed_to_create: 'Buyurtma yaratishda xatolik yuz berdi',
+        something_went_wrong: 'Xatolik yuz berdi',
+        invalid_phone: 'Telefon raqam noto\'g\'ri formatda',
+        invalid_date: 'Sana noto\'g\'ri',
+        name_required: 'F.I.Sh ni kiriting',
+        phone_required: 'Telefon raqamini kiriting',
+        region_required: 'Viloyatni tanlang',
+        district_required: 'Tumanni tanlang',
+        address_required: 'Manzilni kiriting',
+        date_required: 'Yetkazib berish sanasini kiriting',
+        delivery_method_required: 'Yetkazib berish usulini tanlang',
+        payment_method_required: 'To\'lov usulini tanlang',
+        date_past: 'Yetkazib berish sanasi o\'tgan kunlar bo\'lishi mumkin emas'
+      },
+      success: {
+        title: 'Buyurtma qabul qilindi',
+        message: 'Buyurtmangiz muvaffaqiyatli qabul qilindi. Tez orada siz bilan bog\'lanamiz.'
       }
     },
     footer: {
@@ -1203,7 +1266,7 @@ const messages = {
         laptops: 'Laptops',
         accessories: 'Accessories'
       },
-     
+      
       pagination: {
         prev: 'Orqaga',
         next: 'Oldinga'
@@ -1322,7 +1385,5 @@ export default createI18n({
   legacy: false,
   locale: localStorage.getItem('language') || 'uz',
   fallbackLocale: 'uz',
-  messages,
-  globalInjection: true,
-  silentTranslationWarn: true
+  messages
 })

@@ -154,12 +154,12 @@ const router = useRouter()
 const cartStore = useCartStore()
 
 // Get cart items from store
-const cartItems = computed(() => cartStore.cartItems)
-const subtotal = computed(() => cartStore.total)
+const cartItems = computed(() => cartStore.items || [])
+const subtotal = computed(() => cartStore.total || 0)
 
 // Similar products
 const similarProducts = ref([
-{
+  {
     id: 1,
     name: 'iPhone 13 Pro Max',
     price: 13_999_000,
@@ -262,10 +262,7 @@ const formatPrice = (price) => {
 }
 
 const updateQuantity = (item, change) => {
-  const newQuantity = item.quantity + change
-  if (newQuantity > 0) {
-    cartStore.updateQuantity(item.id, newQuantity)
-  }
+  cartStore.updateQuantity(item.id, item.quantity + change)
 }
 
 const removeFromCart = (item) => {

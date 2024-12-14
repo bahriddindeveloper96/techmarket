@@ -1,0 +1,38 @@
+{
+  "currency": "сум",
+  "checkout": {
+    "title": "Оформление заказа",
+    "delivery_info": {
+      "title": "Информация о доставке",
+      "full_name": "ФИО",
+      "phone": "Номер телефона",
+      "region": "Регион",
+      "district": "Район",
+      "address": "Адрес",
+      "comment": "Комментарий к заказу",
+      "delivery_date": "Желаемая дата доставки"
+    },
+    "delivery_method": {
+      "title": "Способ доставки",
+      "standard": "Стандартная доставка",
+      "standard_description": "Доставка в течение 2-3 рабочих дней",
+      "express": "Экспресс доставка",
+      "express_description": "Доставка на следующий рабочий день"
+    },
+    "payment_method": {
+      "title": "Способ оплаты",
+      "cash": "Наличными при получении",
+      "cash_description": "Оплата наличными курьеру при получении",
+      "card": "Банковской картой",
+      "card_description": "Оплата картой при получении",
+      "click": "Click",
+      "click_description": "Оплата через Click"
+    },
+    "cart_summary": "Ваш заказ",
+    "subtotal": "Подытог",
+    "delivery_fee": "Стоимость доставки",
+    "total": "Итого",
+    "place_order": "Оформить заказ",
+    "processing": "Обработка..."
+  }
+}

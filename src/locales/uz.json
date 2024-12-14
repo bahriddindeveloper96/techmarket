@@ -1,0 +1,38 @@
+{
+  "currency": "so'm",
+  "checkout": {
+    "title": "Buyurtma berish",
+    "delivery_info": {
+      "title": "Yetkazib berish ma'lumotlari",
+      "full_name": "F.I.Sh",
+      "phone": "Telefon raqami",
+      "region": "Viloyat",
+      "district": "Tuman",
+      "address": "Manzil",
+      "comment": "Buyurtmaga izoh",
+      "delivery_date": "Yetkazib berish sanasi"
+    },
+    "delivery_method": {
+      "title": "Yetkazib berish usuli",
+      "standard": "Standart yetkazib berish",
+      "standard_description": "2-3 ish kuni ichida yetkazib berish",
+      "express": "Tezkor yetkazib berish",
+      "express_description": "Keyingi ish kunida yetkazib berish"
+    },
+    "payment_method": {
+      "title": "To'lov usuli",
+      "cash": "Naqd pul orqali",
+      "cash_description": "Yetkazib berilganda naqd pul orqali to'lash",
+      "card": "Bank kartasi orqali",
+      "card_description": "Yetkazib berilganda karta orqali to'lash",
+      "click": "Click",
+      "click_description": "Click orqali to'lash"
+    },
+    "cart_summary": "Sizning buyurtmangiz",
+    "subtotal": "Oraliq summa",
+    "delivery_fee": "Yetkazib berish narxi",
+    "total": "Jami",
+    "place_order": "Buyurtma berish",
+    "processing": "Qayta ishlanmoqda..."
+  }
+}

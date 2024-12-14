@@ -640,7 +640,7 @@ const addToCart = () => {
 
   const cartItem = {
     id: selectedVariant.value.id,
-    productId: product.value.id,
+    product_id: selectedVariant.value.product_id,
     name: product.value.name,
     price: selectedVariant.value.price,
     oldPrice: selectedVariant.value.price * 1.2,
