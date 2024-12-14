@@ -32,15 +32,19 @@
             
             <!-- Product Info -->
             <div class="flex-1">
-              <h3 class="font-medium text-gray-900 dark:text-white">{{ $t(`products.${item.id}.name`, item.name) }}</h3>
+              <h3 class="font-medium text-gray-900 dark:text-white">{{ item.name }}</h3>
               <div class="text-sm text-gray-500 dark:text-gray-400 mt-1">
-                <span v-if="item.color" class="mr-2">
-                  <i class="fas fa-circle" :style="{ color: item.color }"></i>
+                <span class="mr-2">
+                  <i class="fas fa-circle" :style="{ color: item.attributes.color }"></i>
+                  {{ item.attributes.color }}
                 </span>
-                <span v-if="item.size">{{ item.size }}</span>
+                <span>{{ item.attributes.storage }}</span>
               </div>
               <div class="mt-2 flex items-center gap-4">
                 <span class="font-medium text-gray-900 dark:text-white">{{ formatPrice(item.price) }} {{ $t('currency') }}</span>
+                <span v-if="item.oldPrice" class="text-sm line-through text-gray-400">
+                  {{ formatPrice(item.oldPrice) }} {{ $t('currency') }}
+                </span>
               </div>
             </div>
 
@@ -168,7 +172,11 @@ const similarProducts = ref([
       'https://picsum.photos/400/400?random=1',
       'https://picsum.photos/400/400?random=2',
       'https://picsum.photos/400/400?random=3'
-    ]
+    ],
+    attributes: {
+      color: 'black',
+      storage: '128GB'
+    }
   },
   {
     id: 2,
@@ -183,7 +191,11 @@ const similarProducts = ref([
       'https://picsum.photos/400/400?random=4',
       'https://picsum.photos/400/400?random=5',
       'https://picsum.photos/400/400?random=6'
-    ]
+    ],
+    attributes: {
+      color: 'white',
+      storage: '256GB'
+    }
   },
   {
     id: 5,
@@ -198,7 +210,11 @@ const similarProducts = ref([
       'https://picsum.photos/400/400?random=1',
       'https://picsum.photos/400/400?random=8',
       'https://picsum.photos/400/400?random=7'
-    ]
+    ],
+    attributes: {
+      color: 'silver',
+      storage: '512GB'
+    }
   },
   {
     id: 6,
@@ -213,7 +229,11 @@ const similarProducts = ref([
       'https://picsum.photos/400/400?random=15',
       'https://picsum.photos/400/400?random=11',
       'https://picsum.photos/400/400?random=14'
-    ]
+    ],
+    attributes: {
+      color: 'gray',
+      storage: '64GB'
+    }
   },
   {
     id: 8,
@@ -228,7 +248,11 @@ const similarProducts = ref([
       'https://picsum.photos/400/400?random=15',
       'https://picsum.photos/400/400?random=11',
       'https://picsum.photos/400/400?random=14'
-    ]
+    ],
+    attributes: {
+      color: 'gray',
+      storage: '64GB'
+    }
   }
 ])
 

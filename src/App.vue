@@ -1,17 +1,26 @@
 <template>
   <div id="app-main" class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">    
     <Navbar class="w-full" />    
-        <router-view></router-view>      
+    <router-view></router-view>      
     <Footer class="mt-auto" />
+
+    <!-- Global Product Detail Modal -->
+    <ProductDetailModal
+      v-if="modalProduct"
+      :show="!!modalProduct"
+      :product="modalProduct"
+      @close="closeProductModal"
+      @added-to-cart="handleAddedToCart"
+    />
   </div>
 </template>
 
 <script setup>
-import { ref, onMounted } from 'vue'
+import { ref, provide, onMounted } from 'vue'
 import { RouterLink, RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
-
+import ProductDetailModal from './components/ProductDetailModal.vue'
 
 // Sample data
 const categories = ref([
@@ -47,6 +56,23 @@ const categories = ref([
   }
 ])
 
+// Modal state
+const modalProduct = ref(null)
+
+// Modal methods
+const openProductModal = (product) => {
+  modalProduct.value = product
+}
+
+const closeProductModal = () => {
+  modalProduct.value = null
+}
+
+const handleAddedToCart = () => {
+  closeProductModal()
+  // Add notification logic here if needed
+}
+
 // Methods
 const addToCart = (product) => {
   console.log('Adding to cart:', product)
@@ -56,6 +82,10 @@ const addToCart = (product) => {
 const toggleFavorite = (product) => {
   product.isFavorite = !product.isFavorite
 }
+
+// Provide modal methods to child components
+provide('openProductModal', openProductModal)
+provide('closeProductModal', closeProductModal)
 
 onMounted(() => {
   // Initialize theme from localStorage or system preference

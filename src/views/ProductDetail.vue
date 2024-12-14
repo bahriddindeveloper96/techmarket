@@ -632,20 +632,30 @@ const updateSelectedVariant = () => {
 watch([selectedColor, selectedSize], updateSelectedVariant);
 
 const addToCart = () => {
-  if (!selectedVariant.value) return;
+  if (!selectedVariant.value) {
+    // Agar variant tanlanmagan bo'lsa, foydalanuvchiga xabar beramiz
+    alert('Iltimos, rang va xotira hajmini tanlang')
+    return
+  }
 
   const cartItem = {
     id: selectedVariant.value.id,
     productId: product.value.id,
     name: product.value.name,
     price: selectedVariant.value.price,
-    color: selectedVariant.value.attribute_values.Color,
-    size: selectedVariant.value.attribute_values.Storage,
-    quantity: quantity.value, // quantity.value ni to'g'ridan-to'g'ri ishlatamiz
-    image: selectedVariant.value.images[0],
-  };
+    oldPrice: selectedVariant.value.price * 1.2,
+    color: selectedColor.value,
+    size: selectedSize.value,
+    quantity: quantity.value,
+    image: selectedVariant.value.images[0] || product.value.images[0],
+    variant: selectedVariant.value,
+    attributes: {
+      color: selectedColor.value,
+      storage: selectedSize.value
+    }
+  }
 
-  cartStore.addToCart(cartItem);
+  cartStore.addToCart(cartItem)
 };
 
 // Helper functions
