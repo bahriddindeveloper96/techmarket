@@ -62,7 +62,7 @@
                       </svg>
                       <span class="font-medium">{{ $t('profile.settings') }}</span>
                     </button>
-                    <div class="mb-8 flex justify-end">
+                    
                       <button 
                         @click="handleLogout"
                         class="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
@@ -70,7 +70,7 @@
                         <i class="fas fa-sign-out-alt"></i>
                         <span>{{ $t('profile.logout') }}</span>
                       </button>
-                    </div>
+                    
 
                     <!-- <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -95,11 +95,12 @@
                 <Settings />
               </div>
               <div v-else-if="activeTab === 'personal'">
-                <!-- <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" /> -->
-                <PersonalInfo />
+                <PersonalInfo :active-tab="activeTab" @update:active-tab="activeTab = $event" />
+                <!-- <PersonalInfo /> -->
+                
               </div>
               <div v-else>
-                
+                  <ProfileView /> 
               </div>
             </div>
           </div>
@@ -164,6 +165,7 @@
                 <i class="ri-arrow-right-s-line text-xl text-gray-400 dark:text-gray-500 ml-auto"></i>
               </div>
             </router-link>
+            
 
             <!-- Help Center -->
             <a href="#" class="block bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
@@ -177,7 +179,7 @@
             </a>
 
             <!-- Logout -->
-            <button class="w-full bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+            <button @click="handleLogout" class="w-full bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
               <div class="p-4 flex items-center">
                 <div class="w-10 h-10 rounded-xl bg-red-50 dark:bg-red-900/50 flex items-center justify-center text-red-600 dark:text-red-400">
                   <i class="ri-logout-box-r-line text-xl"></i>
@@ -185,6 +187,7 @@
                 <span class="ml-4 text-red-600 dark:text-red-400 font-medium">{{ $t('profile.logout') }}</span>
               </div>
             </button>
+            
           </div>
         </div>
   </div>
@@ -198,7 +201,9 @@ import { useRouter } from 'vue-router';
 import Settings from './Settings.vue';
 import PersonalInfo from './PersonalInfo.vue';
 import OrdersView from '../views/OrdersView.vue';
-import Banner from '../components/Banner.vue';
+import ProfileView from '@/views/ProfileView.vue';
+
+
 
 // State
 const authStore = useAuthStore();

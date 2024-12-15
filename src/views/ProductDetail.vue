@@ -639,6 +639,8 @@ const addToCart = () => {
   }
 
   const cartItem = {
+    id: selectedVariant.value.id,
+    productId: product.value.id,
     name: product.value.name,
     price: selectedVariant.value.price,
     oldPrice: selectedVariant.value.price * 1.2,
@@ -652,6 +654,7 @@ const addToCart = () => {
       storage: selectedSize.value
     }
   }
+  
 
   cartStore.addToCart(cartItem)
 };

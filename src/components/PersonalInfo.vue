@@ -115,16 +115,18 @@
 </template>
 
 <script setup>
-import { ref } from 'vue';
+import { ref, onMounted, computed } from 'vue'
+import { useAuthStore } from '../stores/authStore'
+import { useI18n } from 'vue-i18n'
 
-const emit = defineEmits(['update:active-tab']);
+const authStore = useAuthStore()
+const { t, locale } = useI18n()
+const currentLocale = computed(() => locale.value)
 
-const props = defineProps({
-  activeTab: {
-    type: String,
-    required: true
-  }
-});
+const loading = ref(true)
+const updating = ref(false)
+const error = ref(null)
+const successMessage = ref('')
 
 const userData = ref({
   firstName: '',
@@ -134,12 +136,79 @@ const userData = ref({
   birthday: '',
   gender: '',
   address: ''
-});
+})
 
-const handleSave = () => {
-  // Save user data logic here
-  console.log('Saving user data:', userData.value);
-  // Navigate back to home
-  emit('update:active-tab', 'home');
-};
+const fetchProfile = async () => {
+  try {
+    loading.value = true
+    error.value = null
+
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user`, {
+      headers: {
+        'Authorization': `Bearer ${authStore.getToken}`,
+        'Accept': 'application/json'
+      }
+    })
+
+    if (!response.ok) {
+      throw new Error('Failed to fetch profile')
+    }
+
+    const data = await response.json()
+
+    // Set basic data
+    userData.value.firstName = data.first_name || ''
+    userData.value.lastName = data.last_name || ''
+    userData.value.email = data.email || ''
+    userData.value.phone = data.phone || ''
+    userData.value.birthday = data.birthday || ''
+    userData.value.gender = data.gender || ''
+    userData.value.address = data.address || ''
+  } catch (err) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+const updateProfile = async () => {
+  try {
+    updating.value = true
+    error.value = null
+    successMessage.value = ''
+
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user`, {
+      method: 'PUT',
+      headers: {
+        'Authorization': `Bearer ${authStore.getToken}`,
+        'Content-Type': 'application/json',
+        'Accept': 'application/json'
+      },
+      body: JSON.stringify({
+        first_name: userData.value.firstName,
+        last_name: userData.value.lastName,
+        email: userData.value.email,
+        phone: userData.value.phone,
+        birthday: userData.value.birthday,
+        gender: userData.value.gender,
+        address: userData.value.address
+      })
+    })
+
+    if (!response.ok) {
+      throw new Error(t('profile.error'))
+    }
+
+    successMessage.value = t('profile.success')
+  } catch (err) {
+    error.value = err.message || t('profile.error')
+  } finally {
+    updating.value = false
+  }
+}
+
+onMounted(() => {
+  fetchProfile()
+})
 </script>
+
