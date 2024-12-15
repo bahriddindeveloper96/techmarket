@@ -454,7 +454,7 @@ const router = useRouter();
 const cartStore = useCartStore();
 const route = useRoute();
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "6|eVqt5VfQaeGJkRZXLvFmq94VFmxIAUcMftfZatk23c042d0c";
+const token = "1|yVZW2OLxhP4ckuJb5ndIsKwpTbKyTHSs3e2vVnNo7a8707db";
 
 // Product data
 const product = ref(null);
@@ -639,8 +639,6 @@ const addToCart = () => {
   }
 
   const cartItem = {
-    id: selectedVariant.value.id,
-    product_id: selectedVariant.value.product_id,
     name: product.value.name,
     price: selectedVariant.value.price,
     oldPrice: selectedVariant.value.price * 1.2,

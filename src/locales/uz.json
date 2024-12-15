@@ -33,6 +33,14 @@
     "delivery_fee": "Yetkazib berish narxi",
     "total": "Jami",
     "place_order": "Buyurtma berish",
-    "processing": "Qayta ishlanmoqda..."
+    "processing": "Qayta ishlanmoqda...",
+    "errors": {
+      "order_creation_failed": "Buyurtma yaratib bo'lmadi. Iltimos, qayta urinib ko'ring.",
+      "something_went_wrong": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+      "please_fill_required": "Iltimos, barcha majburiy maydonlarni to'ldiring"
+    },
+    "success": {
+      "order_created": "Buyurtma muvaffaqiyatli yaratildi!"
+    }
   }
 }

@@ -118,7 +118,7 @@ const activeCategory = ref(null);
 const categories = ref([]);
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "6|eVqt5VfQaeGJkRZXLvFmq94VFmxIAUcMftfZatk23c042d0c";
+const token = "1|yVZW2OLxhP4ckuJb5ndIsKwpTbKyTHSs3e2vVnNo7a8707db";
 
 const fetchCategories = async () => {
   try {

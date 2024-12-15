@@ -17,14 +17,19 @@ export const useCartStore = defineStore('cart', () => {
   
   function addToCart(item) {
     const existingItem = items.value.find(i => 
-      i.product_variant_id === item.product_variant_id && 
-      i.product_id === item.product_id
+      i.product_variant_id === item.variant.id && 
+      i.product_id === item.variant.product_id
     )
     
     if (existingItem) {
       existingItem.quantity += item.quantity
     } else {
-      items.value.push(item)
+      const cartItem = {
+        ...item,
+        product_variant_id: item.variant.id,
+        product_id: item.variant.product_id
+      }
+      items.value.push(cartItem)
     }
     
     showNotification.value = true

@@ -18,9 +18,13 @@
                   v-model="formData.delivery_name"
                   type="text"
                   class="w-full p-2 border rounded focus:outline-none focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  :class="{ 'border-red-500': formErrors.delivery_name }"
                   :placeholder="t('checkout.delivery_info.full_name')"
                   required
                 />
+                <p v-if="formErrors.delivery_name" class="mt-1 text-sm text-red-500">
+                  {{ formErrors.delivery_name }}
+                </p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -30,9 +34,13 @@
                   v-model="formData.delivery_phone"
                   type="tel"
                   class="w-full p-2 border rounded focus:outline-none focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  :class="{ 'border-red-500': formErrors.delivery_phone }"
                   placeholder="+998"
                   required
                 />
+                <p v-if="formErrors.delivery_phone" class="mt-1 text-sm text-red-500">
+                  {{ formErrors.delivery_phone }}
+                </p>
               </div>
             </div>
 
@@ -46,9 +54,13 @@
                   v-model="formData.delivery_region"
                   type="text"
                   class="w-full p-2 border rounded focus:outline-none focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  :class="{ 'border-red-500': formErrors.delivery_region }"
                   :placeholder="t('checkout.delivery_info.region')"
                   required
                 />
+                <p v-if="formErrors.delivery_region" class="mt-1 text-sm text-red-500">
+                  {{ formErrors.delivery_region }}
+                </p>
               </div>
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
@@ -58,9 +70,13 @@
                   v-model="formData.delivery_district"
                   type="text"
                   class="w-full p-2 border rounded focus:outline-none focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                  :class="{ 'border-red-500': formErrors.delivery_district }"
                   :placeholder="t('checkout.delivery_info.district')"
                   required
                 />
+                <p v-if="formErrors.delivery_district" class="mt-1 text-sm text-red-500">
+                  {{ formErrors.delivery_district }}
+                </p>
               </div>
             </div>
 
@@ -72,9 +88,13 @@
                 v-model="formData.delivery_address"
                 type="text"
                 class="w-full p-2 border rounded focus:outline-none focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                :class="{ 'border-red-500': formErrors.delivery_address }"
                 :placeholder="t('checkout.delivery_info.address')"
                 required
               />
+              <p v-if="formErrors.delivery_address" class="mt-1 text-sm text-red-500">
+                {{ formErrors.delivery_address }}
+              </p>
             </div>
 
             <div>
@@ -98,10 +118,14 @@
                 v-model="formData.desired_delivery_date"
                 type="date"
                 class="w-full p-2 border rounded focus:outline-none focus:border-purple-500 dark:bg-gray-700 dark:border-gray-600 dark:text-white"
+                :class="{ 'border-red-500': formErrors.desired_delivery_date }"
                 :min="minDeliveryDate"
                 :max="maxDeliveryDate"
                 required
               />
+              <p v-if="formErrors.desired_delivery_date" class="mt-1 text-sm text-red-500">
+                {{ formErrors.desired_delivery_date }}
+              </p>
             </div>
 
             <!-- Delivery Method -->
@@ -114,7 +138,8 @@
                   class="border rounded-lg p-4 cursor-pointer transition-colors"
                   :class="{
                     'border-purple-500 bg-purple-50 dark:bg-purple-900/10': formData.delivery_method_id === method.id,
-                    'hover:border-purple-300': formData.delivery_method_id !== method.id
+                    'hover:border-purple-300': formData.delivery_method_id !== method.id,
+                    'border-red-500': formErrors.delivery_method && !formData.delivery_method_id
                   }"
                   @click="formData.delivery_method_id = method.id"
                 >
@@ -138,6 +163,9 @@
                   </div>
                 </div>
               </div>
+              <p v-if="formErrors.delivery_method" class="mt-1 text-sm text-red-500">
+                {{ formErrors.delivery_method }}
+              </p>
             </div>
 
             <!-- Payment Method -->
@@ -150,7 +178,8 @@
                   class="border rounded-lg p-4 cursor-pointer transition-colors"
                   :class="{
                     'border-purple-500 bg-purple-50 dark:bg-purple-900/10': formData.payment_method_id === method.id,
-                    'hover:border-purple-300': formData.payment_method_id !== method.id
+                    'hover:border-purple-300': formData.payment_method_id !== method.id,
+                    'border-red-500': formErrors.payment_method && !formData.payment_method_id
                   }"
                   @click="formData.payment_method_id = method.id"
                 >
@@ -171,6 +200,9 @@
                   </div>
                 </div>
               </div>
+              <p v-if="formErrors.payment_method" class="mt-1 text-sm text-red-500">
+                {{ formErrors.payment_method }}
+              </p>
             </div>
 
             <button
@@ -258,31 +290,33 @@ const cartItems = computed(() => cartStore.items || [])
 const isSubmitting = ref(false)
 
 const formatOrderData = () => {
-  console.log('Cart items:', cartItems.value)
-  const items = cartItems.value.map(item => {
-    console.log('Item:', item)
+  console.log('Cart items before formatting:', cartStore.items)
+  
+  const items = cartStore.items.map(item => {
+    console.log('Processing item:', item)
     return {
-      product_id: item.product_id || item.product?.id,
-      product_variant_id: item.product_variant_id || item.product_variant?.id,
-      quantity: item.quantity
+      product_id: item.productId,
+      product_variant_id: item.id,
+      quantity: item.quantity,
+      price: parseFloat(item.price)
     }
   })
+  console.log('Formatted items:', items)
 
-  const orderData = {
-    delivery_method_id: formData.value.delivery_method_id,
-    payment_method_id: formData.value.payment_method_id,
+  const formattedData = {
     delivery_name: formData.value.delivery_name,
-    delivery_phone: formData.value.delivery_phone.replace(/\D/g, ''),
+    delivery_phone: formData.value.delivery_phone,
     delivery_region: formData.value.delivery_region,
     delivery_district: formData.value.delivery_district,
     delivery_address: formData.value.delivery_address,
-    delivery_comment: formData.value.delivery_comment || '',
     desired_delivery_date: formData.value.desired_delivery_date,
+    delivery_method_id: parseInt(formData.value.delivery_method_id),
+    payment_method_id: parseInt(formData.value.payment_method_id),
     items: items
   }
 
-  console.log('Order data:', orderData)
-  return orderData
+  console.log('Final formatted data:', formattedData)
+  return formattedData
 }
 
 // Mock delivery and payment methods (replace with API data)
@@ -442,54 +476,68 @@ const formatPrice = (price) => {
 const submitOrder = async () => {
   if (isSubmitting.value) return
   
+  // Reset form errors
+  formErrors.value = {}
+
   // Validate form
   if (!validateForm()) {
-    // Show error message
-    alert(t('checkout.errors.please_fill_required'))
     return
   }
 
-  isSubmitting.value = true
-
   try {
-    const orderData = formatOrderData()
-    console.log('Sending order data:', orderData)
+    isSubmitting.value = true
 
-    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/orders`, {
+    // Format order data
+    const orderData = formatOrderData()
+    console.log('Sending order data:', JSON.stringify(orderData, null, 2))
+    
+    // Submit order
+    const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/orders`
+    console.log('API URL:', apiUrl)
+    
+    const headers = {
+      'Content-Type': 'application/json',
+      'Authorization': `Bearer 2|VFJIrMjEkiF5kBFU9w9Uvthz09QVc9IempUbkxNff3a9a5f4`
+    }
+    console.log('Request headers:', headers)
+
+    const response = await fetch(apiUrl, {
       method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'Authorization': `Bearer ${localStorage.getItem('token')}`
-      },
+      headers: headers,
       body: JSON.stringify(orderData)
     })
 
+    console.log('Response status:', response.status)
     const data = await response.json()
-    console.log('API response:', data)
+    console.log('Response data:', data)
 
     if (!response.ok) {
-      // Show validation errors if any
       if (data.errors) {
         console.log('Validation errors:', data.errors)
-        const errorMessages = Object.entries(data.errors)
-          .map(([field, errors]) => `${field}: ${errors.join(', ')}`)
-          .join('\n')
-        throw new Error(errorMessages)
+        // Handle validation errors from the server
+        Object.entries(data.errors).forEach(([field, errors]) => {
+          formErrors.value[field] = Array.isArray(errors) ? errors[0] : errors
+        })
+        return
       }
-      throw new Error(data.message || t('checkout.errors.failed_to_create'))
+      throw new Error(data.message || t('checkout.errors.order_creation_failed'))
     }
 
     // Clear cart
     cartStore.clearCart()
-    
-    // Redirect to success page
-    router.push({
-      name: 'order-success',
-      params: { id: data.data.id }
-    })
+
+    // Show success message using toast or alert
+    alert(t('checkout.success.order_created'))
+
+    // Redirect to orders page
+    router.push('/orders')
   } catch (error) {
-    console.error('Order submission error:', error)
-    alert(error.message || t('checkout.errors.something_went_wrong'))
+    console.error('Failed to create order:', error)
+    console.error('Error details:', {
+      message: error.message,
+      stack: error.stack
+    })
+    alert(t('checkout.errors.something_went_wrong'))
   } finally {
     isSubmitting.value = false
   }
