@@ -1,5 +1,5 @@
 import { createRouter, createWebHistory } from 'vue-router'
-import { requireAuth, requireNoAuth } from './auth.guard'
+import { useAuthStore } from '../stores/authStore'
 import HomeView from '../views/Home.vue'
 import CategoryView from '../views/CategoryView.vue'
 import ProductDetail from '../views/ProductDetail.vue'
@@ -15,8 +15,7 @@ const routes = [
   {
     path: '/login',
     name: 'Login',
-    component: LoginView,
-    beforeEnter: requireNoAuth
+    component: LoginView
   },
   {
     path: '/',
@@ -41,13 +40,14 @@ const routes = [
   {
     path: '/checkout',
     name: 'checkout',
-    component: CheckoutView
+    component: CheckoutView,
+    meta: { requiresAuth: true }
   },
   {
     path: '/profile',
     name: 'profile',
     component: Profile,
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/favorites',
@@ -58,21 +58,33 @@ const routes = [
     path: '/orders',
     name: 'orders',
     component: OrdersView,
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   },
   {
     path: '/settings',
     name: 'settings',
     component: Settings,
-    beforeEnter: requireAuth
+    meta: { requiresAuth: true }
   }
 ]
 
 const router = createRouter({
   history: createWebHistory(import.meta.env.BASE_URL),
-  routes,
-  scrollBehavior(to, from, savedPosition) {
-    return { top: 0, behavior: 'smooth' }
+  routes
+})
+
+// Navigation guard
+router.beforeEach((to, from, next) => {
+  const authStore = useAuthStore()
+  const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
+
+  if (requiresAuth && !authStore.isAuthenticated) {
+    next({
+      path: '/login',
+      query: { redirect: to.fullPath }
+    })
+  } else {
+    next()
   }
 })
 

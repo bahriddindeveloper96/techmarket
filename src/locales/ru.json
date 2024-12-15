@@ -42,5 +42,38 @@
     "success": {
       "order_created": "Заказ успешно создан!"
     }
+  },
+  "orders": {
+    "title": "Мои заказы",
+    "no_orders": "Заказы не найдены",
+    "order_number": "Заказ №",
+    "delivery_details": "Детали доставки",
+    "payment_details": "Детали оплаты",
+    "payment_method": "Способ оплаты",
+    "payment_status": "Статус",
+    "subtotal": "Подытог",
+    "delivery": "Доставка",
+    "total": "Итого",
+    "quantity": "Количество",
+    "status": {
+      "new": "Новый",
+      "pending": "В ожидании",
+      "completed": "Завершен",
+      "cancelled": "Отменен"
+    }
+  },
+  "profile": {
+    "title": "Профиль",
+    "personal_info": "Личная информация",
+    "name": "Имя",
+    "email": "Эл. почта",
+    "phone": "Телефон",
+    "bio": "О себе",
+    "address": "Адрес",
+    "save": "Сохранить изменения",
+    "success": "Профиль успешно обновлен",
+    "error": "Не удалось обновить профиль",
+    "logout": "Выйти",
+    "logout_success": "Вы успешно вышли из системы"
   }
 }

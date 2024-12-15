@@ -45,5 +45,50 @@
       "title": "Order Received",
       "message": "Your order has been successfully received. We will contact you shortly."
     }
+  },
+  "orders": {
+    "title": "My Orders",
+    "no_orders": "No orders found",
+    "order_number": "Order #",
+    "delivery_details": "Delivery Details",
+    "payment_details": "Payment Details",
+    "payment_method": "Method",
+    "payment_status": "Status",
+    "subtotal": "Subtotal",
+    "delivery": "Delivery",
+    "total": "Total",
+    "quantity": "Quantity",
+    "status": {
+      "new": "New",
+      "pending": "Pending",
+      "completed": "Completed",
+      "cancelled": "Cancelled"
+    }
+  },
+  "profile": {
+    "title": "Profile",
+    "personal_info": "Personal Information",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "address": "Address",
+    "bio": "Bio",
+    "save": "Save Changes",
+    "select": "Select",
+    "male": "Male",
+    "female": "Female",
+    "placeholders": {
+      "first_name": "Enter your first name",
+      "last_name": "Enter your last name",
+      "email": "Enter your email",
+      "phone": "Enter your phone number",
+      "address": "Enter your address",
+      "bio": "Tell us about yourself"
+    },
+    "logout": "Logout",
+    "logout_success": "Successfully logged out"
   }
 }

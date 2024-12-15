@@ -1,258 +1,175 @@
 <template>
-  <div class="min-h-screen bg-white dark:bg-gray-900">
-    <!-- Orders Header -->
-    <div class="flex items-center justify-between mb-4">
-      <h1 class="text-2xl font-bold text-gray-900 dark:text-white">{{ $t('orders.title') }}</h1>
+  <div class="container mx-auto px-4 py-8">
+    <h1 class="text-2xl font-bold mb-6">{{ $t('orders.title') }}</h1>
+    
+    <div v-if="loading" class="flex justify-center items-center py-8">
+      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
     </div>
 
-    <!-- Orders Filters -->
-    <div class="bg-white dark:bg-gray-800 rounded-2xl p-6 mb-4">
-      <div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-        <!-- Search -->
-        <div class="relative">
-          <span class="absolute inset-y-0 left-3 flex items-center text-gray-400 dark:text-gray-500">
-            <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0z" />
-            </svg>
-          </span>
-          <input
-            v-model="searchQuery"
-            type="text"
-            :placeholder="$t('orders.filters.search')"
-            class="w-full pl-10 pr-4 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:text-white dark:placeholder-gray-400"
-          >
-        </div>
-
-        <!-- Status Filter -->
-        <div class="relative">
-          <select
-            v-model="statusFilter"
-            class="appearance-none pl-4 pr-10 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:text-white"
-          >
-            <option value="">{{ $t('orders.filters.status.all') }}</option>
-            <option value="pending">{{ $t('orders.filters.status.pending') }}</option>
-            <option value="processing">{{ $t('orders.filters.status.processing') }}</option>
-            <option value="shipped">{{ $t('orders.filters.status.shipped') }}</option>
-            <option value="delivered">{{ $t('orders.filters.status.delivered') }}</option>
-            <option value="cancelled">{{ $t('orders.filters.status.cancelled') }}</option>
-          </select>
-          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 dark:text-gray-500 pointer-events-none">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </span>
-        </div>
-
-        <!-- Period Filter -->
-        <div class="relative">
-          <select
-            v-model="periodFilter"
-            class="appearance-none pl-4 pr-10 py-2 bg-gray-50 dark:bg-gray-700 border border-gray-200 dark:border-gray-600 rounded-xl focus:ring-2 focus:ring-primary-500 focus:border-transparent dark:text-white"
-          >
-            <option value="">{{ $t('orders.filters.period.all') }}</option>
-            <option value="today">{{ $t('orders.filters.period.today') }}</option>
-            <option value="week">{{ $t('orders.filters.period.week') }}</option>
-            <option value="month">{{ $t('orders.filters.period.month') }}</option>
-          </select>
-          <span class="absolute inset-y-0 right-3 flex items-center text-gray-400 dark:text-gray-500 pointer-events-none">
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7" />
-            </svg>
-          </span>
-        </div>
-      </div>
+    <div v-else-if="error" class="text-red-500 text-center py-8">
+      {{ error }}
     </div>
 
-    <!-- Orders List -->
-    <div class="space-y-4">
-      <div v-for="order in filteredOrders" :key="order.id" class="bg-gray-50 dark:bg-gray-800 rounded-2xl p-4">
-        <!-- Order Header -->
-        <div class="flex flex-wrap items-center justify-between gap-4 mb-4">
-          <div class="space-y-1">
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.number') }}: <span class="font-medium text-gray-900 dark:text-white">#{{ order.number }}</span></p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.date') }}: <span class="font-medium text-gray-900 dark:text-white">{{ formatDate(order.date) }}</span></p>
+    <div v-else-if="orders.length === 0" class="text-center py-8">
+      <p class="text-gray-500">{{ $t('orders.no_orders') }}</p>
+    </div>
+
+    <div v-else class="space-y-6">
+      <div v-for="order in orders" :key="order.id" class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="flex justify-between items-start mb-4">
+          <div>
+            <h2 class="text-lg font-semibold">{{ $t('orders.order_number') }}{{ order.order_number }}</h2>
+            <p class="text-sm text-gray-500 dark:text-gray-400">
+              {{ new Date(order.created_at).toLocaleDateString() }}
+            </p>
           </div>
-          <div :class="getStatusClass(order.status)" class="px-3 py-1 rounded-full text-sm font-medium">
-            {{ $t(`orders.filters.status.${order.status}`) }}
+          <div class="text-right">
+            <span class="px-3 py-1 rounded-full text-sm capitalize" 
+                  :class="{
+                    'bg-yellow-100 text-yellow-800': order.status === 'pending',
+                    'bg-green-100 text-green-800': order.status === 'completed',
+                    'bg-blue-100 text-blue-800': order.status === 'new',
+                    'bg-red-100 text-red-800': order.status === 'cancelled'
+                  }">
+              {{ $t(`orders.status.${order.status}`) }}
+            </span>
           </div>
         </div>
 
-        <!-- Order Items -->
-        <div class="space-y-2">
-          <div v-for="item in order.items" :key="item.id" class="flex items-center gap-4 bg-white dark:bg-gray-700 p-4 rounded-xl">
-            <img :src="item.image" :alt="item.name" class="w-16 h-16 object-cover rounded-lg">
-            <div class="flex-1 min-w-0">
-              <h4 class="font-medium text-gray-900 dark:text-white truncate">{{ item.name }}</h4>
+        <div class="space-y-4">
+          <!-- Order Items -->
+          <div v-for="item in order.items" :key="item.id" class="flex items-center space-x-4 py-4 border-t">
+            <img :src="item.product_variant.images[0]" :alt="item.product.name" 
+                 class="w-20 h-20 object-cover rounded-lg">
+            <div class="flex-1">
+              <h3 class="font-medium">{{ item.product.name }}</h3>
               <p class="text-sm text-gray-500 dark:text-gray-400">
-                {{ item.quantity }} {{ $t('orders.order.quantity') }} × {{ formatPrice(item.price) }}
+                {{ Object.entries(item.product_variant.attribute_values).map(([key, value]) => `${key}: ${value}`).join(', ') }}
               </p>
+              <p class="text-sm">{{ $t('orders.quantity') }}: {{ item.quantity }}</p>
             </div>
             <div class="text-right">
-              <p class="font-medium text-gray-900 dark:text-white">{{ formatPrice(item.price * item.quantity) }}</p>
+              <p class="font-medium">${{ item.price }}</p>
             </div>
           </div>
-        </div>
 
-        <!-- Order Footer -->
-        <div class="mt-4 pt-4 border-t border-gray-200 dark:border-gray-700 flex flex-wrap items-center justify-between gap-4">
-          <div class="space-y-1">
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.total') }}: <span class="font-medium text-gray-900 dark:text-white">{{ formatPrice(order.total) }}</span></p>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('orders.order.payment_method') }}: <span class="font-medium text-gray-900 dark:text-white">{{ order.paymentMethod }}</span></p>
+          <!-- Order Details -->
+          <div class="border-t pt-4">
+            <div class="grid grid-cols-2 gap-4">
+              <div>
+                <h4 class="font-medium mb-2">{{ $t('orders.delivery_details') }}</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ order.delivery_name }}</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">{{ order.delivery_phone }}</p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {{ order.delivery_region }}, {{ order.delivery_district }}<br>
+                  {{ order.delivery_address }}
+                </p>
+              </div>
+              <div>
+                <h4 class="font-medium mb-2">{{ $t('orders.payment_details') }}</h4>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {{ $t('orders.payment_method') }}: {{ order.payment_method.translations.find(t => t.locale === currentLocale).name }}
+                </p>
+                <p class="text-sm text-gray-600 dark:text-gray-400">
+                  {{ $t('orders.payment_status') }}: <span class="capitalize">{{ order.payment_status }}</span>
+                </p>
+              </div>
+            </div>
           </div>
-          <button class="px-4 py-2 bg-primary-600 text-white rounded-xl hover:bg-primary-700 transition-colors">
-            {{ $t('common.details') }}
-          </button>
+
+          <!-- Order Summary -->
+          <div class="border-t pt-4">
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 dark:text-gray-400">{{ $t('orders.subtotal') }}:</span>
+              <span>${{ order.total_amount }}</span>
+            </div>
+            <div class="flex justify-between items-center">
+              <span class="text-gray-600 dark:text-gray-400">{{ $t('orders.delivery') }}:</span>
+              <span>${{ order.delivery_cost }}</span>
+            </div>
+            <div class="flex justify-between items-center font-medium mt-2">
+              <span>{{ $t('orders.total') }}:</span>
+              <span>${{ (parseFloat(order.total_amount) + parseFloat(order.delivery_cost)).toFixed(2) }}</span>
+            </div>
+          </div>
         </div>
       </div>
     </div>
 
-    <!-- Empty State -->
-    <div v-if="filteredOrders.length === 0" class="text-center py-12">
-      <div class="inline-flex items-center justify-center w-16 h-16 rounded-full bg-gray-100 dark:bg-gray-800 mb-4">
-        <svg class="w-8 h-8 text-gray-400 dark:text-gray-500" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 3h2l.4 2M7 13h10l4-8H5.4M7 13L5.4 5M7 13l-2.293 2.293c-.63.63-.184 1.707.707 1.707H17m0 0a2 2 0 100 4 2 2 0 000-4zm-8 2a2 2 0 11-4 0 2 2 0 014 0z" />
-        </svg>
-      </div>
-      <h3 class="text-lg font-medium text-gray-900 dark:text-white mb-1">{{ $t('orders.empty.title') }}</h3>
-      <p class="text-gray-500 dark:text-gray-400">{{ $t('orders.empty.description') }}</p>
+    <!-- Pagination -->
+    <div v-if="pagination && pagination.last_page > 1" class="flex justify-center mt-8">
+      <nav class="flex space-x-2">
+        <button
+          v-for="link in pagination.links"
+          :key="link.label"
+          @click="goToPage(link.url)"
+          :disabled="!link.url || link.active"
+          :class="[
+            'px-3 py-1 rounded',
+            {
+              'bg-primary-600 text-white': link.active,
+              'bg-gray-100 text-gray-700 hover:bg-gray-200': !link.active && link.url,
+              'bg-gray-50 text-gray-400 cursor-not-allowed': !link.url
+            }
+          ]"
+          v-html="link.label"
+        ></button>
+      </nav>
     </div>
   </div>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, onMounted, computed } from 'vue'
+import { useAuthStore } from '../stores/authStore'
+import { useI18n } from 'vue-i18n'
 
-// State
-const searchQuery = ref('')
-const statusFilter = ref('')
-const periodFilter = ref('')
+const authStore = useAuthStore()
+const { locale } = useI18n()
+const currentLocale = computed(() => locale.value)
 
-// Mock data
-const orders = ref([
-  {
-    id: 1,
-    number: '1234',
-    date: '2024-01-15',
-    status: 'processing',
-    total: 2500000,
-    paymentMethod: 'Click',
-    items: [
-      {
-        id: 1,
-        name: 'iPhone 13 Pro',
-        quantity: 1,
-        price: 1500000,
-        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-max-gold-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1631652956000'
-      },
-      {
-        id: 2,
-        name: 'AirPods Pro',
-        quantity: 1,
-        price: 1000000,
-        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/MQD83?wid=572&hei=572&fmt=jpeg&qlt=95&.v=1660803972361'
+const orders = ref([])
+const loading = ref(true)
+const error = ref(null)
+const pagination = ref(null)
+
+const fetchOrders = async (page = 1) => {
+  try {
+    loading.value = true
+    error.value = null
+
+    const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/orders?page=${page}`, {
+      headers: {
+        'Authorization': `Bearer ${authStore.getToken}`,
+        'Accept': 'application/json'
       }
-    ]
-  },
-  {
-    id: 2,
-    number: '1235',
-    date: '2024-01-14',
-    status: 'delivered',
-    total: 3500000,
-    paymentMethod: 'Payme',
-    items: [
-      {
-        id: 3,
-        name: 'MacBook Air M2',
-        quantity: 1,
-        price: 3500000,
-        image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/macbook-air-midnight-select-20220606?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1653084303665'
-      }
-    ]
-  }
-])
+    })
 
-// Computed
-const filteredOrders = computed(() => {
-  let result = orders.value
-
-  if (searchQuery.value) {
-    result = result.filter(order => 
-      order.number.includes(searchQuery.value) ||
-      order.items.some(item => item.name.toLowerCase().includes(searchQuery.value.toLowerCase()))
-    )
-  }
-
-  if (statusFilter.value) {
-    result = result.filter(order => order.status === statusFilter.value)
-  }
-
-  if (periodFilter.value !== '') {
-    const now = new Date()
-    
-    switch(periodFilter.value) {
-      case 'today':
-        result = result.filter(order => 
-          new Date(order.date).toDateString() === now.toDateString()
-        )
-        break
-      case 'week':
-        const weekAgo = new Date(now.setDate(now.getDate() - 7))
-        result = result.filter(order => 
-          new Date(order.date) >= weekAgo
-        )
-        break
-      case 'month':
-        const monthAgo = new Date(now.setMonth(now.getMonth() - 1))
-        result = result.filter(order => 
-          new Date(order.date) >= monthAgo
-        )
-        break
+    if (!response.ok) {
+      throw new Error('Failed to fetch orders')
     }
-  }
 
-  return result
+    const data = await response.json()
+    orders.value = data.data.data
+    pagination.value = {
+      current_page: data.data.current_page,
+      last_page: data.data.last_page,
+      links: data.data.links
+    }
+  } catch (err) {
+    error.value = err.message
+  } finally {
+    loading.value = false
+  }
+}
+
+const goToPage = (url) => {
+  if (!url) return
+  const page = new URL(url).searchParams.get('page')
+  fetchOrders(page)
+}
+
+onMounted(() => {
+  fetchOrders()
 })
-
-// Utility functions
-const formatDate = (date) => {
-  return new Date(date).toLocaleDateString('uz-UZ', {
-    year: 'numeric',
-    month: 'long',
-    day: 'numeric'
-  })
-}
-
-const formatPrice = (price) => {
-  return new Intl.NumberFormat('uz-UZ', {
-    style: 'currency',
-    currency: 'UZS'
-  }).format(price)
-}
-
-const getStatusClass = (status) => {
-  const classes = {
-    pending: 'bg-yellow-50 text-yellow-700',
-    processing: 'bg-blue-50 text-blue-700',
-    shipped: 'bg-purple-50 text-purple-700',
-    delivered: 'bg-green-50 text-green-700',
-    cancelled: 'bg-red-50 text-red-700'
-  }
-  return classes[status] || 'bg-gray-50 text-gray-700'
-}
-
-const getStatusText = (status) => {
-  const statusTexts = {
-    pending: 'Kutilmoqda',
-    processing: 'Jarayonda',
-    shipped: 'Yetkazilmoqda',
-    delivered: 'Yetkazildi',
-    cancelled: 'Bekor qilindi'
-  }
-  return statusTexts[status] || status
-}
-
-const getImageUrl = (image) => {
-  return new URL(`../assets/images/products/${image}`, import.meta.url).href
-}
 </script>

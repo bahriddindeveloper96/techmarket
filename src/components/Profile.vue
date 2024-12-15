@@ -49,6 +49,7 @@
                       </svg>
                       <span>{{ $t('profile.favorites') }}</span>
                     </a>
+                    
 
                     <button @click="handleTabChange('settings')" 
                       :class="[
@@ -61,6 +62,15 @@
                       </svg>
                       <span class="font-medium">{{ $t('profile.settings') }}</span>
                     </button>
+                    <div class="mb-8 flex justify-end">
+                      <button 
+                        @click="handleLogout"
+                        class="flex items-center space-x-2 px-4 py-2 text-red-600 hover:bg-red-50 rounded-lg transition-colors"
+                      >
+                        <i class="fas fa-sign-out-alt"></i>
+                        <span>{{ $t('profile.logout') }}</span>
+                      </button>
+                    </div>
 
                     <!-- <a href="#" class="flex items-center space-x-3 px-4 py-2.5 rounded-xl hover:bg-gray-50 dark:hover:bg-gray-700 text-gray-700 dark:text-gray-300 font-medium transition-colors">
                       <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" fill="none" viewBox="0 0 24 24" stroke="currentColor">
@@ -183,12 +193,16 @@
 
 <script setup>
 import { ref } from 'vue';
+import { useAuthStore } from '../stores/authStore';
+import { useRouter } from 'vue-router';
 import Settings from './Settings.vue';
 import PersonalInfo from './PersonalInfo.vue';
 import OrdersView from '../views/OrdersView.vue';
 import Banner from '../components/Banner.vue';
 
 // State
+const authStore = useAuthStore();
+const router = useRouter();
 const activeTab = ref('home');
 const searchQuery = ref('');
 const statusFilter = ref('');
@@ -198,4 +212,12 @@ const dateFilter = ref('all');
 const handleTabChange = (tab) => {
   activeTab.value = tab;
 };
+const handleLogout = async () => {
+  try {
+    await authStore.logoutApi()
+    router.push('/login')
+  } catch (error) {
+    console.error('Logout error:', error)
+  }
+}
 </script>

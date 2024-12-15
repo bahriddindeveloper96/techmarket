@@ -42,5 +42,38 @@
     "success": {
       "order_created": "Buyurtma muvaffaqiyatli yaratildi!"
     }
+  },
+  "orders": {
+    "title": "Mening buyurtmalarim",
+    "no_orders": "Buyurtmalar topilmadi",
+    "order_number": "Buyurtma №",
+    "delivery_details": "Yetkazib berish ma'lumotlari",
+    "payment_details": "To'lov ma'lumotlari",
+    "payment_method": "To'lov usuli",
+    "payment_status": "Holati",
+    "subtotal": "Oraliq summa",
+    "delivery": "Yetkazib berish",
+    "total": "Jami",
+    "quantity": "Soni",
+    "status": {
+      "new": "Yangi",
+      "pending": "Kutilmoqda",
+      "completed": "Bajarildi",
+      "cancelled": "Bekor qilindi"
+    }
+  },
+  "profile": {
+    "title": "Profil",
+    "personal_info": "Shaxsiy ma'lumotlar",
+    "name": "Ism",
+    "email": "Email",
+    "phone": "Telefon",
+    "bio": "Bio",
+    "address": "Manzil",
+    "logout": "Chiqish",
+    "logout_success": "Tizimdan muvaffaqiyatli chiqdingiz",
+    "save": "O'zgarishlarni saqlash",
+    "success": "Profil muvaffaqiyatli yangilandi",
+    "error": "Profilni yangilashda xatolik yuz berdi"
   }
 }
