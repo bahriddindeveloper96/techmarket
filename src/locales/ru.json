@@ -1,5 +1,114 @@
 {
+  "nav": {
+    "home": "Главная",
+    "products": "Продукты",
+    "about": "О нас",
+    "contact": "Контакты",
+    "company_info": "О компании",
+    "contacts": "Контакты",
+    "stores": "Магазины",
+    "delivery": "Доставка",
+    "favorites": "Избранное",
+    "profile": "Профиль",
+    "cart": "Корзина",
+    "new": "Новинки",
+    "sales": "Распродажа",
+    "hot_deals": "Горячие предложения",
+    "promotions": "Акции",
+    "catalog": "Каталог",
+    "see_all": "Смотреть все"
+  },
+  "header": {
+    "search": "Поиск товаров...",
+    "cart": "Корзина",
+    "login": "Войти",
+    "register": "Регистрация"
+  },
+  "profile": {
+    "title": "Мой профиль",
+    "personal_info": "Личная информация",
+    "orders": "Мои заказы",
+    "favorites": "Избранное",
+    "settings": "Настройки",
+    "help": "Центр помощи",
+    "logout": "Выйти",
+    "first_name": "Имя",
+    "last_name": "Фамилия",
+    "email": "Эл. почта",
+    "phone": "Телефон",
+    "birthday": "Дата рождения",
+    "gender": "Пол",
+    "address": "Адрес",
+    "select": "Выбрать",
+    "male": "Мужской",
+    "female": "Женский",
+    "save": "Сохранить изменения",
+    "placeholders": {
+      "first_name": "Введите имя",
+      "last_name": "Введите фамилию",
+      "email": "email@example.com",
+      "phone": "+998 90 123 45 67",
+      "address": "Введите полный адрес"
+    }
+  },
+  "favorites": {
+    "title": "Избранное",
+    "category": "Категория",
+    "empty": {
+      "title": "Ваш список избранного пуст",
+      "description": "Добавьте понравившиеся товары в избранное. Просматривайте их в любое время и легко перемещайте в корзину.",
+      "button": "Продолжить покупки"
+    },
+    "remove": "Удалить",
+    "add_to_cart": "В корзину",
+    "move_all_to_cart": "Все в корзину",
+    "clear_all": "Очистить все",
+    "items_count": "товаров",
+    "item_count": "товар",
+    "save_for_later": "Сохранить на потом",
+    "price": "Цена",
+    "total": "Итого",
+    "success": {
+      "added": "Добавлено в избранное",
+      "removed": "Удалено из избранного",
+      "moved_to_cart": "Перемещено в корзину",
+      "cleared": "Список избранного очищен"
+    },
+    "recommended": "Рекомендуемые товары",
+    "recommended_products": "Рекомендуемые товары"
+  },
   "currency": "сум",
+  "month": "месяцев",
+  "product": {
+    "about": "О товаре",
+    "specifications": "Характеристики",
+    "similar": "Похожие товары",
+    "add_to_cart": "В корзину",
+    "monthly_payment": "Ежемесячный платеж",
+    "sale_price": "Цена со скидкой",
+    "rating": "Рейтинг",
+    "reviews": "Отзывы",
+    "orders": "Заказы",
+    "colors": "Цвета",
+    "sizes": "Размеры",
+    "quantity": "Количество"
+  },
+  "cart": {
+    "title": "Корзина",
+    "empty": "Ваша корзина пуста",
+    "total": "Итого",
+    "checkout": "Оформить заказ",
+    "continue_shopping": "Продолжить покупки",
+    "remove": "Удалить",
+    "quantity": "Количество",
+    "subtotal": "Подытог",
+    "shipping": "Доставка",
+    "free": "Бесплатно",
+    "total_items": "товаров",
+    "clear_cart": "Очистить корзину",
+    "save_for_later": "Сохранить на потом",
+    "similar_products": "Вам также может понравиться"
+  },
   "checkout": {
     "title": "Оформление заказа",
     "delivery_info": {
@@ -22,7 +131,7 @@
     "payment_method": {
       "title": "Способ оплаты",
       "cash": "Наличными при получении",
-      "cash_description": "Оплата наличными курьеру при получении",
+      "cash_description": "Оплата наличными при получении",
       "card": "Банковской картой",
       "card_description": "Оплата картой при получении",
       "click": "Click",
@@ -35,12 +144,69 @@
     "place_order": "Оформить заказ",
     "processing": "Обработка...",
     "errors": {
-      "order_creation_failed": "Не удалось создать заказ. Пожалуйста, попробуйте еще раз.",
-      "something_went_wrong": "Что-то пошло не так. Пожалуйста, попробуйте еще раз.",
-      "please_fill_required": "Пожалуйста, заполните все обязательные поля"
+      "please_fill_required": "Пожалуйста, заполните все обязательные поля",
+      "failed_to_create": "Не удалось создать заказ",
+      "something_went_wrong": "Что-то пошло не так",
+      "invalid_phone": "Неверный формат номера телефона",
+      "invalid_date": "Неверная дата",
+      "name_required": "Необходимо указать ФИО",
+      "phone_required": "Необходимо указать номер телефона",
+      "region_required": "Необходимо указать регион",
+      "district_required": "Необходимо указать район",
+      "address_required": "Необходимо указать адрес",
+      "date_required": "Необходимо указать дату доставки",
+      "delivery_method_required": "Выберите способ доставки",
+      "payment_method_required": "Выберите способ оплаты",
+      "date_past": "Дата доставки не может быть в прошлом"
     },
     "success": {
-      "order_created": "Заказ успешно создан!"
+      "title": "Заказ принят",
+      "message": "Ваш заказ успешно принят. Мы свяжемся с вами в ближайшее время."
+    }
+  },
+  "auth": {
+    "login": "Войти",
+    "email": "Эл. почта",
+    "password": "Пароль",
+    "email_placeholder": "Введите эл. почту",
+    "password_placeholder": "Введите пароль",
+    "logging_in": "Выполняется вход...",
+    "login_failed": "Ошибка входа. Проверьте правильность данных.",
+    "no_account": "Нет аккаунта?",
+    "register": "Зарегистрироваться"
+  },
+  "footer": {
+    "company": {
+      "title": "Компания",
+      "about": "О нас",
+      "careers": "Карьера",
+      "news": "Новости",
+      "partners": "Партнеры"
+    },
+    "help": {
+      "title": "Помощь",
+      "faq": "FAQ",
+      "delivery": "Доставка",
+      "returns": "Возврат",
+      "contact": "Контакты"
+    },
+    "legal": {
+      "title": "Юридическая информация",
+      "privacy": "Политика конфиденциальности",
+      "terms": "Условия использования",
+      "security": "Безопасность",
+      "sitemap": "Карта сайта"
+    },
+    "social": {
+      "title": "Следите за нами",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "telegram": "Telegram"
+    },
+    "mobileApp": {
+      "title": "Мобильное приложение",
+      "description": "Скачайте наше мобильное приложение для лучшего шоппинга"
     }
   },
   "orders": {
@@ -61,19 +227,5 @@
       "completed": "Завершен",
       "cancelled": "Отменен"
     }
-  },
-  "profile": {
-    "title": "Профиль",
-    "personal_info": "Личная информация",
-    "name": "Имя",
-    "email": "Эл. почта",
-    "phone": "Телефон",
-    "bio": "О себе",
-    "address": "Адрес",
-    "save": "Сохранить изменения",
-    "success": "Профиль успешно обновлен",
-    "error": "Не удалось обновить профиль",
-    "logout": "Выйти",
-    "logout_success": "Вы успешно вышли из системы"
   }
 }

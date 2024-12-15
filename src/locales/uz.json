@@ -1,15 +1,124 @@
 {
+  "nav": {
+    "home": "Bosh sahifa",
+    "products": "Mahsulotlar",
+    "about": "Biz haqimizda",
+    "contact": "Aloqa",
+    "company_info": "Kompaniya haqida",
+    "contacts": "Kontaktlar",
+    "stores": "Do'konlar",
+    "delivery": "Yetkazib berish",
+    "favorites": "Sevimlilar",
+    "profile": "Profil",
+    "cart": "Savat",
+    "new": "Yangi",
+    "sales": "Chegirmalar",
+    "hot_deals": "Qaynoq takliflar",
+    "promotions": "Aksiyalar",
+    "catalog": "Katalog",
+    "see_all": "Hammasini ko'rish"
+  },
+  "header": {
+    "search": "Mahsulotlarni qidirish...",
+    "cart": "Savat",
+    "login": "Kirish",
+    "register": "Ro'yxatdan o'tish"
+  },
+  "profile": {
+    "title": "Mening profilim",
+    "personal_info": "Shaxsiy ma'lumotlar",
+    "orders": "Mening buyurtmalarim",
+    "favorites": "Sevimlilar",
+    "settings": "Sozlamalar",
+    "help": "Yordam markazi",
+    "logout": "Chiqish",
+    "first_name": "Ism",
+    "last_name": "Familiya",
+    "email": "Elektron pochta",
+    "phone": "Telefon",
+    "birthday": "Tug'ilgan sana",
+    "gender": "Jins",
+    "address": "Manzil",
+    "select": "Tanlang",
+    "male": "Erkak",
+    "female": "Ayol",
+    "save": "O'zgarishlarni saqlash",
+    "placeholders": {
+      "first_name": "Ismingizni kiriting",
+      "last_name": "Familiyangizni kiriting",
+      "email": "email@example.com",
+      "phone": "+998 90 123 45 67",
+      "address": "To'liq manzilingizni kiriting"
+    }
+  },
+  "favorites": {
+    "title": "Sevimlilar",
+    "category": "Kategoriya",
+    "empty": {
+      "title": "Sevimlilar ro'yxati bo'sh",
+      "description": "Yoqtirgan mahsulotlaringizni sevimlilarga qo'shing. Ularni istalgan vaqtda ko'rib chiqing va savatga osongina o'tkazing.",
+      "button": "Xaridni davom ettirish"
+    },
+    "remove": "O'chirish",
+    "add_to_cart": "Savatga qo'shish",
+    "move_all_to_cart": "Hammasini savatga",
+    "clear_all": "Hammasini tozalash",
+    "items_count": "ta mahsulot",
+    "item_count": "ta mahsulot",
+    "save_for_later": "Keyinroqqa saqlash",
+    "price": "Narx",
+    "total": "Jami",
+    "success": {
+      "added": "Sevimlilarga qo'shildi",
+      "removed": "Sevimlilardan o'chirildi",
+      "moved_to_cart": "Savatga o'tkazildi",
+      "cleared": "Sevimlilar ro'yxati tozalandi"
+    },
+    "recommended": "Tavsiya etilgan mahsulotlar",
+    "recommended_products": "Tavsiya etilgan mahsulotlar"
+  },
   "currency": "so'm",
+  "month": "oy",
+  "product": {
+    "about": "Mahsulot haqida",
+    "specifications": "Xarakteristikalar",
+    "similar": "O'xshash mahsulotlar",
+    "add_to_cart": "Savatga qo'shish",
+    "monthly_payment": "Oylik to'lov",
+    "sale_price": "Chegirma narxi",
+    "rating": "Reyting",
+    "reviews": "Sharhlar",
+    "orders": "Buyurtmalar",
+    "colors": "Ranglar",
+    "sizes": "O'lchamlar",
+    "quantity": "Soni"
+  },
+  "cart": {
+    "title": "Savat",
+    "empty": "Savatingiz bo'sh",
+    "total": "Jami",
+    "checkout": "Buyurtma berish",
+    "continue_shopping": "Xaridni davom ettirish",
+    "remove": "O'chirish",
+    "quantity": "Soni",
+    "subtotal": "Oraliq jami",
+    "shipping": "Yetkazib berish",
+    "free": "Bepul",
+    "total_items": "ta mahsulot",
+    "clear_cart": "Savatni tozalash",
+    "save_for_later": "Keyinroqqa saqlash",
+    "similar_products": "Sizga yoqishi mumkin"
+  },
   "checkout": {
     "title": "Buyurtma berish",
     "delivery_info": {
       "title": "Yetkazib berish ma'lumotlari",
-      "full_name": "F.I.Sh",
+      "full_name": "To'liq ism-sharif",
       "phone": "Telefon raqami",
       "region": "Viloyat",
       "district": "Tuman",
       "address": "Manzil",
-      "comment": "Buyurtmaga izoh",
+      "comment": "Buyurtma izohi",
       "delivery_date": "Yetkazib berish sanasi"
     },
     "delivery_method": {
@@ -29,18 +138,75 @@
       "click_description": "Click orqali to'lash"
     },
     "cart_summary": "Sizning buyurtmangiz",
-    "subtotal": "Oraliq summa",
+    "subtotal": "Oraliq jami",
     "delivery_fee": "Yetkazib berish narxi",
     "total": "Jami",
     "place_order": "Buyurtma berish",
     "processing": "Qayta ishlanmoqda...",
     "errors": {
-      "order_creation_failed": "Buyurtma yaratib bo'lmadi. Iltimos, qayta urinib ko'ring.",
-      "something_went_wrong": "Xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
-      "please_fill_required": "Iltimos, barcha majburiy maydonlarni to'ldiring"
+      "please_fill_required": "Iltimos, barcha majburiy maydonlarni to'ldiring",
+      "failed_to_create": "Buyurtmani yaratib bo'lmadi",
+      "something_went_wrong": "Xatolik yuz berdi",
+      "invalid_phone": "Telefon raqami formati noto'g'ri",
+      "invalid_date": "Sana noto'g'ri",
+      "name_required": "Ism-sharif kiritish majburiy",
+      "phone_required": "Telefon raqami kiritish majburiy",
+      "region_required": "Viloyatni tanlash majburiy",
+      "district_required": "Tumanni tanlash majburiy",
+      "address_required": "Manzilni kiritish majburiy",
+      "date_required": "Yetkazib berish sanasini tanlash majburiy",
+      "delivery_method_required": "Yetkazib berish usulini tanlang",
+      "payment_method_required": "To'lov usulini tanlang",
+      "date_past": "Yetkazib berish sanasi o'tgan kunlarda bo'lishi mumkin emas"
     },
     "success": {
-      "order_created": "Buyurtma muvaffaqiyatli yaratildi!"
+      "title": "Buyurtma qabul qilindi",
+      "message": "Sizning buyurtmangiz muvaffaqiyatli qabul qilindi. Tez orada siz bilan bog'lanamiz."
+    }
+  },
+  "auth": {
+    "login": "Kirish",
+    "email": "Elektron pochta",
+    "password": "Parol",
+    "email_placeholder": "Elektron pochtangizni kiriting",
+    "password_placeholder": "Parolingizni kiriting",
+    "logging_in": "Kirilmoqda...",
+    "login_failed": "Kirishda xatolik yuz berdi. Ma'lumotlarni tekshiring.",
+    "no_account": "Hisobingiz yo'qmi?",
+    "register": "Ro'yxatdan o'tish"
+  },
+  "footer": {
+    "company": {
+      "title": "Kompaniya",
+      "about": "Biz haqimizda",
+      "careers": "Karyera",
+      "news": "Yangiliklar",
+      "partners": "Hamkorlar"
+    },
+    "help": {
+      "title": "Yordam",
+      "faq": "FAQ",
+      "delivery": "Yetkazib berish",
+      "returns": "Qaytarish",
+      "contact": "Aloqa"
+    },
+    "legal": {
+      "title": "Huquqiy ma'lumot",
+      "privacy": "Maxfiylik siyosati",
+      "terms": "Foydalanish shartlari",
+      "security": "Xavfsizlik",
+      "sitemap": "Sayt xaritasi"
+    },
+    "social": {
+      "title": "Bizni kuzating",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "telegram": "Telegram"
+    },
+    "mobileApp": {
+      "title": "Mobil ilova",
+      "description": "Yaxshiroq xarid qilish uchun mobil ilovamizni yuklab oling"
     }
   },
   "orders": {
@@ -61,19 +227,5 @@
       "completed": "Bajarildi",
       "cancelled": "Bekor qilindi"
     }
-  },
-  "profile": {
-    "title": "Profil",
-    "personal_info": "Shaxsiy ma'lumotlar",
-    "name": "Ism",
-    "email": "Email",
-    "phone": "Telefon",
-    "bio": "Bio",
-    "address": "Manzil",
-    "logout": "Chiqish",
-    "logout_success": "Tizimdan muvaffaqiyatli chiqdingiz",
-    "save": "O'zgarishlarni saqlash",
-    "success": "Profil muvaffaqiyatli yangilandi",
-    "error": "Profilni yangilashda xatolik yuz berdi"
   }
 }

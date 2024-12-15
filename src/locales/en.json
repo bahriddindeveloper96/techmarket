@@ -1,13 +1,116 @@
 {
+  "nav": {
+    "home": "Home",
+    "products": "Products",
+    "about": "About",
+    "contact": "Contact",
+    "company_info": "Company Info",
+    "contacts": "Contacts",
+    "stores": "Stores",
+    "delivery": "Delivery",
+    "favorites": "Favorites",
+    "profile": "Profile",
+    "cart": "Cart",
+    "new": "New",
+    "sales": "Sales",
+    "hot_deals": "Hot Deals",
+    "promotions": "Promotions",
+    "catalog": "Catalog",
+    "see_all": "See All"
+  },
+  "header": {
+    "search": "Search products...",
+    "cart": "Cart",
+    "login": "Login",
+    "register": "Register"
+  },
+  "profile": {
+    "title": "My Profile",
+    "personal_info": "Personal Information",
+    "orders": "My Orders",
+    "favorites": "Favorites",
+    "settings": "Settings",
+    "help": "Help Center",
+    "logout": "Log Out",
+    "first_name": "First Name",
+    "last_name": "Last Name",
+    "email": "Email",
+    "phone": "Phone",
+    "birthday": "Birthday",
+    "gender": "Gender",
+    "address": "Address",
+    "select": "Select",
+    "male": "Male",
+    "female": "Female",
+    "save": "Save Changes",
+    "placeholders": {
+      "first_name": "Enter your first name",
+      "last_name": "Enter your last name",
+      "email": "email@example.com",
+      "phone": "+998 90 123 45 67",
+      "address": "Enter your full address"
+    }
+  },
+  "favorites": {
+    "title": "Favorites",
+    "category": "Category",
+    "empty": {
+      "title": "Your favorites list is empty",
+      "description": "Add items you like to your favorites list. Review them anytime and easily move them to the cart.",
+      "button": "Continue Shopping"
+    },
+    "remove": "Remove",
+    "add_to_cart": "Add to Cart",
+    "move_all_to_cart": "Move All to Cart",
+    "clear_all": "Clear All",
+    "items_count": "items",
+    "item_count": "item",
+    "save_for_later": "Save for later",
+    "price": "Price",
+    "total": "Total",
+    "success": {
+      "added": "Added to favorites",
+      "removed": "Removed from favorites",
+      "moved_to_cart": "Moved to cart",
+      "cleared": "Favorites list cleared"
+    },
+    "recommended": "Recommended Products",
+    "recommended_products": "Recommended Products"
+  },
   "currency": "sum",
+  "month": "months",
+  "product": {
+    "about": "About Product",
+    "specifications": "Specifications",
+    "similar": "Similar Products",
+    "add_to_cart": "Add to Cart",
+    "monthly_payment": "Monthly Payment",
+    "sale_price": "Sale Price",
+    "rating": "Rating",
+    "reviews": "Reviews",
+    "orders": "Orders",
+    "colors": "Colors",
+    "sizes": "Sizes",
+    "quantity": "Quantity"
+  },
+  "cart": {
+    "title": "Shopping Cart",
+    "empty": "Your cart is empty",
+    "total": "Total",
+    "checkout": "Proceed to Checkout",
+    "continue_shopping": "Continue Shopping",
+    "remove": "Remove",
+    "quantity": "Quantity",
+    "subtotal": "Subtotal",
+    "shipping": "Shipping",
+    "free": "Free",
+    "total_items": "items",
+    "clear_cart": "Clear Cart",
+    "save_for_later": "Save for Later",
+    "similar_products": "You may also like"
+  },
   "checkout": {
     "title": "Checkout",
-    "cart_summary": "Your Order",
-    "subtotal": "Subtotal",
-    "delivery_fee": "Delivery Fee",
-    "total": "Total",
-    "place_order": "Place Order",
-    "processing": "Processing...",
     "delivery_info": {
       "title": "Delivery Information",
       "full_name": "Full Name",
@@ -34,16 +137,76 @@
       "click": "Click",
       "click_description": "Pay with Click"
     },
+    "cart_summary": "Your Order",
+    "subtotal": "Subtotal",
+    "delivery_fee": "Delivery Fee",
+    "total": "Total",
+    "place_order": "Place Order",
+    "processing": "Processing...",
     "errors": {
       "please_fill_required": "Please fill all required fields",
       "failed_to_create": "Failed to create order",
       "something_went_wrong": "Something went wrong",
       "invalid_phone": "Invalid phone number format",
-      "invalid_date": "Invalid date"
+      "invalid_date": "Invalid date",
+      "name_required": "Full name is required",
+      "phone_required": "Phone number is required",
+      "region_required": "Region is required",
+      "district_required": "District is required",
+      "address_required": "Address is required",
+      "date_required": "Delivery date is required",
+      "delivery_method_required": "Please select a delivery method",
+      "payment_method_required": "Please select a payment method",
+      "date_past": "Delivery date cannot be in the past"
     },
     "success": {
       "title": "Order Received",
-      "message": "Your order has been successfully received. We will contact you shortly."
+      "message": "Your order has been successfully received. We will contact you soon."
+    }
+  },
+  "auth": {
+    "login": "Login",
+    "email": "Email",
+    "password": "Password",
+    "email_placeholder": "Enter your email",
+    "password_placeholder": "Enter your password",
+    "logging_in": "Logging in...",
+    "login_failed": "Login failed. Please check your credentials.",
+    "no_account": "Don't have an account?",
+    "register": "Register"
+  },
+  "footer": {
+    "company": {
+      "title": "Company",
+      "about": "About Us",
+      "careers": "Careers",
+      "news": "News",
+      "partners": "Partners"
+    },
+    "help": {
+      "title": "Help",
+      "faq": "FAQ",
+      "delivery": "Delivery",
+      "returns": "Returns",
+      "contact": "Contact"
+    },
+    "legal": {
+      "title": "Legal",
+      "privacy": "Privacy Policy",
+      "terms": "Terms of Service",
+      "security": "Security",
+      "sitemap": "Sitemap"
+    },
+    "social": {
+      "title": "Follow Us",
+      "facebook": "Facebook",
+      "instagram": "Instagram",
+      "twitter": "Twitter",
+      "telegram": "Telegram"
+    },
+    "mobileApp": {
+      "title": "Mobile App",
+      "description": "Download our mobile app for a better shopping experience"
     }
   },
   "orders": {
@@ -64,31 +227,5 @@
       "completed": "Completed",
       "cancelled": "Cancelled"
     }
-  },
-  "profile": {
-    "title": "Profile",
-    "personal_info": "Personal Information",
-    "first_name": "First Name",
-    "last_name": "Last Name",
-    "email": "Email",
-    "phone": "Phone",
-    "birthday": "Birthday",
-    "gender": "Gender",
-    "address": "Address",
-    "bio": "Bio",
-    "save": "Save Changes",
-    "select": "Select",
-    "male": "Male",
-    "female": "Female",
-    "placeholders": {
-      "first_name": "Enter your first name",
-      "last_name": "Enter your last name",
-      "email": "Enter your email",
-      "phone": "Enter your phone number",
-      "address": "Enter your address",
-      "bio": "Tell us about yourself"
-    },
-    "logout": "Logout",
-    "logout_success": "Successfully logged out"
   }
 }
