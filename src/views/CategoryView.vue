@@ -145,7 +145,7 @@ const sortBy = ref("popular");
 const fetchProducts = async () => {
   try {
     loading.value = true;
-    const token = "1|yVZW2OLxhP4ckuJb5ndIsKwpTbKyTHSs3e2vVnNo7a8707db";
+    const token = "9|wFsR9Xnbxw5PONdfdU2lWsTqB4uvyZyjjHg4Ggvv40820f1f";
 
     const response = await axios.get(
       `${baseUrl}/api/categories/${route.params.id}/products`,

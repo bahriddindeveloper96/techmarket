@@ -91,7 +91,18 @@
     "orders": "Orders",
     "colors": "Colors",
     "sizes": "Sizes",
-    "quantity": "Quantity"
+    "quantity": "Quantity",
+    "select_color": "Select Color",
+    "select_storage": "Select Storage",
+    "added_to_cart": "Product added to cart",
+    "out_of_stock": "Out of Stock",
+    "available": "Available",
+    "price": "Price",
+    "old_price": "Old Price",
+    "description": "Description",
+    "no_reviews": "No reviews yet",
+    "write_review": "Write a Review",
+    "related_products": "Related Products"
   },
   "cart": {
     "title": "Shopping Cart",
@@ -157,10 +168,14 @@
       "date_required": "Delivery date is required",
       "delivery_method_required": "Please select a delivery method",
       "payment_method_required": "Please select a payment method",
-      "date_past": "Delivery date cannot be in the past"
+      "date_past": "Delivery date cannot be in the past",
+      "title": "Error Occurred",
+      "something_went_wrong": "An error occurred while creating your order. Please try again.",
+      "order_creation_failed": "Failed to create order. Please check your information and try again."
     },
     "success": {
-      "title": "Order Received",
+      "title": "Order Accepted",
+      "order_created": "Your order has been successfully created. You can track your order status on the 'Orders' page.",
       "message": "Your order has been successfully received. We will contact you soon."
     }
   },
@@ -226,6 +241,21 @@
       "pending": "Pending",
       "completed": "Completed",
       "cancelled": "Cancelled"
+    }
+  },
+  "home": {
+    "featured_products": "Featured Products",
+    "popular_products": "Popular Products",
+    "new_products": "New Products",
+    "view_all": "View All",
+    "categories": "Categories",
+    "loading": {
+      "products": "Loading products...",
+      "categories": "Loading categories..."
+    },
+    "error": {
+      "loading_failed": "Failed to load data",
+      "try_again": "Try again"
     }
   }
 }

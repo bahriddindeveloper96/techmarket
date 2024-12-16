@@ -52,17 +52,17 @@
               <!-- Price -->
               <div class="flex items-center space-x-4">
                 <span class="text-2xl sm:text-3xl font-bold text-gray-900 dark:text-white">
-                  {{ formatPrice(selectedVariant?.price || product.price) }} {{ $t('currency') }}
+                  {{ formatPrice(selectedVariant?.price || product.price) }} {{ t('currency') }}
                 </span>
                 <span v-if="product.oldPrice" class="text-lg sm:text-xl text-gray-500 line-through">
-                  {{ formatPrice(product.oldPrice) }} {{ $t('currency') }}
+                  {{ formatPrice(product.oldPrice) }} {{ t('currency') }}
                 </span>
               </div>
 
               <!-- Color Selection -->
               <div class="space-y-3">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t('product.select_color') }}
+                  {{ t('product.select_color') }}
                 </label>
                 <div class="flex flex-wrap gap-3">
                   <button
@@ -80,7 +80,7 @@
               <!-- Storage Selection -->
               <div class="space-y-3">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t('product.select_storage') }}
+                  {{ t('product.select_storage') }}
                 </label>
                 <div class="flex flex-wrap gap-3">
                   <button
@@ -98,7 +98,7 @@
               <!-- Quantity -->
               <div class="space-y-3">
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">
-                  {{ $t('product.quantity') }}
+                  {{ t('product.quantity') }}
                 </label>
                 <div class="flex items-center space-x-3">
                   <button
@@ -124,7 +124,7 @@
                 class="w-full py-3 px-8 rounded-lg bg-primary-600 hover:bg-primary-700 text-white font-medium transition-colors"
                 :disabled="!selectedColor || !selectedSize"
               >
-                {{ $t('product.add_to_cart') }}
+                {{ t('product.add_to_cart') }}
               </button>
             </div>
           </div>
@@ -137,7 +137,9 @@
 <script setup>
 import { ref, computed, watch } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
+import { useI18n } from 'vue-i18n'
 
+const { t } = useI18n()
 const props = defineProps({
   show: Boolean,
   product: Object

@@ -91,7 +91,18 @@
     "orders": "Buyurtmalar",
     "colors": "Ranglar",
     "sizes": "O'lchamlar",
-    "quantity": "Soni"
+    "quantity": "Soni",
+    "select_color": "Rangni tanlang",
+    "select_storage": "Xotirani tanlang",
+    "added_to_cart": "Mahsulot savatga qo'shildi",
+    "out_of_stock": "Omborda yo'q",
+    "available": "Mavjud",
+    "price": "Narxi",
+    "old_price": "Eski narxi",
+    "description": "Tavsif",
+    "related_products": "O'xshash mahsulotlar",
+    "no_reviews": "Sharhlar yo'q",
+    "write_review": "Sharh qoldirish"
   },
   "cart": {
     "title": "Savat",
@@ -157,10 +168,14 @@
       "date_required": "Yetkazib berish sanasini tanlash majburiy",
       "delivery_method_required": "Yetkazib berish usulini tanlang",
       "payment_method_required": "To'lov usulini tanlang",
-      "date_past": "Yetkazib berish sanasi o'tgan kunlarda bo'lishi mumkin emas"
+      "date_past": "Yetkazib berish sanasi o'tgan kunlarda bo'lishi mumkin emas",
+      "title": "Xatolik yuz berdi",
+      "something_went_wrong": "Buyurtmani yaratishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+      "order_creation_failed": "Buyurtmani yaratib bo'lmadi. Iltimos, ma'lumotlarni tekshirib, qayta urinib ko'ring."
     },
     "success": {
       "title": "Buyurtma qabul qilindi",
+      "order_created": "Sizning buyurtmangiz muvaffaqiyatli yaratildi. Buyurtma holatini 'Buyurtmalar' sahifasida kuzatib borishingiz mumkin.",
       "message": "Sizning buyurtmangiz muvaffaqiyatli qabul qilindi. Tez orada siz bilan bog'lanamiz."
     }
   },
@@ -226,6 +241,21 @@
       "pending": "Kutilmoqda",
       "completed": "Bajarildi",
       "cancelled": "Bekor qilindi"
+    }
+  },
+  "home": {
+    "featured_products": "Tanlangan mahsulotlar",
+    "popular_products": "Ommabop mahsulotlar",
+    "new_products": "Yangi mahsulotlar",
+    "view_all": "Barchasini ko'rish",
+    "categories": "Kategoriyalar",
+    "loading": {
+      "products": "Mahsulotlar yuklanmoqda...",
+      "categories": "Kategoriyalar yuklanmoqda..."
+    },
+    "error": {
+      "loading_failed": "Ma'lumotlarni yuklashda xatolik yuz berdi",
+      "try_again": "Qayta urinib ko'ring"
     }
   }
 }

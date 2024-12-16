@@ -263,11 +263,15 @@
 <script setup>
 import { ref, computed, onMounted } from 'vue'
 import { useCartStore } from '@/stores/cartStore'
+import { useAuthStore } from '@/stores/authStore'
+import { useToastStore } from '@/stores/toastStore'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
 
 const router = useRouter()
 const cartStore = useCartStore()
+const authStore = useAuthStore()
+const toastStore = useToastStore()
 const { t } = useI18n()
 
 // Form data
@@ -497,7 +501,7 @@ const submitOrder = async () => {
     
     const headers = {
       'Content-Type': 'application/json',
-      'Authorization': `Bearer 2|VFJIrMjEkiF5kBFU9w9Uvthz09QVc9IempUbkxNff3a9a5f4`
+      'Authorization': `Bearer ${authStore.getToken}`
     }
     console.log('Request headers:', headers)
 
@@ -526,8 +530,13 @@ const submitOrder = async () => {
     // Clear cart
     cartStore.clearCart()
 
-    // Show success message using toast or alert
-    alert(t('checkout.success.order_created'))
+    // Show success message using toast
+    toastStore.showToast({
+      type: 'success',
+      title: t('checkout.success.title'),
+      message: t('checkout.success.order_created'),
+      duration: 5000
+    })
 
     // Redirect to orders page
     router.push('/orders')
@@ -537,7 +546,14 @@ const submitOrder = async () => {
       message: error.message,
       stack: error.stack
     })
-    alert(t('checkout.errors.something_went_wrong'))
+    
+    // Show error message using toast
+    toastStore.showToast({
+      type: 'error',
+      title: t('checkout.errors.title'),
+      message: t('checkout.errors.something_went_wrong'),
+      duration: 5000
+    })
   } finally {
     isSubmitting.value = false
   }

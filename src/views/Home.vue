@@ -59,7 +59,7 @@ import axios from "axios";
 
 const { t } = useI18n();
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "1|yVZW2OLxhP4ckuJb5ndIsKwpTbKyTHSs3e2vVnNo7a8707db";
+const token = "9|wFsR9Xnbxw5PONdfdU2lWsTqB4uvyZyjjHg4Ggvv40820f1f";
 
 const categories = ref([]);
 const popularProducts = ref([]);
