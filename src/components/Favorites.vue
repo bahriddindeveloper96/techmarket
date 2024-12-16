@@ -6,13 +6,13 @@
         <h1 class="text-2xl font-bold bg-gradient-to-r from-gray-900 to-purple-900 dark:from-purple-400 dark:to-purple-300 bg-clip-text text-transparent">
           {{ $t('nav.favorites') }}
         </h1>
-        <button v-if="favorites.length" @click="clearFavorites" class="text-sm text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors">
+        <button v-if="favoriteStore.count" @click="clearFavorites" class="text-sm text-red-500 hover:text-red-600 dark:text-red-400 dark:hover:text-red-300 transition-colors">
           {{ $t('favorites.clear_all') }}
         </button>
       </div>
 
       <!-- Empty Favorites -->
-      <div v-if="!favorites.length" class="text-center py-8">
+      <div v-if="!favoriteStore.count" class="text-center py-8">
         <div class="w-24 h-24 mx-auto mb-6 text-gray-300 dark:text-gray-600">
           <i class="ri-heart-3-line text-6xl"></i>
         </div>
@@ -26,7 +26,7 @@
       <div v-else class="grid grid-cols-1 lg:grid-cols-3 gap-4">
         <!-- Favorites Items -->
         <div class="lg:col-span-2 space-y-4">
-          <div v-for="item in favorites" :key="item.id" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
+          <div v-for="item in favoriteStore.items" :key="item.id" class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm hover:shadow-md transition-shadow p-4 relative group">
             <div class="flex gap-4">
               <!-- Product Image -->
               <div class="w-24 h-24 rounded-xl overflow-hidden bg-gradient-to-br from-purple-50 to-gray-50 dark:from-gray-700 dark:to-gray-800 p-2 flex-shrink-0">
@@ -45,8 +45,8 @@
                     </h3>
                     <div class="text-sm text-gray-500 dark:text-gray-400">
                       <p>
-                        <span class="hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer transition-colors" @click="goToCategory(item.category.toLowerCase())">
-                          {{ $t('favorites.category') }}: {{ $t(`category.categories.${item.category.toLowerCase()}`) }}
+                        <span class="hover:text-purple-600 dark:hover:text-purple-400 cursor-pointer transition-colors" @click="goToCategory(item.category)">
+                          {{ $t('favorites.category') }}: {{ item.category }}
                         </span>
                       </p>
                     </div>
@@ -103,45 +103,21 @@
 </template>
 
 <script setup>
-import { ref } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
-import Banner from './Banner.vue'
+import { useFavoriteStore } from '@/stores/favoriteStore'
+import { useCartStore } from '@/stores/cartStore'
 
 const router = useRouter()
 const { t } = useI18n()
+const favoriteStore = useFavoriteStore()
+const cartStore = useCartStore()
 
-// Favorites items
-const favorites = ref([
-  {
-    id: 1,
-    name: 'Apple iPhone 13 Pro Max',
-    price: 1099,
-    image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/iphone-13-pro-max-graphite-select?wid=470&hei=556&fmt=jpeg&qlt=95&.v=1631652956000',
-    category: 'Smartphones'
-  },
-  {
-    id: 2,
-    name: 'Samsung Galaxy S22 Ultra',
-    price: 999,
-    image: 'https://images.samsung.com/is/image/samsung/p6pim/uk/2202/gallery/uk-galaxy-s22-ultra-s908-sm-s908bzwgeub-530964068?$650_519_PNG$',
-    category: 'Smartphones'
-  },
-  {
-    id: 3,
-    name: 'MacBook Pro 14"',
-    price: 1999,
-    image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/mbp14-spacegray-select-202301?wid=452&hei=420&fmt=jpeg&qlt=95&.v=1671304673229',
-    category: 'Laptops'
-  },
-  {
-    id: 4,
-    name: 'iPad Pro 12.9"',
-    price: 1099,
-    image: 'https://store.storeimages.cdn-apple.com/4982/as-images.apple.com/is/ipad-pro-12-select-wifi-spacegray-202104?wid=470&hei=556&fmt=p-jpg&qlt=95&.v=1617126613000',
-    category: 'Tablets'
-  }
-])
+// Debug log to check store items
+onMounted(() => {
+  console.log('Favorite items:', favoriteStore.items)
+})
 
 // Recommended products
 const recommendedProducts = ref([
@@ -174,22 +150,17 @@ const handleImageError = (e) => {
 }
 
 const removeFromFavorites = (productId) => {
-  favorites.value = favorites.value.filter(product => product.id !== productId)
+  favoriteStore.removeFromFavorites(productId)
 }
 
 const clearFavorites = () => {
-  favorites.value = []
+  favoriteStore.clearFavorites()
 }
 
 const addToCartAndNavigate = async (product) => {
   try {
-    // Add to cart functionality
-    console.log('Added to cart:', product)
-    
-    // Show success message
+    await cartStore.addToCart(product)
     alert(t('favorites.added_to_cart'))
-    
-    // Navigate to cart view
     await router.push('/cart')
   } catch (error) {
     console.error('Error adding to cart:', error)

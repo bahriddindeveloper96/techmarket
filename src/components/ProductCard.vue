@@ -11,12 +11,15 @@
     <!-- Favorite Button -->
     <button 
       @click.stop="toggleFavorite"
-      class="absolute top-3 right-3 w-9 h-9 rounded-full bg-white/80 dark:bg-gray-700/80 backdrop-blur-sm shadow-lg flex items-center justify-center transition-all duration-300 hover:scale-110"
-      :class="{'text-red-500 dark:text-red-400': product.isFavorite, 'text-gray-400 dark:text-gray-500': !product.isFavorite}"
+      class="absolute top-3 right-3 w-8 h-8 rounded-full bg-white/90 dark:bg-gray-800/90 backdrop-blur-sm shadow-lg flex items-center justify-center transition-all duration-300 z-20 hover:bg-white dark:hover:bg-gray-800"
+      :class="{
+        'text-red-500 dark:text-red-400': favoriteStore.isFavorite(props.product.id),
+        'text-gray-400 dark:text-gray-500': !favoriteStore.isFavorite(props.product.id)
+      }"
     >
-      <i class="fas fa-heart text-lg transform transition-transform duration-300" 
+      <i class="fas fa-heart text-base transform transition-transform duration-300" 
          :class="[
-           product.isFavorite ? 'text-red-500 scale-110' : 'text-gray-400 group-hover:text-gray-600',
+           favoriteStore.isFavorite(props.product.id) ? 'text-red-500 scale-110' : 'text-gray-400 group-hover:text-gray-600',
            'hover:scale-125'
          ]">
       </i>
@@ -26,7 +29,7 @@
     <div class="relative h-[200px] sm:h-[250px] md:h-[300px] w-full overflow-hidden bg-gray-50 dark:bg-gray-900 rounded-t-2xl">
       <router-link :to="{ name: 'product', params: { id: product.id }}" class="block h-full">
         <swiper
-          :modules="[SwiperAutoplay, SwiperPagination]"
+          :modules="[Autoplay, Pagination]"
           :autoplay="{
             delay: 3000,
             disableOnInteraction: false
@@ -126,80 +129,42 @@
   </div>
 </template>
 
-<script>
-// Sample product images (high quality, square format 800x800)
-const sampleImages = {
-  laptop: [
-    'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1661961110372-8a7682543120?q=80&w=800&h=800&fit=crop'
-  ],
-  smartphone: [
-    'https://images.unsplash.com/photo-1592750475338-74b7b21085ab?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1511707171634-5f897ff02aa9?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1565849904461-04a58ad377e0?q=80&w=800&h=800&fit=crop'
-  ],
-  headphones: [
-    'https://images.unsplash.com/photo-1505740420928-5e560c06d30e?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1583394838336-acd977736f90?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1524678606370-a47ad25cb82a?q=80&w=800&h=800&fit=crop'
-  ],
-  watch: [
-    'https://images.unsplash.com/photo-1523275335684-37898b6baf30?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1579586337278-3befd40fd17a?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1542496658-e33a6d0d50f6?q=80&w=800&h=800&fit=crop'
-  ],
-  tablet: [
-    'https://images.unsplash.com/photo-1561154464-82e9adf32764?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1544244015-0df4b3ffc6b0?q=80&w=800&h=800&fit=crop',
-    'https://images.unsplash.com/photo-1585790050230-5dd28404ccb9?q=80&w=800&h=800&fit=crop'
-  ]
-}
-</script>
-
 <script setup>
-import { defineProps, ref, inject } from 'vue'
-import { useRouter } from 'vue-router'
-import { useCartStore } from '../stores/cartStore'
+import { ref, inject } from 'vue'
 import { Swiper, SwiperSlide } from 'swiper/vue'
 import { Autoplay, Pagination } from 'swiper/modules'
-import ProductDetailModal from './ProductDetailModal.vue'
-
-// Import Swiper styles
 import 'swiper/css'
 import 'swiper/css/pagination'
 import 'swiper/css/autoplay'
 
+import { useFavoriteStore } from '@/stores/favoriteStore'
+import { useRouter } from 'vue-router'
+import { useCartStore } from '../stores/cartStore'
+import ProductDetailModal from './ProductDetailModal.vue'
+
 const router = useRouter()
 const cartStore = useCartStore()
-
+const favoriteStore = useFavoriteStore()
 const openProductModal = inject('openProductModal')
 
 const props = defineProps({
   product: {
     type: Object,
     required: true,
-    default: () => ({
-      id: '',
-      name: '',
-      price: 0,
-      oldPrice: null,
-      rating: 0,
-      reviews: 0,
-      isFavorite: false,
-      installment: false,
-      images: [
-        'https://images.unsplash.com/photo-1517336714731-489689fd1ca4?q=80&w=800&h=800&fit=crop',
-        'https://images.unsplash.com/photo-1531297484001-80022131f5a1?q=80&w=800&h=800&fit=crop',
-        'https://images.unsplash.com/photo-1661961110372-8a7682543120?q=80&w=800&h=800&fit=crop'
-      ]
-    })
+    default() {
+      return {
+        id: '',
+        name: '',
+        price: 0,
+        oldPrice: null,
+        rating: 0,
+        reviews: 0,
+        images: [],
+        installment: false
+      }
+    }
   }
 })
-
-// Swiper modules
-const SwiperAutoplay = Autoplay
-const SwiperPagination = Pagination
 
 // Format price with thousand separators
 const formatPrice = (price) => {
@@ -219,7 +184,11 @@ const calculateMonthlyPayment = (price) => {
 // Toggle favorite status
 const toggleFavorite = (event) => {
   event.stopPropagation()
-  // Add your favorite toggle logic here
+  if (favoriteStore.isFavorite(props.product.id)) {
+    favoriteStore.removeFromFavorites(props.product.id)
+  } else {
+    favoriteStore.addToFavorites(props.product)
+  }
 }
 
 // Flying animation states
@@ -252,81 +221,76 @@ const handleAddedToCart = () => {
 }
 
 .product-swiper {
-  width: 100%;
-  height: 100%;
+  position: relative;
 }
 
-.product-swiper :deep(.swiper-wrapper) {
-  display: flex;
-  align-items: stretch;
-  height: 100%;
+.product-swiper .swiper-pagination {
+  bottom: 8px !important;
 }
 
-.product-swiper :deep(.swiper-slide) {
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  height: 100%;
-  width: 100%;
-  background: #fff;
+.product-swiper .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.8);
+  opacity: 0.5;
 }
 
-.dark .product-swiper :deep(.swiper-slide) {
-  background: #1f2937;
+.product-swiper .swiper-pagination-bullet-active {
+  opacity: 1;
+  background: white;
 }
 
 .image-container {
-  position: relative;
   width: 100%;
   height: 100%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   overflow: hidden;
 }
 
 .product-image {
-  position: absolute;
-  top: 0;
-  left: 0;
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s ease;
+  transition: transform 0.3s ease;
 }
 
-.group:hover .product-image {
-  transform: scale(1.05);
+/* Favorite button animation */
+button i.fa-heart {
+  transform-origin: center;
 }
 
-.product-swiper :deep(.swiper-pagination) {
-  position: absolute;
-  bottom: 10px !important;
-  left: 0;
-  right: 0;
-  z-index: 10;
-  display: flex;
-  justify-content: center;
-  gap: 4px;
+button:hover i.fa-heart {
+  animation: heartBeat 0.3s ease-in-out;
 }
 
-.product-swiper :deep(.swiper-pagination-bullet) {
-  width: 6px;
-  height: 6px;
-  background: rgba(255, 255, 255, 0.6);
-  opacity: 1;
-  transition: all 0.3s ease;
-  margin: 0;
+button i.fa-heart.text-red-500 {
+  animation: heartPop 0.3s ease-in-out;
 }
 
-.product-swiper :deep(.swiper-pagination-bullet-active) {
-  background: #ffffff;
-  width: 20px;
-  border-radius: 4px;
+@keyframes heartBeat {
+  0% { transform: scale(1); }
+  50% { transform: scale(1.2); }
+  100% { transform: scale(1); }
 }
 
-.dark .product-swiper :deep(.swiper-pagination-bullet) {
-  background: rgba(255, 255, 255, 0.4);
+@keyframes heartPop {
+  0% { transform: scale(0.8); }
+  50% { transform: scale(1.3); }
+  100% { transform: scale(1); }
 }
 
-.dark .product-swiper :deep(.swiper-pagination-bullet-active) {
-  background: #ffffff;
+/* Flying animation */
+.flying-item {
+  position: fixed;
+  pointer-events: none;
+  z-index: 9999;
+  transition: all 0.8s cubic-bezier(0.215, 0.61, 0.355, 1);
+}
+
+.flying-item.active {
+  transform: scale(0.1) rotate(360deg);
+  opacity: 0;
 }
 </style>

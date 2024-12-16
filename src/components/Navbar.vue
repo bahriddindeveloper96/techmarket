@@ -61,8 +61,16 @@
 
           <!-- Right menu -->
           <div class="flex items-center space-x-6">
-            <router-link to="/favorites" class="flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">
-              <i class="ri-heart-3-line text-2xl"></i>
+            <router-link to="/favorites" class="relative flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors">
+              <div class="relative">
+                <i class="ri-heart-3-line text-2xl"></i>
+                <transition name="bounce">
+                  <span v-if="favoriteStore.count > 0"
+                    class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
+                    {{ favoriteStore.count }}
+                  </span>
+                </transition>
+              </div>
               <span class="text-xs mt-1">{{ $t('nav.favorites') }}</span>
             </router-link>
             <!-- Profile button -->
@@ -189,24 +197,25 @@
             <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.catalog') }}</span>
           </button>
 
-          <router-link to="/favorites" class="group relative flex flex-col items-center justify-center py-2">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
-              <i class="ri-heart-3-line text-white text-lg"></i>
+          <router-link to="/favorites" class="group relative flex flex-col items-center justify-center">
+            <div class="relative">
+              <i class="ri-heart-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
+              <transition name="bounce">
+                <span v-if="favoriteStore.count > 0"
+                  class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
+                  {{ favoriteStore.count }}
+                </span>
+              </transition>
             </div>
-            <i class="ri-heart-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.favorites') }}</span>
+            <span class="text-xs text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.favorites') }}</span>
           </router-link>
 
           <router-link to="/cart" class="group relative flex flex-col items-center justify-center py-2">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
-              <i class="ri-shopping-cart-2-line text-white text-lg"></i>
-            </div>
             <div class="relative">
               <i class="ri-shopping-cart-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
               <transition name="bounce">
                 <span v-if="cartStore.itemsCount > 0"
-                  class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1"
-                  :class="{'animate-bounce': cartStore.showNotification}">
+                  class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
                   {{ cartStore.itemsCount }}
                 </span>
               </transition>
@@ -244,17 +253,19 @@ import { ref, computed } from 'vue'
 import { useI18n } from 'vue-i18n'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
-import { auth } from '../firebase/config'
+import { useFavoriteStore } from '../stores/favoriteStore'
+import { useAuthStore } from '../stores/authStore'
 import CatalogMenu from './CatalogMenu.vue'
 import MobileCatalogMenu from './MobileCatalogMenu.vue'
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import ThemeToggle from './ThemeToggle.vue'
 
-const { locale } = useI18n()
+const { locale, t } = useI18n()
 const currentLocale = ref(locale.value)
 
 const cartStore = useCartStore()
-const { t } = useI18n()
+const favoriteStore = useFavoriteStore()
+const auth = useAuthStore()
 const router = useRouter()
 
 const isSearchOpen = ref(false)

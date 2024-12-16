@@ -24,6 +24,15 @@
     "login": "Login",
     "register": "Register"
   },
+  "common": {
+    "clear_all": "Clear All",
+    "browse_products": "Browse Products",
+    "currency": "$",
+    "add_to_favorites": "Add to Favorites",
+    "remove_from_favorites": "Remove from Favorites",
+    "no_favorites": "No favorites yet",
+    "start_adding": "Start adding products to your favorites"
+  },
   "profile": {
     "title": "My Profile",
     "personal_info": "Personal Information",
@@ -56,10 +65,11 @@
     "category": "Category",
     "empty": {
       "title": "Your favorites list is empty",
-      "description": "Add items you like to your favorites list. Review them anytime and easily move them to the cart.",
-      "button": "Continue Shopping"
+      "description": "Your favorites list is empty",
+      "button": "Browse Products"
     },
-    "remove": "Remove",
+    "empty_list": "Your favorites list is empty",
+    "remove": "Remove from favorites",
     "add_to_cart": "Add to Cart",
     "move_all_to_cart": "Move All to Cart",
     "clear_all": "Clear All",
@@ -102,7 +112,9 @@
     "description": "Description",
     "no_reviews": "No reviews yet",
     "write_review": "Write a Review",
-    "related_products": "Related Products"
+    "related_products": "Related Products",
+    "category": "Category",
+    "recommended": "Recommended Products"
   },
   "cart": {
     "title": "Shopping Cart",
@@ -118,7 +130,10 @@
     "total_items": "items",
     "clear_cart": "Clear Cart",
     "save_for_later": "Save for Later",
-    "similar_products": "You may also like"
+    "similar_products": "You may also like",
+    "add": "Add to Cart",
+    "added_to_cart": "Product added to cart",
+    "error_adding": "Error adding product to cart"
   },
   "checkout": {
     "title": "Checkout",
@@ -170,7 +185,7 @@
       "payment_method_required": "Please select a payment method",
       "date_past": "Delivery date cannot be in the past",
       "title": "Error Occurred",
-      "something_went_wrong": "An error occurred while creating your order. Please try again.",
+  
       "order_creation_failed": "Failed to create order. Please check your information and try again."
     },
     "success": {

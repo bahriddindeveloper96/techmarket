@@ -295,13 +295,33 @@
           </div>
 
           <!-- Add to Cart Button -->
-          <button
-            @click="addToCart"
-            id="addToCartButton"
-            class="w-full py-3 px-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 text-white font-medium rounded-xl hover:from-purple-700 hover:to-purple-900 dark:hover:from-purple-500 dark:hover:to-purple-700 transition-all duration-300 shadow-lg shadow-purple-500/30 dark:shadow-purple-800/30"
-          >
-            {{ $t("product.add_to_cart") }}
-          </button>
+          <div class="flex gap-2">
+            <button
+              @click="addToCart"
+              id="addToCartButton"
+              class="flex-1 py-3 px-4 bg-gradient-to-r from-purple-600 to-purple-800 dark:from-purple-400 dark:to-purple-600 text-white font-medium rounded-xl hover:from-purple-700 hover:to-purple-900 dark:hover:from-purple-500 dark:hover:to-purple-700 transition-all duration-300 shadow-lg shadow-purple-500/30 dark:shadow-purple-800/30"
+            >
+              {{ $t("product.add_to_cart") }}
+            </button>
+            <button
+              @click="toggleFavorite"
+              class="p-3 rounded-xl border border-gray-200 dark:border-gray-700 hover:border-purple-500 dark:hover:border-purple-400 transition-colors"
+              :class="{ 'text-red-500 dark:text-red-400': isInFavorites }"
+            >
+              <svg
+                class="w-6 h-6"
+                fill="currentColor"
+                viewBox="0 0 20 20"
+                xmlns="http://www.w3.org/2000/svg"
+              >
+                <path
+                  fill-rule="evenodd"
+                  d="M3.172 5.172a4 4 0 015.656 0L10 6.343l1.172-1.171a4 4 0 115.656 5.656L10 17.657l-6.828-6.829a4 4 0 010-5.656z"
+                  clip-rule="evenodd"
+                />
+              </svg>
+            </button>
+          </div>
         </div>
       </div>
     </div>
@@ -657,6 +677,12 @@ const addToCart = () => {
   
 
   cartStore.addToCart(cartItem)
+};
+
+const isInFavorites = ref(false);
+
+const toggleFavorite = () => {
+  isInFavorites.value = !isInFavorites.value;
 };
 
 // Helper functions

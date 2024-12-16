@@ -13,7 +13,7 @@
     "cart": "Savat",
     "new": "Yangi",
     "sales": "Chegirmalar",
-    "hot_deals": "Qaynoq takliflar",
+    "hot_deals": "Qizg'in takliflar",
     "promotions": "Aksiyalar",
     "catalog": "Katalog",
     "see_all": "Hammasini ko'rish"
@@ -23,6 +23,11 @@
     "cart": "Savat",
     "login": "Kirish",
     "register": "Ro'yxatdan o'tish"
+  },
+  "common": {
+    "clear_all": "Hammasini o'chirish",
+    "browse_products": "Mahsulotlarni ko'rish",
+    "currency": "so'm"
   },
   "profile": {
     "title": "Mening profilim",
@@ -56,13 +61,14 @@
     "category": "Kategoriya",
     "empty": {
       "title": "Sevimlilar ro'yxati bo'sh",
-      "description": "Yoqtirgan mahsulotlaringizni sevimlilarga qo'shing. Ularni istalgan vaqtda ko'rib chiqing va savatga osongina o'tkazing.",
-      "button": "Xaridni davom ettirish"
+      "description": "Sevimlilar ro'yxati bo'sh",
+      "button": "Mahsulotlarni ko'rish"
     },
-    "remove": "O'chirish",
+    "empty_list": "Sevimlilar ro'yxati bo'sh",
+    "remove": "Sevimlilardan olib tashlash",
     "add_to_cart": "Savatga qo'shish",
     "move_all_to_cart": "Hammasini savatga",
-    "clear_all": "Hammasini tozalash",
+    "clear_all": "Hammasini o'chirish",
     "items_count": "ta mahsulot",
     "item_count": "ta mahsulot",
     "save_for_later": "Keyinroqqa saqlash",
@@ -77,8 +83,6 @@
     "recommended": "Tavsiya etilgan mahsulotlar",
     "recommended_products": "Tavsiya etilgan mahsulotlar"
   },
-  "currency": "so'm",
-  "month": "oy",
   "product": {
     "about": "Mahsulot haqida",
     "specifications": "Xarakteristikalar",
@@ -102,7 +106,9 @@
     "description": "Tavsif",
     "related_products": "O'xshash mahsulotlar",
     "no_reviews": "Sharhlar yo'q",
-    "write_review": "Sharh qoldirish"
+    "write_review": "Sharh qoldirish",
+    "category": "Kategoriya",
+    "recommended": "Tavsiya etilgan mahsulotlar"
   },
   "cart": {
     "title": "Savat",
@@ -118,7 +124,10 @@
     "total_items": "ta mahsulot",
     "clear_cart": "Savatni tozalash",
     "save_for_later": "Keyinroqqa saqlash",
-    "similar_products": "Sizga yoqishi mumkin"
+    "similar_products": "Sizga yoqishi mumkin",
+    "add": "Savatga qo'shish",
+    "added_to_cart": "Mahsulot savatga qo'shildi",
+    "error_adding": "Mahsulotni savatga qo'shishda xatolik yuz berdi"
   },
   "checkout": {
     "title": "Buyurtma berish",
@@ -170,7 +179,7 @@
       "payment_method_required": "To'lov usulini tanlang",
       "date_past": "Yetkazib berish sanasi o'tgan kunlarda bo'lishi mumkin emas",
       "title": "Xatolik yuz berdi",
-      "something_went_wrong": "Buyurtmani yaratishda xatolik yuz berdi. Iltimos, qayta urinib ko'ring.",
+      
       "order_creation_failed": "Buyurtmani yaratib bo'lmadi. Iltimos, ma'lumotlarni tekshirib, qayta urinib ko'ring."
     },
     "success": {
