@@ -128,28 +128,48 @@
       </div>
 
       <!-- Similar Products -->
-      <div class="mt-2">
-        <h2 class="text-2xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
+      <div class="mt-2 px-4 md:px-0">
+        <h2 class="text-xl md:text-2xl font-bold mb-4 bg-gradient-to-r from-gray-900 to-purple-900 bg-clip-text text-transparent dark:text-white">
           {{ $t('cart.similar_products') }}
         </h2>
-        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
-          <ProductCard 
-            v-for="product in similarProducts" 
-            :key="product.id"
-            :product="product"
-          />
-        </div>
+        <Swiper
+          :modules="[Autoplay, Pagination, Navigation]"
+          :slides-per-view="2"
+          :space-between="8"
+          :navigation="true"
+          :pagination="{ clickable: true }"
+          :autoplay="{ delay: 3000, disableOnInteraction: false }"
+          class="similar-products-swiper"
+          :breakpoints="{
+            '768': {
+              slidesPerView: 3,
+              spaceBetween: 16,
+            },
+            '1024': {
+              slidesPerView: 5,
+              spaceBetween: 16,
+            },
+          }"
+        >
+          <SwiperSlide v-for="product in similarProducts" :key="product.id">
+            <ProductCard :product="product" />
+          </SwiperSlide>
+        </Swiper>
       </div>
   </main>
 </template>
 
 <script setup>
-import { ref, computed } from 'vue'
+import { ref, computed, onMounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { useCartStore } from '@/stores/cartStore'
-import Banner from './../components/Banner.vue'
 import ProductCard from '@/components/ProductCard.vue'
+import axios from 'axios'
+import { useI18n } from 'vue-i18n'
+import { Swiper, SwiperSlide } from 'swiper/vue'
+import { Autoplay, Pagination, Navigation } from 'swiper/modules'
 
+const { t } = useI18n()
 const router = useRouter()
 const cartStore = useCartStore()
 
@@ -158,103 +178,71 @@ const cartItems = computed(() => cartStore.items || [])
 const subtotal = computed(() => cartStore.total || 0)
 
 // Similar products
-const similarProducts = ref([
-  {
-    id: 1,
-    name: 'iPhone 13 Pro Max',
-    price: 13_999_000,
-    oldPrice: 15_999_000,
-    rating: 4.8,
-    reviews: 245,
-    isFavorite: false,
-    installment: true,
-    images: [
-      'https://picsum.photos/400/400?random=1',
-      'https://picsum.photos/400/400?random=2',
-      'https://picsum.photos/400/400?random=3'
-    ],
-    attributes: {
-      color: 'black',
-      storage: '128GB'
+const similarProducts = ref([])
+const loading = ref(false)
+
+const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
+const token = "9|wFsR9Xnbxw5PONdfdU2lWsTqB4uvyZyjjHg4Ggvv40820f1f"
+
+// Fetch similar products
+const fetchSimilarProducts = async () => {
+  try {
+    loading.value = true;
+    console.log('Fetching similar products from:', `${baseUrl}/api/homepage`);
+    
+    const response = await axios.get(
+      `${baseUrl}/api/homepage`,
+      {
+        headers: {
+          Authorization: `Bearer ${token}`,
+          Accept: "application/json",
+        },
+      }
+    );
+
+    console.log('API Response:', response.data);
+
+    if (response.data?.success && response.data?.data?.featured_products) {
+      similarProducts.value = response.data.data.featured_products.map(product => {
+        const defaultVariant = product.variants?.[0];
+        return {
+          id: product.id,
+          name: product.name,
+          slug: product.slug,
+          price: defaultVariant?.price || 0,
+          oldPrice: null,
+          stock: defaultVariant?.stock || 0,
+          rating: product.average_rating || 0,
+          reviews: 0,
+          isFavorite: product.favorite_count > 0,
+          installment: true,
+          images: defaultVariant?.images ||
+            product.images?.map((img) => img.image) || [
+              product.category?.image ||
+                "https://picsum.photos/400/400?random=1",
+            ],
+          image: defaultVariant?.images?.[0] ||
+            product.images?.[0]?.image ||
+            product.category?.image ||
+            "https://picsum.photos/400/400?random=1",
+        };
+      });
+    } else {
+      console.error('Invalid API response structure:', response.data);
+      similarProducts.value = [];
     }
-  },
-  {
-    id: 2,
-    name: 'Samsung Galaxy S21 Ultra',
-    price: 12_999_000,
-    oldPrice: 14_499_000,
-    rating: 4.7,
-    reviews: 189,
-    isFavorite: false,
-    installment: true,
-    images: [
-      'https://picsum.photos/400/400?random=4',
-      'https://picsum.photos/400/400?random=5',
-      'https://picsum.photos/400/400?random=6'
-    ],
-    attributes: {
-      color: 'white',
-      storage: '256GB'
-    }
-  },
-  {
-    id: 5,
-    name: 'MacBook Pro 16"',
-    price: 15_999_000,
-    oldPrice: null,
-    rating: 5.0,
-    reviews: 87,
-    isFavorite: false,
-    installment: true,
-    images: [
-      'https://picsum.photos/400/400?random=1',
-      'https://picsum.photos/400/400?random=8',
-      'https://picsum.photos/400/400?random=7'
-    ],
-    attributes: {
-      color: 'silver',
-      storage: '512GB'
-    }
-  },
-  {
-    id: 6,
-    name: 'iPad Pro 10.9"',
-    price: 10_999_000,
-    oldPrice: 13_499_000,
-    rating: 4.9,
-    reviews: 156,
-    isFavorite: false,
-    installment: true,
-    images: [
-      'https://picsum.photos/400/400?random=15',
-      'https://picsum.photos/400/400?random=11',
-      'https://picsum.photos/400/400?random=14'
-    ],
-    attributes: {
-      color: 'gray',
-      storage: '64GB'
-    }
-  },
-  {
-    id: 8,
-    name: 'iPad Pro 10.9"',
-    price: 10_999_000,
-    oldPrice: 13_499_000,
-    rating: 4.9,
-    reviews: 156,
-    isFavorite: false,
-    installment: true,
-    images: [
-      'https://picsum.photos/400/400?random=15',
-      'https://picsum.photos/400/400?random=11',
-      'https://picsum.photos/400/400?random=14'
-    ],
-    attributes: {
-      color: 'gray',
-      storage: '64GB'
-    }
+  } catch (error) {
+    console.error('Error fetching similar products:', error.response?.data || error.message);
+    similarProducts.value = [];
+  } finally {
+    loading.value = false;
   }
-])
+};
+
+// Computed total price
+const totalPrice = computed(() => {
+  return cartStore.items.reduce((total, item) => total + item.price * item.quantity, 0)
+})
 
 // Methods
 const formatPrice = (price) => {
@@ -276,4 +264,128 @@ const clearCart = () => {
 const checkout = () => {
   router.push('/checkout')
 }
+
+// Fetch similar products on mount
+onMounted(() => {
+  fetchSimilarProducts()
+})
 </script>
+<style>
+@import '@/assets/main.css';
+@import 'swiper/css';
+@import 'swiper/css/navigation';
+@import 'swiper/css/pagination';
+
+.similar-products-swiper {
+  padding: 10px 0 30px 0;
+  position: relative;
+}
+
+/* Mobile styles (default) */
+.similar-products-swiper .swiper-button-next,
+.similar-products-swiper .swiper-button-prev {
+  display: none;
+}
+
+.similar-products-swiper .swiper-pagination {
+  bottom: 0;
+}
+
+.similar-products-swiper .swiper-pagination-bullet {
+  width: 6px;
+  height: 6px;
+  margin: 0 4px;
+  background: #e2e8f0;
+  opacity: 1;
+  transition: all 0.3s ease;
+}
+
+.similar-products-swiper .swiper-pagination-bullet-active {
+  background: #6b46c1;
+  width: 18px;
+  border-radius: 3px;
+}
+
+.similar-products-swiper .swiper-slide {
+  height: auto;
+  padding: 0 4px;
+}
+
+/* Tablet and Desktop styles */
+@media (min-width: 768px) {
+  .similar-products-swiper {
+    padding: 20px 40px 40px;
+  }
+
+  .similar-products-swiper .swiper-slide {
+    padding: 0;
+  }
+
+  .similar-products-swiper .swiper-button-next,
+  .similar-products-swiper .swiper-button-prev {
+    display: flex;
+    width: 40px;
+    height: 40px;
+    background-color: white;
+    border-radius: 50%;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+  }
+
+  .similar-products-swiper .swiper-button-next:hover,
+  .similar-products-swiper .swiper-button-prev:hover {
+    background-color: #6b46c1;
+  }
+
+  .similar-products-swiper .swiper-button-next::after,
+  .similar-products-swiper .swiper-button-prev::after {
+    font-size: 16px;
+    color: #6b46c1;
+    font-weight: bold;
+    transition: all 0.3s ease;
+  }
+
+  .similar-products-swiper .swiper-button-next:hover::after,
+  .similar-products-swiper .swiper-button-prev:hover::after {
+    color: white;
+  }
+
+  .similar-products-swiper .swiper-pagination {
+    bottom: 10px;
+  }
+
+  .similar-products-swiper .swiper-pagination-bullet {
+    width: 8px;
+    height: 8px;
+    margin: 0 6px;
+  }
+
+  .similar-products-swiper .swiper-pagination-bullet-active {
+    width: 24px;
+    border-radius: 4px;
+  }
+
+  .similar-products-swiper .swiper-slide:hover {
+    transform: translateY(-5px);
+  }
+}
+
+/* Dark mode styles */
+.dark .similar-products-swiper .swiper-button-next,
+.dark .similar-products-swiper .swiper-button-prev {
+  background-color: #1a1a1a;
+}
+
+.dark .similar-products-swiper .swiper-button-next:hover,
+.dark .similar-products-swiper .swiper-button-prev:hover {
+  background-color: #6b46c1;
+}
+
+.dark .similar-products-swiper .swiper-pagination-bullet {
+  background: #4a5568;
+}
+
+.dark .similar-products-swiper .swiper-pagination-bullet-active {
+  background: #6b46c1;
+}
+</style>

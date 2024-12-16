@@ -53,7 +53,6 @@
 import { ref, onMounted } from "vue";
 import { useI18n } from "vue-i18n";
 import Banner from "./../components/Banner.vue";
-import CategoryCard from "./../components/CategoryCard.vue";
 import ProductCard from "./../components/ProductCard.vue";
 import axios from "axios";
 
@@ -69,12 +68,15 @@ const banners = ref([]);
 
 const fetchHomeData = async () => {
   try {
+    console.log('Fetching home data from:', `${baseUrl}/api/homepage`);
     const response = await axios.get(`${baseUrl}/api/homepage`, {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
     });
+    console.log('API Response:', response.data);
+    
     if (response.data.success) {
       const { data } = response.data;
 
@@ -117,9 +119,15 @@ const fetchHomeData = async () => {
           ? banner.image
           : `${baseUrl}/${banner.image}`,
       }));
+    } else {
+      console.error('API returned success: false', response.data);
     }
   } catch (error) {
-    console.error("Error fetching home data:", error);
+    console.error("Error fetching home data:", error.response?.data || error.message);
+    popularProducts.value = [];
+    newProducts.value = [];
+    featuredProducts.value = [];
+    banners.value = [];
   }
 };
 
