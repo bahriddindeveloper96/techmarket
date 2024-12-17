@@ -156,7 +156,7 @@ const activeCategory = ref(null);
 const categories = ref([]);
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "9|wFsR9Xnbxw5PONdfdU2lWsTqB4uvyZyjjHg4Ggvv40820f1f";
+const token = "1|THEsafwjzLqfqau7rGpgmXw1dHB3Iq6UiqAVb7Qjbe3de238";
 
 const emit = defineEmits(["close"]);
 
