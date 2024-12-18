@@ -118,7 +118,7 @@ const activeCategory = ref(null);
 const categories = ref([]);
 
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz";
-const token = import.meta.env.VITE_API_BASE_token || "3|y0r5ZdazYN92gQ9VG10pYim8f6YWqTErZUH52NAo660ed509";
+const token = import.meta.env.VITE_API_BASE_token || "2|Yz4cT4P7rJJND86WgT5OhAQDG8E9k3l7NzcLaGDLb6810987";
 
 const fetchCategories = async () => {
   try {
