@@ -57,8 +57,8 @@ import ProductCard from "./../components/ProductCard.vue";
 import axios from "axios";
 
 const { t } = useI18n();
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "7|MKTulSoz5KuBSjF4v1CmSsVdD6LYHsDZo2PJxGDV2162af25";
+const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz";
+const token = "3|y0r5ZdazYN92gQ9VG10pYim8f6YWqTErZUH52NAo660ed509";
 
 const categories = ref([]);
 const popularProducts = ref([]);
