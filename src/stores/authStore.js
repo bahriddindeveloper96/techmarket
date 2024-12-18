@@ -3,7 +3,7 @@ import { defineStore } from 'pinia'
 export const useAuthStore = defineStore('auth', {
   state: () => ({
     token: localStorage.getItem('access_token') || null,
-    user: null
+    user: localStorage.getItem('user') ? JSON.parse(localStorage.getItem('user')) : null
   }),
 
   getters: {
@@ -36,15 +36,16 @@ export const useAuthStore = defineStore('auth', {
           throw new Error(data.message || data.error || 'Invalid credentials')
         }
 
-        // Save token
+        // Save token and user data
         const token = data.access_token
         if (!token) {
           throw new Error('No token received')
         }
 
-        console.log('Setting token:', token)
         this.token = token
+        this.user = data.user // Save user data directly from response
         localStorage.setItem('access_token', token)
+        localStorage.setItem('user', JSON.stringify(data.user))
         
         return true
       } catch (error) {
@@ -53,11 +54,74 @@ export const useAuthStore = defineStore('auth', {
       }
     },
 
+    async fetchUserData() {
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`,
+            'Accept': 'application/json'
+          }
+        })
+
+        if (!response.ok) {
+          throw new Error('Failed to fetch user data')
+        }
+
+        const userData = await response.json()
+        this.user = userData
+        return userData
+      } catch (error) {
+        console.error('Error fetching user data:', error)
+        this.logout()
+        throw error
+      }
+    },
+
+    async validateToken() {
+      if (!this.token) {
+        // Try to restore from localStorage
+        const savedToken = localStorage.getItem('access_token')
+        const savedUser = localStorage.getItem('user')
+        
+        if (savedToken && savedUser) {
+          this.token = savedToken
+          this.user = JSON.parse(savedUser)
+        } else {
+          return false
+        }
+      }
+      
+      try {
+        const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user`, {
+          headers: {
+            'Authorization': `Bearer ${this.token}`,
+            'Accept': 'application/json'
+          }
+        })
+
+        if (!response.ok) {
+          this.logout()
+          return false
+        }
+
+        // Update user data
+        const userData = await response.json()
+        this.user = userData
+        localStorage.setItem('user', JSON.stringify(userData))
+        return true
+      } catch (error) {
+        console.error('Token validation error:', error)
+        this.logout()
+        return false
+      }
+    },
+
     logout() {
       console.log('Logging out')
       this.token = null
       this.user = null
       localStorage.removeItem('access_token')
+      localStorage.removeItem('user')
     },
 
     async logoutApi() {

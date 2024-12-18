@@ -454,7 +454,7 @@ const router = useRouter();
 const cartStore = useCartStore();
 const route = useRoute();
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
-const token = "1|THEsafwjzLqfqau7rGpgmXw1dHB3Iq6UiqAVb7Qjbe3de238";
+const token = "7|MKTulSoz5KuBSjF4v1CmSsVdD6LYHsDZo2PJxGDV2162af25";
 
 // Product data
 const product = ref(null);

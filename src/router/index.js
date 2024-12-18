@@ -74,18 +74,46 @@ const router = createRouter({
 })
 
 // Navigation guard
-router.beforeEach((to, from, next) => {
+router.beforeEach(async (to, from, next) => {
   const authStore = useAuthStore()
   const requiresAuth = to.matched.some(record => record.meta.requiresAuth)
 
-  if (requiresAuth && !authStore.isAuthenticated) {
-    next({
-      path: '/login',
-      query: { redirect: to.fullPath }
-    })
-  } else {
-    next()
+  if (requiresAuth) {
+    const isAuthenticated = !!authStore.token && !!authStore.user
+    
+    if (!isAuthenticated) {
+      // If not authenticated, redirect to login
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+      return
+    }
+
+    // Validate token by checking user data
+    try {
+      const response = await fetch(`${import.meta.env.VITE_API_BASE_URL}/api/user`, {
+        headers: {
+          'Authorization': `Bearer ${authStore.token}`,
+          'Accept': 'application/json'
+        }
+      })
+
+      if (!response.ok) {
+        throw new Error('Invalid token')
+      }
+    } catch (error) {
+      console.error('Auth check failed:', error)
+      authStore.logout()
+      next({
+        path: '/login',
+        query: { redirect: to.fullPath }
+      })
+      return
+    }
   }
+  
+  next()
 })
 
 export default router
