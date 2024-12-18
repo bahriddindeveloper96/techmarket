@@ -133,8 +133,7 @@ const userData = ref({
   lastName: '',
   email: '',
   phone: '',
-  birthday: '',
-  gender: '',
+  bio: '',
   address: ''
 })
 
@@ -155,15 +154,14 @@ const fetchProfile = async () => {
     }
 
     const data = await response.json()
-
+  
     // Set basic data
-    userData.value.firstName = data.first_name || ''
-    userData.value.lastName = data.last_name || ''
+    userData.value.firstName = data.firstname || ''
+    userData.value.lastName = data.lastname || ''
     userData.value.email = data.email || ''
     userData.value.phone = data.phone || ''
-    userData.value.birthday = data.birthday || ''
-    userData.value.gender = data.gender || ''
     userData.value.address = data.address || ''
+    userData.value.bio = data.bio || ''
   } catch (err) {
     error.value = err.message
   } finally {
@@ -185,14 +183,13 @@ const updateProfile = async () => {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        first_name: userData.value.firstName,
-        last_name: userData.value.lastName,
-        email: userData.value.email,
-        phone: userData.value.phone,
-        birthday: userData.value.birthday,
-        gender: userData.value.gender,
-        address: userData.value.address
-      })
+      firstname: userData.value.firstName,
+      lastname: userData.value.lastName,
+      email: userData.value.email,
+      phone: userData.value.phone,
+      address: userData.value.address,
+      bio: userData.value.bio
+    })
     })
 
     if (!response.ok) {

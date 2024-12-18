@@ -1,96 +1,115 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
-    <h1 class="text-2xl font-bold mb-6">{{ $t('profile.title') }}</h1>
-
-    <div v-if="loading" class="flex justify-center items-center py-8">
-      <div class="animate-spin rounded-full h-8 w-8 border-b-2 border-primary-600"></div>
+  <div class="settings-container p-4 sm:p-6 max-w-4xl mx-auto">
+    <!-- Mobile Header -->
+    <div class="flex items-center justify-between p-4 md:hidden border-b border-gray-200 dark:border-gray-800">
+      <div class="flex items-center space-x-4">
+        <button @click="$emit('update:active-tab', 'home')" class="text-gray-600 dark:text-gray-400 hover:text-gray-900 dark:hover:text-white">
+          <i class="fas fa-arrow-left text-xl"></i>
+        </button>
+        <h1 class="text-xl font-semibold text-gray-900 dark:text-white">{{ $t('profile.personal_info') }}</h1>
+      </div>
     </div>
 
-    <div v-else-if="error" class="text-red-500 text-center py-8">
-      {{ error }}
+    <!-- Desktop Header -->
+    <div class="hidden md:flex items-center justify-between mb-8">
+      <h2 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $t('profile.personal_info') }}</h2>
     </div>
 
-    <div v-else class="max-w-2xl mx-auto">
-      <form @submit.prevent="updateProfile" class="space-y-6 bg-white dark:bg-gray-800 rounded-lg shadow p-6">
-        <h2 class="text-xl font-semibold mb-4">{{ $t('profile.personal_info') }}</h2>
+    <!-- Personal Info Form -->
+    <div class="bg-white dark:bg-gray-800 rounded-2xl shadow-sm">
+      <div class="p-6">
+        <!-- Form Grid -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <!-- First Name -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.first_name') }}</label>
+            <input 
+              v-model="userData.firstName"
+              type="text" 
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
+              :placeholder="$t('profile.placeholders.first_name')" 
+            />
+          </div>
 
-        <!-- Name -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ $t('profile.name') }}
-          </label>
-          <input
-            type="text"
-            v-model="formData.name"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
-          />
-        </div>
+          <!-- Last Name -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.last_name') }}</label>
+            <input 
+              v-model="userData.lastName"
+              type="text" 
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
+              :placeholder="$t('profile.placeholders.last_name')" 
+            />
+          </div>
 
-        <!-- Email -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ $t('profile.email') }}
-          </label>
-          <input
-            type="email"
-            v-model="formData.email"
-            disabled
-            class="w-full px-3 py-2 border border-gray-300 rounded-md bg-gray-100"
-          />
-        </div>
+          <!-- Email -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.email') }}</label>
+            <input 
+              v-model="userData.email"
+              type="email" 
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
+              :placeholder="$t('profile.placeholders.email')" 
+            />
+          </div>
 
-        <!-- Phone -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ $t('profile.phone') }}
-          </label>
-          <input
-            type="tel"
-            v-model="formData.phone"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
-          />
-        </div>
+          <!-- Phone -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.phone') }}</label>
+            <input 
+              v-model="userData.phone"
+              type="tel" 
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
+              :placeholder="$t('profile.placeholders.phone')" 
+            />
+          </div>
 
-        <!-- Bio -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ $t('profile.bio') }}
-          </label>
-          <textarea
-            v-model="formData.bio"
-            rows="3"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
-          ></textarea>
-        </div>
+          <!-- Birthday -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.birthday') }}</label>
+            <input 
+              v-model="userData.birthday"
+              type="date" 
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
+            />
+          </div>
 
-        <!-- Address -->
-        <div>
-          <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-1">
-            {{ $t('profile.address') }}
-          </label>
-          <textarea
-            v-model="formData.address"
-            rows="2"
-            class="w-full px-3 py-2 border border-gray-300 rounded-md focus:outline-none focus:ring-1 focus:ring-primary-500"
-          ></textarea>
-        </div>
+          <!-- Gender -->
+          <div class="space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.gender') }}</label>
+            <select 
+              v-model="userData.gender"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all"
+            >
+              <option value="">{{ $t('profile.select') }}</option>
+              <option value="male">{{ $t('profile.male') }}</option>
+              <option value="female">{{ $t('profile.female') }}</option>
+            </select>
+          </div>
 
-        <!-- Submit Button -->
-        <div class="flex justify-end">
-          <button
-            type="submit"
-            :disabled="updating"
-            class="px-4 py-2 bg-primary-600 text-white rounded-md hover:bg-primary-700 focus:outline-none focus:ring-2 focus:ring-primary-500 focus:ring-offset-2 disabled:opacity-50"
-          >
-            {{ updating ? '...' : $t('profile.save') }}
-          </button>
-        </div>
+          <!-- Address -->
+          <div class="col-span-1 md:col-span-2 space-y-2">
+            <label class="block text-sm font-medium text-gray-700 dark:text-gray-300">{{ $t('profile.address') }}</label>
+            <textarea 
+              v-model="userData.address"
+              class="w-full px-4 py-2 rounded-xl border border-gray-200 dark:border-gray-700 dark:bg-gray-700 dark:text-white focus:ring-2 focus:ring-primary-500 focus:border-transparent transition-all" 
+              rows="3" 
+              :placeholder="$t('profile.placeholders.address')"
+            ></textarea>
+          </div>
 
-        <!-- Success Message -->
-        <div v-if="successMessage" class="text-green-600 text-center mt-4">
-          {{ successMessage }}
+          <!-- Save Button -->
+          <div class="col-span-1 md:col-span-2 flex justify-end space-x-4">
+           
+            <button 
+              @click="handleSave"
+              class="px-6 py-2 bg-primary-600 dark:bg-primary-900 text-white rounded-xl hover:bg-primary-700 dark:hover:bg-primary-800 transition-colors"
+            >
+              {{ $t('profile.save') }}
+            </button>
+          </div>
         </div>
-      </form>
+      </div>
     </div>
   </div>
 </template>
@@ -101,7 +120,7 @@ import { useAuthStore } from '../stores/authStore'
 import { useI18n } from 'vue-i18n'
 
 const authStore = useAuthStore()
-const { locale } = useI18n()
+const { t, locale } = useI18n()
 const currentLocale = computed(() => locale.value)
 
 const loading = ref(true)
@@ -109,8 +128,9 @@ const updating = ref(false)
 const error = ref(null)
 const successMessage = ref('')
 
-const formData = ref({
-  name: '',
+const userData = ref({
+  firstName: '',
+  lastName: '',
   email: '',
   phone: '',
   bio: '',
@@ -134,18 +154,14 @@ const fetchProfile = async () => {
     }
 
     const data = await response.json()
-    
+  
     // Set basic data
-    formData.value.email = data.email
-    formData.value.phone = data.phone
-
-    // Find translation for current locale
-    const translation = data.translations.find(t => t.locale === currentLocale.value)
-    if (translation) {
-      formData.value.name = translation.name
-      formData.value.bio = translation.bio
-      formData.value.address = translation.address
-    }
+    userData.value.firstName = data.firstname || ''
+    userData.value.lastName = data.lastname || ''
+    userData.value.email = data.email || ''
+    userData.value.phone = data.phone || ''
+    userData.value.address = data.address || ''
+    userData.value.bio = data.bio || ''
   } catch (err) {
     error.value = err.message
   } finally {
@@ -167,24 +183,22 @@ const updateProfile = async () => {
         'Accept': 'application/json'
       },
       body: JSON.stringify({
-        phone: formData.value.phone,
-        translations: {
-          [currentLocale.value]: {
-            name: formData.value.name,
-            bio: formData.value.bio,
-            address: formData.value.address
-          }
-        }
-      })
+      firstname: userData.value.firstName,
+      lastname: userData.value.lastName,
+      email: userData.value.email,
+      phone: userData.value.phone,
+      address: userData.value.address,
+      bio: userData.value.bio
+    })
     })
 
     if (!response.ok) {
-      throw new Error('Failed to update profile')
+      throw new Error(t('profile.error'))
     }
 
-    successMessage.value = $t('profile.success')
+    successMessage.value = t('profile.success')
   } catch (err) {
-    error.value = $t('profile.error')
+    error.value = err.message || t('profile.error')
   } finally {
     updating.value = false
   }
@@ -194,3 +208,4 @@ onMounted(() => {
   fetchProfile()
 })
 </script>
+

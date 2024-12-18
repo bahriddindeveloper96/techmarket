@@ -77,26 +77,35 @@
             <!-- Register link -->
             <div class="text-sm text-center">
               <span class="text-gray-600 dark:text-gray-400">
-                Don't have an account?
+                {{ $t('auth.no_account') }}
               </span>
-              <router-link
-                to="/register"
-                class="font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
+              <button
+                @click="showRegisterModal = true"
+                class="ml-2 font-medium text-primary-600 hover:text-primary-500 dark:text-primary-400 dark:hover:text-primary-300"
               >
-                Register
-              </router-link>
+                {{ $t('auth.register') }}
+              </button>
             </div>
           </form>
         </div>
       </div>
     </div>
   </div>
+
+  <!-- Register Modal -->
+  <RegisterModal
+    v-if="showRegisterModal"
+    :is-open="showRegisterModal"
+    @close="showRegisterModal = false"
+    @registered="handleRegistered"
+  />
 </template>
 
 <script setup>
 import { ref } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 import { useAuthStore } from '../stores/authStore'
+import RegisterModal from '../components/RegisterModal.vue'
 
 const router = useRouter()
 const route = useRoute()
@@ -106,6 +115,7 @@ const email = ref('')
 const password = ref('')
 const error = ref('')
 const loading = ref(false)
+const showRegisterModal = ref(false)
 
 const handleLogin = async () => {
   try {
@@ -127,6 +137,18 @@ const handleLogin = async () => {
 
 const handleClose = () => {
   router.push('/')
+}
+
+const handleRegistered = async (userData) => {
+  try {
+    loading.value = true
+    await authStore.login(userData.email, userData.password)
+    router.push('/')
+  } catch (err) {
+    error.value = err.message || 'Login failed'
+  } finally {
+    loading.value = false
+  }
 }
 </script>
 
