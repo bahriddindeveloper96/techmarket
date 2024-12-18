@@ -233,22 +233,42 @@
   },
   "orders": {
     "title": "My Orders",
-    "no_orders": "No orders found",
+    "order": "Order",
     "order_number": "Order #",
-    "delivery_details": "Delivery Details",
-    "payment_details": "Payment Details",
-    "payment_method": "Method",
-    "payment_status": "Status",
+    "no_orders": "You don't have any orders yet",
+    "quantity": "Quantity",
+    "total": "Total",
     "subtotal": "Subtotal",
     "delivery": "Delivery",
-    "total": "Total",
-    "quantity": "Quantity",
+    "delivery_details": "Delivery Details",
+    "payment_details": "Payment Details",
+    "payment_method": "Payment Method",
+    "payment_status": "Payment Status",
+    "write_review": "Write Review",
     "status": {
-      "new": "New",
       "pending": "Pending",
+      "processing": "Processing",
       "completed": "Completed",
-      "cancelled": "Cancelled"
+      "cancelled": "Cancelled",
+      "new": "New"
     }
+  },
+  "reviews": {
+    "write_review": "Write a Review",
+    "rating": "Rating",
+    "select_rating": "Select rating",
+    "your_review": "Your Review",
+    "write_your_review": "Share your thoughts about this product...",
+    "min_length": "Review must be at least {count} characters long",
+    "photos": "Photos",
+    "max_photos": "Maximum {count} photos",
+    "already_reviewed": "You have already reviewed this product",
+    "thank_you": "Thank you for your review!"
+  },
+  "common": {
+    "cancel": "Cancel",
+    "submit": "Submit",
+    "close": "Close"
   },
   "home": {
     "featured_products": "Featured Products",

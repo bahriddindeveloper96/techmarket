@@ -235,22 +235,42 @@
   },
   "orders": {
     "title": "Мои заказы",
-    "no_orders": "Заказы не найдены",
+    "order": "Заказ",
     "order_number": "Заказ №",
+    "no_orders": "У вас пока нет заказов",
+    "quantity": "Количество",
+    "total": "Итого",
+    "subtotal": "Подытог",
+    "delivery": "Доставка",
     "delivery_details": "Детали доставки",
     "payment_details": "Детали оплаты",
     "payment_method": "Способ оплаты",
-    "payment_status": "Статус",
-    "subtotal": "Подытог",
-    "delivery": "Доставка",
-    "total": "Итого",
-    "quantity": "Количество",
+    "payment_status": "Статус оплаты",
+    "write_review": "Написать отзыв",
     "status": {
-      "new": "Новый",
       "pending": "В ожидании",
+      "processing": "В обработке",
       "completed": "Завершен",
-      "cancelled": "Отменен"
+      "cancelled": "Отменен",
+      "new": "Новый"
     }
+  },
+  "reviews": {
+    "write_review": "Написать отзыв",
+    "rating": "Рейтинг",
+    "select_rating": "Выберите рейтинг",
+    "your_review": "Ваш отзыв",
+    "write_your_review": "Поделитесь своими мыслями об этом товаре...",
+    "min_length": "Отзыв должен содержать не менее {count} символов",
+    "photos": "Фотографии",
+    "max_photos": "Максимум {count} фотографий",
+    "already_reviewed": "Вы уже оставили отзыв об этом товаре",
+    "thank_you": "Спасибо за ваш отзыв!"
+  },
+  "common": {
+    "cancel": "Отмена",
+    "submit": "Отправить",
+    "close": "Закрыть"
   },
   "home": {
     "featured_products": "Рекомендуемые товары",

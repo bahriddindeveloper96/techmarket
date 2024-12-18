@@ -234,22 +234,42 @@
   },
   "orders": {
     "title": "Mening buyurtmalarim",
-    "no_orders": "Buyurtmalar topilmadi",
+    "order": "Buyurtma",
     "order_number": "Buyurtma №",
+    "no_orders": "Sizda hali buyurtmalar yo'q",
+    "quantity": "Soni",
+    "total": "Jami",
+    "subtotal": "Oraliq jami",
+    "delivery": "Yetkazib berish",
     "delivery_details": "Yetkazib berish ma'lumotlari",
     "payment_details": "To'lov ma'lumotlari",
     "payment_method": "To'lov usuli",
-    "payment_status": "Holati",
-    "subtotal": "Oraliq summa",
-    "delivery": "Yetkazib berish",
-    "total": "Jami",
-    "quantity": "Soni",
+    "payment_status": "To'lov holati",
+    "write_review": "Sharh yozish",
     "status": {
-      "new": "Yangi",
       "pending": "Kutilmoqda",
+      "processing": "Jarayonda",
       "completed": "Bajarildi",
-      "cancelled": "Bekor qilindi"
+      "cancelled": "Bekor qilindi",
+      "new": "Yangi"
     }
+  },
+  "reviews": {
+    "write_review": "Sharh yozish",
+    "rating": "Reyting",
+    "select_rating": "Reytingni tanlang",
+    "your_review": "Sizning sharhingiz",
+    "write_your_review": "Bu mahsulot haqida fikringizni baham ko'ring...",
+    "min_length": "Sharh kamida {count} ta belgidan iborat bo'lishi kerak",
+    "photos": "Rasmlar",
+    "max_photos": "Maksimal {count} ta rasm",
+    "already_reviewed": "Siz allaqachon bu mahsulotga sharh yozgansiz",
+    "thank_you": "Sharhingiz uchun rahmat!"
+  },
+  "common": {
+    "cancel": "Bekor qilish",
+    "submit": "Yuborish",
+    "close": "Yopish"
   },
   "home": {
     "featured_products": "Tanlangan mahsulotlar",
