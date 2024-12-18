@@ -129,7 +129,8 @@ import FilterSidebar from "../components/FilterSidebar.vue";
 import ProductCard from "../components/ProductCard.vue";
 
 const route = useRoute();
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000";
+const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz";
+
 
 // Initialize with empty arrays and objects
 const category = ref({
@@ -145,7 +146,7 @@ const sortBy = ref("popular");
 const fetchProducts = async () => {
   try {
     loading.value = true;
-    const token = "7|MKTulSoz5KuBSjF4v1CmSsVdD6LYHsDZo2PJxGDV2162af25";
+    const token = import.meta.env.VITE_API_BASE_token || "3|y0r5ZdazYN92gQ9VG10pYim8f6YWqTErZUH52NAo660ed509";
 
     const response = await axios.get(
       `${baseUrl}/api/categories/${route.params.id}/products`,
