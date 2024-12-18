@@ -53,11 +53,13 @@
   },
   "favorites": {
     "title": "Sevimlilar",
+    "empty_title": "Sevimlilar ro'yxati bo'sh",
+    "empty_description": "Yoqtirgan mahsulotlaringizni sevimlilarga qo'shing. Ularni istalgan vaqtda ko'rib chiqing va savatga osongina o'tkazing.",
     "category": "Kategoriya",
     "empty": {
-      "title": "Sevimlilar ro'yxati bo'sh",
-      "description": "Yoqtirgan mahsulotlaringizni sevimlilarga qo'shing. Ularni istalgan vaqtda ko'rib chiqing va savatga osongina o'tkazing.",
-      "button": "Xaridni davom ettirish"
+      "title": "Sevimli mahsulotlar yo'q",
+      "description": "Siz hali hech qanday mahsulotni sevimlilarga qo'shmagansiz",
+      "button": "Bosh sahifaga qaytish"
     },
     "remove": "O'chirish",
     "add_to_cart": "Savatga qo'shish",
@@ -75,7 +77,13 @@
       "cleared": "Sevimlilar ro'yxati tozalandi"
     },
     "recommended": "Tavsiya etilgan mahsulotlar",
-    "recommended_products": "Tavsiya etilgan mahsulotlar"
+    "recommended_products": "Tavsiya etilgan mahsulotlar",
+    "addToCart": "Savatga qo'shish",
+    "removeFromFavorites": "Sevimlilardan olib tashlash",
+    "noFavorites": "Sevimli mahsulotlar yo'q",
+    "noFavoritesDescription": "Siz hali hech qanday mahsulotni sevimlilarga qo'shmagansiz",
+    "goHome": "Bosh sahifaga qaytish",
+    "browse_catalog": "Katalogni ko'rish"
   },
   "currency": "so'm",
   "month": "oy",
