@@ -68,14 +68,14 @@ const banners = ref([]);
 
 const fetchHomeData = async () => {
   try {
-    console.log('Fetching home data from:', `${baseUrl}/api/homepage`);
+   // console.log('Fetching home data from:', `${baseUrl}/api/homepage`);
     const response = await axios.get(`${baseUrl}/api/homepage`, {
       headers: {
         Authorization: `Bearer ${token}`,
         Accept: "application/json",
       },
     });
-    console.log('API Response:', response.data);
+   // console.log('API Response:', response.data);
     
     if (response.data.success) {
       const { data } = response.data;
@@ -120,7 +120,7 @@ const fetchHomeData = async () => {
           : `${baseUrl}/${banner.image}`,
       }));
     } else {
-      console.error('API returned success: false', response.data);
+    //  console.error('API returned success: false', response.data);
     }
   } catch (error) {
     console.error("Error fetching home data:", error.response?.data || error.message);
@@ -137,7 +137,7 @@ onMounted(() => {
 
 // Methods
 const addToCart = (product) => {
-  console.log("Adding to cart:", product);
+ // console.log("Adding to cart:", product);
   // Add cart logic here
 };
 
