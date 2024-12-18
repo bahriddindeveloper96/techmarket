@@ -181,9 +181,8 @@ const subtotal = computed(() => cartStore.total || 0)
 const similarProducts = ref([])
 const loading = ref(false)
 
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
-const token = "7|MKTulSoz5KuBSjF4v1CmSsVdD6LYHsDZo2PJxGDV2162af25"
-
+const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz";
+const token = import.meta.env.VITE_API_BASE_token || "3|y0r5ZdazYN92gQ9VG10pYim8f6YWqTErZUH52NAo660ed509";
 // Fetch similar products
 const fetchSimilarProducts = async () => {
   try {
