@@ -186,7 +186,7 @@ const token = import.meta.env.VITE_API_BASE_token;
 const fetchSimilarProducts = async () => {
   try {
     loading.value = true;
-    console.log('Fetching similar products from:', `${baseUrl}/api/homepage`);
+   // console.log('Fetching similar products from:', `${baseUrl}/api/homepage`);
     
     const response = await axios.get(
       `${baseUrl}/api/homepage`,
@@ -226,11 +226,11 @@ const fetchSimilarProducts = async () => {
         };
       });
     } else {
-      console.error('Invalid API response structure:', response.data);
+   //   console.error('Invalid API response structure:', response.data);
       similarProducts.value = [];
     }
   } catch (error) {
-    console.error('Error fetching similar products:', error.response?.data || error.message);
+   // console.error('Error fetching similar products:', error.response?.data || error.message);
     similarProducts.value = [];
   } finally {
     loading.value = false;

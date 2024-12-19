@@ -222,7 +222,7 @@ const handleLogout = async () => {
     await authStore.logoutApi()
     router.push('/login')
   } catch (error) {
-    console.error('Logout error:', error)
+  //  console.error('Logout error:', error)
   }
 }
 </script>

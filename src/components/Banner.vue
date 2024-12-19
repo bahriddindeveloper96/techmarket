@@ -22,7 +22,7 @@
         clickable: true,
       }"
       :navigation="true"
-      class="h-[300px] md:h-[400px]"
+      class="h-[200px] sm:h-[300px] md:h-[400px]"
     >
       <swiper-slide v-for="banner in banners" :key="banner.id">
         <div class="relative h-full w-full">
@@ -32,25 +32,29 @@
           <img
             :src="banner.image"
             :alt="banner.title"
-            class="h-full w-full object-cover"
+            class="h-full w-full object-cover object-center md:object-[center_30%]"
+            :style="{
+              aspectRatio: '16/9',
+              objectPosition: windowWidth < 768 ? 'center 40%' : 'center 30%'
+            }"
           />
           <div class="absolute inset-0 flex items-center">
             <div class="container mx-auto px-4">
               <div class="max-w-lg">
-                <h2
-                  class="text-4xl md:text-5xl font-bold text-white mb-4 animate-float"
+                <!-- <h2
+                  class="text-2xl sm:text-3xl md:text-5xl font-bold text-white mb-2 md:mb-4 animate-float"
                 >
-                  {{ banner.title }}
+                  {{ $t(`${banner.title}`) }}
                 </h2>
-                <p class="text-lg text-white/90 mb-8">
-                  {{ banner.description }}
-                </p>
+                <p class="text-sm sm:text-base md:text-lg text-white/90 mb-4 md:mb-8 line-clamp-2 md:line-clamp-none">
+                  {{ $t(`${banner.title}`) }}
+                </p> -->
                 <div class="flex space-x-4">
-                  <button
-                    class="px-8 py-3 bg-white text-primary-600 rounded-full font-semibold hover:bg-primary-50 transition-colors"
+                  <!-- <button
+                    class="px-4 sm:px-6 md:px-8 py-2 md:py-3 bg-white text-primary-600 rounded-full text-sm sm:text-base font-semibold hover:bg-primary-50 transition-colors"
                   >
-                    {{ banner.button_text }}
-                  </button>
+                    {{ $t(`${banner.title}`) }}
+                  </button> -->
                 </div>
               </div>
             </div>
@@ -70,6 +74,8 @@
 </template>
 
 <script setup>
+import { ref, onMounted, onUnmounted } from 'vue';
+import { useI18n } from 'vue-i18n';
 import { Swiper, SwiperSlide } from "swiper/vue";
 import {
   Autoplay as SwiperAutoplay,
@@ -81,6 +87,21 @@ import "swiper/css";
 import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 import "swiper/css/navigation";
+
+const { t } = useI18n();
+const windowWidth = ref(window.innerWidth);
+
+const handleResize = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
 
 defineProps({
   banners: {

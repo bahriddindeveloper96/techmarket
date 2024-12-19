@@ -155,7 +155,7 @@ const fetchCategories = async () => {
       }
     }
   } catch (error) {
-    console.error("Error fetching categories:", error);
+   // console.error("Error fetching categories:", error);
   }
 };
 

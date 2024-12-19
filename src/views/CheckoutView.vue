@@ -294,10 +294,10 @@ const cartItems = computed(() => cartStore.items || [])
 const isSubmitting = ref(false)
 
 const formatOrderData = () => {
-  console.log('Cart items before formatting:', cartStore.items)
+ // console.log('Cart items before formatting:', cartStore.items)
   
   const items = cartStore.items.map(item => {
-    console.log('Processing item:', item)
+    // console.log('Processing item:', item)
     return {
       product_id: item.productId,
       product_variant_id: item.id,
@@ -305,7 +305,7 @@ const formatOrderData = () => {
       price: parseFloat(item.price)
     }
   })
-  console.log('Formatted items:', items)
+  //console.log('Formatted items:', items)
 
   const formattedData = {
     delivery_name: formData.value.delivery_name,
@@ -319,7 +319,7 @@ const formatOrderData = () => {
     items: items
   }
 
-  console.log('Final formatted data:', formattedData)
+ // console.log('Final formatted data:', formattedData)
   return formattedData
 }
 
@@ -493,17 +493,17 @@ const submitOrder = async () => {
 
     // Format order data
     const orderData = formatOrderData()
-    console.log('Sending order data:', JSON.stringify(orderData, null, 2))
+   // console.log('Sending order data:', JSON.stringify(orderData, null, 2))
     
     // Submit order
     const apiUrl = `${import.meta.env.VITE_API_BASE_URL}/api/orders`
-    console.log('API URL:', apiUrl)
+   // console.log('API URL:', apiUrl)
     
     const headers = {
       'Content-Type': 'application/json',
       'Authorization': `Bearer ${authStore.getToken}`
     }
-    console.log('Request headers:', headers)
+   // console.log('Request headers:', headers)
 
     const response = await fetch(apiUrl, {
       method: 'POST',
@@ -511,13 +511,13 @@ const submitOrder = async () => {
       body: JSON.stringify(orderData)
     })
 
-    console.log('Response status:', response.status)
+   // console.log('Response status:', response.status)
     const data = await response.json()
-    console.log('Response data:', data)
+   // console.log('Response data:', data)
 
     if (!response.ok) {
       if (data.errors) {
-        console.log('Validation errors:', data.errors)
+      //  console.log('Validation errors:', data.errors)
         // Handle validation errors from the server
         Object.entries(data.errors).forEach(([field, errors]) => {
           formErrors.value[field] = Array.isArray(errors) ? errors[0] : errors
@@ -541,11 +541,11 @@ const submitOrder = async () => {
     // Redirect to orders page
     router.push('/orders')
   } catch (error) {
-    console.error('Failed to create order:', error)
-    console.error('Error details:', {
-      message: error.message,
-      stack: error.stack
-    })
+   // console.error('Failed to create order:', error)
+    // console.error('Error details:', {
+    //   message: error.message,
+    //   stack: error.stack
+    // })
     
     // Show error message using toast
     toastStore.showToast({

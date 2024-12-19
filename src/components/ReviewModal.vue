@@ -276,7 +276,7 @@ const handleImageUpload = async (event) => {
         previewImages.value.push(URL.createObjectURL(file)) // For preview
         images.value.push(base64String) // For API
       } catch (err) {
-        console.error('Error converting image:', err)
+       // console.error('Error converting image:', err)
       }
     }
   }
@@ -330,7 +330,7 @@ const submitReview = async () => {
     emit('close')
   } catch (err) {
     error.value = err.message || 'An error occurred while submitting the review'
-    console.error('Error submitting review:', err)
+   // console.error('Error submitting review:', err)
   } finally {
     loading.value = false
   }

@@ -517,7 +517,7 @@ const fetchProduct = async () => {
       selectedVariant.value = productData.variants?.[0];
     }
   } catch (error) {
-    console.error("Error fetching product:", error);
+  //  console.error("Error fetching product:", error);
   }
 };
 

@@ -286,5 +286,70 @@
       "loading_failed": "Ma'lumotlarni yuklashda xatolik yuz berdi",
       "try_again": "Qayta urinib ko'ring"
     }
+  },
+  "banner": {
+    "shop_now": "Xarid qilish",
+    "learn_more": "Batafsil",
+    "view_details": "Tafsilotlar",
+    "special_offer": "Maxsus taklif",
+    "new_arrival": "Yangi mahsulot",
+    "sale": "Chegirma",
+    "titles": {
+      "new_year": "Yangi yil chegirmalari!",
+      "black_friday": "Qora juma chegirmalari!",
+      "summer_sale": "Yozgi chegirmalar!",
+      "special_offer": "Maxsus takliflar",
+      "new_collection": "Yangi kolleksiya",
+      "trending": "Trendda",
+      "best_sellers": "Eng ko'p sotilganlar"
+    },
+    "descriptions": {
+      "new_year": "Yangi yil bayramiga maxsus chegirmalar! Barcha mahsulotlarga 50% gacha chegirmalar.",
+      "black_friday": "Yilning eng katta chegirmalari! Barcha mahsulotlarga maxsus narxlar.",
+      "summer_sale": "Yozgi mavsumga tayyormisiz? Barcha mavsumiy mahsulotlarga chegirmalar.",
+      "special_offer": "Maxsus takliflarimizdan foydalaning va tejang.",
+      "new_collection": "Yangi kolleksiyamiz bilan tanishing. Eng so'nggi tendentsiyalar va dizaynlar.",
+      "trending": "Hozirgi kundagi eng mashhur mahsulotlar bilan tanishing.",
+      "best_sellers": "Eng ko'p sotilgan mahsulotlarimiz bilan tanishing."
+    },
+    "buttons": {
+      "new_year": "Chegirmalarni ko'rish",
+      "black_friday": "Chegirmalarga o'tish",
+      "summer_sale": "Xarid qilish",
+      "special_offer": "Batafsil ma'lumot",
+      "new_collection": "Kolleksiyani ko'rish",
+      "trending": "Ko'rib chiqish",
+      "best_sellers": "Xarid qilish"
+    }
+  },
+  "settings": {
+    "title": "Sozlamalar",
+    "account": {
+      "title": "Akkaunt sozlamalari",
+      "language": {
+        "title": "Til",
+        "description": "Interfeys tilini o'zgartirish"
+      },
+      "theme": {
+        "title": "Mavzu",
+        "description": "Interfeys mavzusini o'zgartirish"
+      },
+      "currency": {
+        "title": "Valyuta",
+        "description": "Narxlarni ko'rsatish valyutasini o'zgartirish"
+      }
+    },
+    "notifications": {
+      "title": "Bildirishnomalar",
+      "email": {
+        "title": "Email xabarnomalar",
+        "description": "Buyurtmalar va yangiliklar haqida email xabarnomalarni qabul qilish"
+      },
+      "sms": {
+        "title": "SMS xabarnomalar",
+        "description": "Buyurtmalar va yangiliklar haqida SMS xabarnomalarni qabul qilish"
+      }
+    },
+    "save_changes": "O'zgarishlarni saqlash"
   }
 }

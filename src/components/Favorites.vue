@@ -247,9 +247,9 @@ const removeFromFavorites = (itemId) => {
 // Load product details for each favorite item
 const loadProductDetails = async () => {
   try {
-    console.log("Loading product details for items:", favoriteStore.items)
+   // console.log("Loading product details for items:", favoriteStore.items)
     for (let item of favoriteStore.items) {
-      console.log("Processing item:", item)
+      // console.log("Processing item:", item)
       const response = await axios.get(
         `${baseUrl}/api/products/${item.id}`,
         {
@@ -262,7 +262,7 @@ const loadProductDetails = async () => {
       console.log("API Response:", response.data)
       if (response.data.message === "Product retrieved successfully") {
         const productData = response.data.data.data
-        console.log("Product data:", productData)
+        //console.log("Product data:", productData)
         
         // Update item with new data
         const images = productData.variants?.[0]?.images ||
@@ -280,12 +280,12 @@ const loadProductDetails = async () => {
           mainImage: mainImage
         })
         
-        console.log("Updated item:", item)
+       // console.log("Updated item:", item)
       }
     }
-    console.log("Final items state:", favoriteStore.items)
+    //console.log("Final items state:", favoriteStore.items)
   } catch (error) {
-    console.error("Error loading product details:", error)
+    //console.error("Error loading product details:", error)
   }
 }
 

@@ -77,7 +77,7 @@ const handleAddedToCart = () => {
 
 // Methods
 const addToCart = (product) => {
-  console.log('Adding to cart:', product)
+ // console.log('Adding to cart:', product)
   // Add cart logic here
 }
 

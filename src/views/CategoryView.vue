@@ -207,7 +207,7 @@ const fetchCategory = async () => {
       name: getCategoryName(categoryId),
     };
   } catch (error) {
-    console.error("Error setting category:", error);
+  //  console.error("Error setting category:", error);
     // Set default values on error
     category.value = {
       id: route.params.id,
@@ -217,15 +217,15 @@ const fetchCategory = async () => {
 };
 
 const addToCart = (product) => {
-  console.log("Adding to cart:", product);
+ // console.log("Adding to cart:", product);
 };
 
 const toggleFavorite = (product) => {
-  console.log("Toggle favorite:", product);
+ // console.log("Toggle favorite:", product);
 };
 
 const handleFilters = (filters) => {
-  console.log("Applying filters:", filters);
+//  console.log("Applying filters:", filters);
   fetchProducts();
 };
 

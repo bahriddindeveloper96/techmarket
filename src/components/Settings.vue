@@ -11,6 +11,7 @@
     
   </div>
 
+
   <!-- Desktop Header -->
   <div class="hidden sm:flex items-center justify-between mb-6">
     <h2 class="text-2xl font-bold text-gray-800 dark:text-white">{{ $t('settings.title') }}</h2>
@@ -56,6 +57,7 @@
       </div>
     </div>
 
+
     <!-- Notifications -->
     <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm">
       <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">{{ $t('settings.notifications.title') }}</h3>
@@ -84,27 +86,6 @@
       </div>
     </div>
 
-    <!-- Privacy & Security -->
-    <!-- <div class="bg-white dark:bg-gray-800 rounded-2xl p-4 sm:p-6 shadow-sm">
-      <h3 class="text-lg font-semibold text-gray-800 dark:text-white mb-4">{{ $t('settings.privacy.title') }}</h3>
-      <div class="space-y-4">
-        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-2 sm:gap-4">
-          <div>
-            <h4 class="font-medium text-gray-800 dark:text-white">{{ $t('settings.privacy.two_factor.title') }}</h4>
-            <p class="text-sm text-gray-500 dark:text-gray-400">{{ $t('settings.privacy.two_factor.description') }}</p>
-          </div>
-          <label class="relative inline-flex items-center cursor-pointer">
-            <input type="checkbox" v-model="settings.security.twoFactor" class="sr-only peer">
-            <div class="w-11 h-6 bg-gray-200 dark:bg-gray-700 peer-focus:outline-none peer-focus:ring-4 peer-focus:ring-primary-300 dark:peer-focus:ring-primary-800 rounded-full peer peer-checked:after:translate-x-full peer-checked:after:border-white after:content-[''] after:absolute after:top-[2px] after:left-[2px] after:bg-white after:border-gray-300 dark:after:border-gray-600 after:border after:rounded-full after:h-5 after:w-5 after:transition-all peer-checked:bg-primary-600"></div>
-          </label>
-        </div>
-
-        <button class="w-full px-4 py-2 text-left text-red-600 hover:bg-red-50 dark:hover:bg-red-900 rounded-xl transition-colors">
-          {{ $t('settings.privacy.delete_account') }}
-        </button>
-      </div>
-    </div> -->
-
     <!-- Save Changes -->
     <div class="flex justify-end">
       <button class="px-6 py-2.5 bg-primary-600 hover:bg-primary-700 text-white font-medium rounded-xl shadow-lg hover:shadow-xl transition-all duration-300">
@@ -119,11 +100,14 @@
 import { ref, watch } from 'vue'
 import { useRouter } from 'vue-router'
 import { useI18n } from 'vue-i18n'
+
 import LanguageSwitcher from './LanguageSwitcher.vue'
 import ThemeToggle from './ThemeToggle.vue'
 
+
 const router = useRouter()
 const { t } = useI18n()
+
 
 const settings = ref({
 language: localStorage.getItem('language') || 'uz',
@@ -137,10 +121,12 @@ security: {
 }
 })
 
+
 // Currency o'zgarganda localStorage'ga saqlash
 watch(() => settings.value.currency, (newCurrency) => {
 localStorage.setItem('currency', newCurrency)
 })
+
 
 // Language o'zgarganda localStorage'ga saqlash
 watch(() => settings.value.language, (newLanguage) => {
@@ -148,8 +134,10 @@ localStorage.setItem('language', newLanguage)
 })
 </script>
 
+
 <style scoped>
 .mobile-language-switcher :deep(.origin-top-right) {
 right: -8px;
 }
+
 </style>
