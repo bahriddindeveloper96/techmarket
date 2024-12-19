@@ -1,9 +1,9 @@
 <template>
-  <main class="py-4">
+  <main class="py-4 pb-[60px] md:pb-4">
     <!-- Breadcrumb -->
-    <div class="mb-4 sm:mb-4">
+    <div class="mb-2 sm:mb-4">
       <nav class="flex" aria-label="Breadcrumb">
-        <ol class="inline-flex items-center space-x-1 md:space-x-3 text-sm">
+        <ol class="inline-flex items-center space-x-1 md:space-x-3 text-xs md:text-sm">
           <li class="inline-flex items-center">
             <router-link to="/" class="text-gray-700 hover:text-primary-600">
               {{ $t("nav.home") }}
@@ -12,7 +12,7 @@
           <li>
             <div class="flex items-center">
               <svg
-                class="w-3 h-3 text-gray-400 mx-1"
+                class="w-2 h-2 md:w-3 md:h-3 text-gray-400 mx-1"
                 aria-hidden="true"
                 xmlns="http://www.w3.org/2000/svg"
                 fill="none"
@@ -35,7 +35,7 @@
       </nav>
     </div>
     <!-- Main Content -->
-    <div class="flex flex-col lg:flex-row gap-4">
+    <div class="flex flex-col lg:flex-row gap-2 md:gap-4">
       <!-- Filters Sidebar -->
       <div class="w-full lg:w-1/4 lg:sticky lg:top-4">
         <FilterSidebar @apply-filters="handleFilters" />
@@ -44,17 +44,17 @@
       <!-- Products Section -->
       <div class="w-full lg:w-3/4">
         <!-- Sort Options -->
-        <div class="bg-white rounded-lg shadow-sm p-4 mb-4">
+        <div class="bg-white rounded-lg shadow-sm p-3 md:p-4 mb-2 md:mb-4">
           <div
-            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-4"
+            class="flex flex-col sm:flex-row justify-between items-start sm:items-center gap-2 md:gap-4"
           >
-            <h1 class="text-lg sm:text-xl font-semibold text-gray-900">
+            <h1 class="text-base md:text-lg font-semibold text-gray-900">
               {{ $t(`${category.name.toLowerCase()}`) }}
             </h1>
             <div class="flex items-center gap-2 w-full sm:w-auto">
               <select
                 v-model="sortBy"
-                class="w-full sm:w-auto bg-gray-50 border border-gray-200 rounded-lg px-3 py-2 text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
+                class="w-full sm:w-auto bg-gray-50 border border-gray-200 rounded-lg px-2 md:px-3 py-1.5 md:py-2 text-xs md:text-sm focus:outline-none focus:ring-2 focus:ring-primary-500 focus:border-primary-500"
               >
                 <option value="popular">
                   {{ $t("category.sort.popular") }}
@@ -73,7 +73,7 @@
 
         <!-- Products Grid -->
         <div
-          class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 sm:gap-4"
+          class="grid grid-cols-2 md:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-2 md:gap-4"
         >
           <ProductCard
             v-for="product in products"
@@ -90,7 +90,7 @@
             <button
               :disabled="currentPage === 1"
               @click="changePage(currentPage - 1)"
-              class="px-3 py-1 sm:px-4 sm:py-2 rounded-lg border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              class="px-2 py-1 sm:px-4 sm:py-2 rounded-lg border text-xs md:text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
             >
               {{ $t("category.pagination.prev") }}
             </button>
@@ -99,7 +99,7 @@
               :key="page"
               @click="changePage(page)"
               :class="[
-                'px-3 py-1 sm:px-4 sm:py-2 rounded-lg text-sm font-medium',
+                'px-2 py-1 sm:px-4 sm:py-2 rounded-lg text-xs md:text-sm font-medium',
                 currentPage === page
                   ? 'bg-primary-600 text-white'
                   : 'border hover:bg-gray-50',
@@ -110,7 +110,7 @@
             <button
               :disabled="currentPage === totalPages"
               @click="changePage(currentPage + 1)"
-              class="px-3 py-1 sm:px-4 sm:py-2 rounded-lg border text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
+              class="px-2 py-1 sm:px-4 sm:py-2 rounded-lg border text-xs md:text-sm font-medium disabled:opacity-50 disabled:cursor-not-allowed hover:bg-gray-50"
             >
               {{ $t("category.pagination.next") }}
             </button>
@@ -130,7 +130,6 @@ import ProductCard from "../components/ProductCard.vue";
 
 const route = useRoute();
 const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz";
-
 
 // Initialize with empty arrays and objects
 const category = ref({

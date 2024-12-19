@@ -1,11 +1,11 @@
 <template>
-  <div class="container mx-auto px-4 py-8">
+  <div class="container mx-auto px-2 py-2">
     <h1 class="text-2xl font-bold mb-8">{{ t('checkout.title') }}</h1>
 
-    <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+    <div class="grid grid-cols-1 lg:grid-cols-3 gap-2">
       <!-- Checkout Form -->
       <div class="lg:col-span-2 space-y-8">
-        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-6">
+        <div class="bg-white dark:bg-gray-800 rounded-lg shadow p-2">
           <h2 class="text-xl font-semibold mb-6">{{ t('checkout.delivery_info.title') }}</h2>
           <form @submit.prevent="submitOrder" class="space-y-6">
             <!-- Personal Info -->
@@ -45,7 +45,7 @@
             </div>
 
             <!-- Address Info -->
-            <div class="grid grid-cols-1 md:grid-cols-2 gap-6">
+            <div class="grid grid-cols-1 md:grid-cols-2 gap-4">
               <div>
                 <label class="block text-sm font-medium text-gray-700 dark:text-gray-300 mb-2">
                   {{ t('checkout.delivery_info.region') }} *
