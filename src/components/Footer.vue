@@ -31,7 +31,7 @@
               </a>
             </li>
             <li>
-              <a href="#" class="flex items-center text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+              <a href="https://t.me/baxa_developer" target="_blank" class="flex items-center text-sm md:text-base text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
                 <i class="ri-telegram-fill mr-2"></i>
                 {{ $t('footer.social.telegram') }}
               </a>
@@ -49,7 +49,7 @@
             >
               <i class="ri-google-play-fill text-xl md:text-2xl text-gray-900 dark:text-white"></i>
               <div>
-                <div class="text-xs text-gray-600 dark:text-gray-400">{{ $t('footer.mobileApp.googlePlay') }}</div>
+                
                 <div class="text-sm font-medium text-gray-900 dark:text-white">Google Play</div>
               </div>
             </a>
@@ -59,7 +59,7 @@
             >
               <i class="ri-apple-fill text-xl md:text-2xl text-gray-900 dark:text-white"></i>
               <div>
-                <div class="text-xs text-gray-600 dark:text-gray-400">{{ $t('footer.mobileApp.appStore') }}</div>
+               
                 <div class="text-sm font-medium text-gray-900 dark:text-white">App Store</div>
               </div>
             </a>
@@ -69,7 +69,11 @@
 
       <!-- Bottom Footer -->
       <div class="block pt-2 border-t border-gray-200 dark:border-gray-800">
-        <p class="text-center text-xs md:text-sm text-gray-600 dark:text-gray-400">{{ $t('footer.copyright') }}</p>
+        <p class="text-center text-xs md:text-sm text-gray-600 dark:text-gray-400">
+          <a href="https://t.me/baxa_developer" target="_blank" class="hover:text-primary-600 dark:hover:text-primary-400 transition-colors">
+            {{ $t('footer.copyright', 2024) }}
+          </a>
+        </p>
       </div>
     </div>
   </footer>

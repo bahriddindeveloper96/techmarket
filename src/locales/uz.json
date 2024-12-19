@@ -230,7 +230,8 @@
     "mobileApp": {
       "title": "Mobil ilova",
       "description": "Yaxshiroq xarid qilish uchun mobil ilovamizni yuklab oling"
-    }
+    },
+    "copyright": " 2024 TechMarket. Barcha huquqlar himoyalangan."
   },
   "orders": {
     "title": "Mening buyurtmalarim",

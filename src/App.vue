@@ -183,7 +183,7 @@ button {
   color: #fff;
 }
 
-button:hover {
+/* button:hover {
   background-color: #3e8e41;
-}
+} */
 </style>

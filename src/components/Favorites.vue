@@ -11,7 +11,7 @@
           {{ $t('favorites.empty_description') }}
         </p>
         <router-link
-          to="/catalog"
+          to="/"
           class="inline-flex items-center gap-2 px-6 py-3 bg-gradient-to-r from-purple-600 to-indigo-600 text-white rounded-xl font-medium shadow-lg shadow-purple-100 dark:shadow-purple-900/30 hover:shadow-xl hover:shadow-purple-200 dark:hover:shadow-purple-900/40 transform hover:-translate-y-0.5 transition-all duration-200"
         >
           <i class="ri-shopping-bag-line"></i>
@@ -26,9 +26,9 @@
         <h1 class="text-2xl font-bold text-gray-900 dark:text-white flex items-center gap-2">
           <i class="ri-heart-line"></i>
           {{ $t('favorites.title') }}
-          <span class="text-sm font-normal text-gray-600 dark:text-gray-400">
+          <!-- <span class="text-sm font-normal text-gray-600 dark:text-gray-400">
             ({{ favoriteStore.count }} {{ $t('favorites.items') }})
-          </span>
+          </span> -->
         </h1>
         <button
           @click="favoriteStore.clearFavorites"
@@ -110,12 +110,12 @@
                 {{ formatPrice(item.price) }}
               </span>
               <div class="flex items-center gap-2">
-                <button
+                <!-- <button
                   @click="openProductModal(item)"
                   class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
                 >
                   <i class="ri-info-line"></i>
-                </button>
+                </button> -->
                 <button
                   @click="openProductModal(item)"
                   class="p-2 rounded-lg bg-purple-50 dark:bg-purple-900/30 text-purple-600 dark:text-purple-400 hover:bg-purple-100 dark:hover:bg-purple-900/50 transition-colors"
@@ -161,8 +161,8 @@ import 'swiper/css/pagination'
 const { t } = useI18n()
 const favoriteStore = useFavoriteStore()
 const cartStore = useCartStore()
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "http://localhost:8000"
-const token = "7|MKTulSoz5KuBSjF4v1CmSsVdD6LYHsDZo2PJxGDV2162af25"
+const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz"
+const token = "2|Yz4cT4P7rJJND86WgT5OhAQDG8E9k3l7NzcLaGDLb6810987"
 const debug = ref(false)
 
 // Modal state
