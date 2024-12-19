@@ -1,5 +1,5 @@
 <template>
-  <div>
+  
     <!-- Top bar - Desktop only -->
     <div class="hidden md:block bg-gray-100 rounded-b-xl dark:bg-gray-900">
       <div class="container mx-auto px-4">
@@ -76,7 +76,7 @@
             <!-- Profile button -->
             <router-link 
               to="/profile" 
-              class="flex flex-col items-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400 transition-colors"
+              class="flex flex-col items-center justify-center text-gray-700 hover:text-primary-600 dark:text-gray-400 dark:hover:text-primary-400"
             >
               <i class="ri-user-3-line text-2xl"></i>
               <span class="text-xs mt-1">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
@@ -116,7 +116,7 @@
         <!-- Mobile Navigation -->
         <div class="md:hidden">
           <!-- Top Section -->
-          <div class="flex items-center justify-between p-4">
+          <div class="flex items-center justify-between p-4 max-w-md mx-auto">
             <!-- Logo -->
             <router-link to="/" class="flex items-center space-x-2">
               <span class="text-xl font-bold text-primary-600 dark:text-primary-400">Tech</span>
@@ -126,30 +126,29 @@
             <!-- Search Button -->
             <button 
               @click="isSearchOpen = !isSearchOpen"
-              class="w-10 h-10 flex items-center justify-center text-gray-700 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+              class="w-[60px] h-[60px] flex items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
             >
-              <i class="ri-search-2-line text-2xl"></i>
+              <i class="ri-search-2-line text-[22px]"></i>
             </button>
           </div>
 
           <!-- Search Bar (Collapsible) -->
           <div 
             v-show="isSearchOpen"
-            class="px-4 pb-4"
+            class="px-4 pb-4 max-w-md mx-auto"
           >
             <div class="relative">
               <input
                 type="text"
                 :placeholder="$t('header.search')"
-                class="w-full h-12 pl-12 pr-4 text-base border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-primary-500 dark:focus:border-primary-400"
+                class="w-full h-[60px] pl-12 pr-4 text-[16px] border border-gray-200 dark:border-gray-700 rounded-xl focus:outline-none focus:border-primary-500 dark:focus:border-primary-400"
               />
               <span class="absolute left-4 top-1/2 -translate-y-1/2">
-                <i class="ri-search-2-line text-lg text-gray-400 dark:text-gray-600"></i>
+                <i class="ri-search-2-line text-[22px] text-gray-400 dark:text-gray-600"></i>
               </span>
             </div>
           </div>
         </div>
-      </div>
 
       <!-- Categories Navigation -->
       <!-- <div class="hidden md:flex items-center justify-center w-full py-4 bg-white dark:bg-gray-900">
@@ -175,60 +174,68 @@
     </div>
 
     <!-- Mobile Bottom Navigation Bar -->
-    <div class="fixed bottom-0 left-0 right-0 md:hidden z-50">
-      <div class="bg-white dark:bg-gray-900 shadow-t-lg border-t border-gray-200 dark:border-gray-700 rounded-t-xl">
-        <div class="grid grid-cols-5 h-16">
-          <router-link to="/" class="group relative flex flex-col items-center justify-center py-2">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
-              <i class="ri-store-2-line text-white text-lg"></i>
-            </div>
-            <i class="ri-store-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.home') }}</span>
+    <div class="fixed bottom-0 left-0 right-0 md:hidden z-50 bg-white dark:bg-gray-900">
+      <div class="border-t border-gray-200 dark:border-gray-700">
+        <div class="grid grid-cols-5 h-[60px] max-w-md mx-auto">
+          <!-- Home -->
+          <router-link to="/" 
+            class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/' }"
+          >
+            <i class="ri-home-5-line text-[22px]"></i>
+            <span class="text-[10px] mt-1">{{ $t('nav.home') }}</span>
           </router-link>
 
-          <button 
-            class="group relative flex flex-col items-center justify-center py-2"
-            @click.prevent="toggleMobileMenu"
+          <!-- Catalog -->
+          <button @click="toggleMobileMenu" 
+            class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+            :class="{ 'text-primary-600 dark:text-primary-400': showMobileMenu }"
           >
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
-              <i class="ri-apps-2-line text-white text-lg"></i>
-            </div>
-            <i class="ri-apps-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-            <span class="text-xs font-medium text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.catalog') }}</span>
+            <i class="ri-apps-line text-[22px]"></i>
+            <span class="text-[10px] mt-1">{{ $t('nav.catalog') }}</span>
           </button>
 
-          <router-link to="/favorites" class="group relative flex flex-col items-center justify-center">
+          <!-- Cart -->
+          <router-link to="/cart" 
+            class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 relative"
+            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/cart' }"
+          >
             <div class="relative">
-              <i class="ri-heart-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-              <transition name="bounce">
-                <span v-if="favoriteStore.count > 0"
-                  class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
-                  {{ favoriteStore.count }}
-                </span>
-              </transition>
-            </div>
-            <span class="text-xs text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300">{{ $t('nav.favorites') }}</span>
-          </router-link>
-
-          <router-link to="/cart" class="group relative flex flex-col items-center justify-center py-2">
-            <div class="relative">
-              <i class="ri-shopping-cart-2-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
+              <i class="ri-shopping-cart-2-line text-[22px]"></i>
               <transition name="bounce">
                 <span v-if="cartStore.itemsCount > 0"
-                  class="absolute -top-2 -right-2 bg-accent-500 text-white text-xs font-bold rounded-full min-w-[20px] h-5 flex items-center justify-center px-1">
+                  class="absolute -top-1.5 -right-2 bg-accent-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-[16px] flex items-center justify-center px-1">
                   {{ cartStore.itemsCount }}
                 </span>
               </transition>
             </div>
-            <span class="text-xs">{{ $t('nav.cart') }}</span>
+            <span class="text-[10px] mt-1">{{ $t('nav.cart') }}</span>
           </router-link>
 
-          <router-link to="/profile" class="group relative flex flex-col items-center justify-center py-2">
-            <div class="absolute -top-5 left-1/2 -translate-x-1/2 w-10 h-10 bg-gradient-to-br from-primary-500 to-accent-500 dark:from-primary-400 dark:to-accent-400 rounded-xl flex items-center justify-center shadow-md transform transition-all duration-300 scale-0 opacity-0 group-hover:scale-100 group-hover:opacity-100">
-              <i class="ri-user-3-line text-white text-lg"></i>
+          <!-- Favorites -->
+          <router-link to="/favorites" 
+            class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400 relative"
+            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/favorites' }"
+          >
+            <div class="relative">
+              <i class="ri-heart-3-line text-[22px]"></i>
+              <transition name="bounce">
+                <span v-if="favoriteStore.count > 0"
+                  class="absolute -top-1.5 -right-2 bg-accent-500 text-white text-[10px] font-bold rounded-full min-w-[16px] h-[16px] flex items-center justify-center px-1">
+                  {{ favoriteStore.count }}
+                </span>
+              </transition>
             </div>
-            <i class="ri-user-3-line text-2xl mb-1 text-gray-600 dark:text-gray-400 group-hover:text-primary-600 dark:group-hover:text-primary-400 transition-colors duration-300"></i>
-            <span class="text-xs">{{ auth.currentUser?.phone || $t('nav.profile') }}</span>
+            <span class="text-[10px] mt-1">{{ $t('nav.favorites') }}</span>
+          </router-link>
+
+          <!-- Profile -->
+          <router-link to="/profile" 
+            class="flex flex-col items-center justify-center text-gray-600 dark:text-gray-400 hover:text-primary-600 dark:hover:text-primary-400"
+            :class="{ 'text-primary-600 dark:text-primary-400': $route.path === '/profile' }"
+          >
+            <i class="ri-user-3-line text-[22px]"></i>
+            <span class="text-[10px] mt-1">{{ $t('nav.profile') }}</span>
           </router-link>
         </div>
       </div>

@@ -1,8 +1,10 @@
 <template>
-  <div id="app-main" class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300 w-full max-w-screen-xl mx-auto px-4 sm:px-6 lg:px-8">    
-    <Navbar class="w-full" />    
-    <router-view></router-view>      
-    <Footer class="mt-auto" />
+  <div id="app-main" class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">    
+    <div class="w-full md:container md:mx-auto">
+      <Navbar class="w-full" />    
+      <router-view></router-view>      
+      <Footer class="mt-auto" />
+    </div>
 
     <!-- Global Product Detail Modal -->
     <ProductDetailModal
@@ -124,12 +126,11 @@ body {
   width: 100%;
   max-width: 1280px;
   margin: 0 auto;
-  padding: 0 1rem;
 }
 
 @media (max-width: 768px) {
   .container {
-    padding: 0 0.5rem;
+    margin: 0 auto;
   }
 }
 
@@ -144,7 +145,6 @@ body {
 @media (min-width: 768px) and (max-width: 1023px) {
   #app-main {
     max-width: 100%;
-    padding: 0 1rem;
   }
 }
 
@@ -152,7 +152,6 @@ body {
 @media (max-width: 767px) {
   #app-main {
     max-width: 100%;
-    padding: 0 0.5rem;
   }
 }
 

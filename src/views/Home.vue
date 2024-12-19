@@ -1,5 +1,5 @@
 <template>
-  <main class="py-4">
+  <main class="py-4 pb-[60px] md:pb-4">
     <!-- Banner Section -->
     <div class="mb-4">
       <Banner :banners="banners" />
@@ -10,7 +10,7 @@
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold">{{ $t("home.featured_products") }}</h2>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
         <ProductCard
           v-for="product in featuredProducts"
           :key="product.id"
@@ -24,7 +24,7 @@
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold">{{ $t("home.popular_products") }}</h2>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
         <ProductCard
           v-for="product in popularProducts"
           :key="product.id"
@@ -38,7 +38,7 @@
       <div class="flex justify-between items-center mb-4">
         <h2 class="text-2xl font-bold">{{ $t("home.new_products") }}</h2>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-4">
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
         <ProductCard
           v-for="product in newProducts"
           :key="product.id"
