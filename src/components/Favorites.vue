@@ -161,8 +161,8 @@ import 'swiper/css/pagination'
 const { t } = useI18n()
 const favoriteStore = useFavoriteStore()
 const cartStore = useCartStore()
-const baseUrl = import.meta.env.VITE_API_BASE_URL || "https://eragon.uz"
-const token = "2|Yz4cT4P7rJJND86WgT5OhAQDG8E9k3l7NzcLaGDLb6810987"
+const baseUrl = import.meta.env.VITE_API_BASE_URL;
+const token = import.meta.env.VITE_API_BASE_token;
 const debug = ref(false)
 
 // Modal state
