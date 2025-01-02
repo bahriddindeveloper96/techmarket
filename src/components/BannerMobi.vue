@@ -1,72 +1,61 @@
 <!-- BannerMobi.vue -->
 <template>
-  <div class="relative overflow-hidden">
+  <div class="relative overflow-hidden px-2">
     <!-- Swiper container -->
     <swiper
       :modules="[
         SwiperAutoplay,
-        SwiperEffectFade,
         SwiperPagination,
       ]"
-      :slides-per-view="1"
+      :slides-per-view="1.1"
+      :space-between="8"
       :loop="true"
-      :effect="'fade'"
+      :speed="600"
       :autoplay="{
-        delay: 4000,
+        delay: 3000,
         disableOnInteraction: false,
       }"
       :pagination="{
         clickable: true,
         dynamicBullets: true,
       }"
-      class="h-[200px] rounded-[24px] relative"
+      class="h-[160px] relative banner-swiper"
     >
       <swiper-slide v-for="banner in banners" :key="banner.id" class="group">
-        <div class="relative h-full w-full overflow-hidden">
-          <!-- Gradient overlay -->
-          <div class="absolute inset-0 bg-gradient-to-br from-primary-900/80 via-primary-800/60 to-transparent z-10"></div>
-          
-          <!-- Background patterns -->
-          <div class="absolute inset-0 z-0 opacity-30">
-            <div class="absolute top-0 left-0 w-32 h-32 bg-primary-500/20 rounded-full filter blur-2xl transform -translate-x-1/2 -translate-y-1/2"></div>
-            <div class="absolute bottom-0 right-0 w-40 h-40 bg-accent-500/20 rounded-full filter blur-2xl transform translate-x-1/4 translate-y-1/4"></div>
-          </div>
-
+        <div class="relative h-full w-full overflow-hidden rounded-lg">
           <!-- Main image -->
           <img
             :src="banner.image"
             :alt="banner.title"
-            class="h-full w-full object-cover transform scale-100 group-hover:scale-110 transition-transform duration-700"
+            class="h-full w-full object-cover"
             :style="{
               aspectRatio: '16/9',
-              objectPosition: 'center 40%'
+              objectPosition: 'center center'
             }"
             loading="lazy"
           />
 
+          <!-- Gradient overlay -->
+          <div class="absolute inset-0 bg-gradient-to-r from-black/40 to-transparent"></div>
+
           <!-- Content -->
-          <div class="absolute inset-0 z-20 flex items-center">
-            <div class="w-full px-5">
-              <div class="max-w-[250px]">
-                <!-- Badge -->
-                <div class="inline-block px-3 py-1 mb-2 bg-white/10 backdrop-blur-sm rounded-full">
-                  <span class="text-xs font-medium text-white">New Arrival</span>
-                </div>
-                
+          <div class="absolute inset-0 flex items-center">
+            <div class="w-full px-4">
+              <div class="max-w-[200px]">
                 <!-- Title -->
-                <h3 class="text-xl font-bold text-white mb-2 transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300 line-clamp-2">
+                <h3 class="text-base font-semibold text-white mb-1.5 line-clamp-2">
                   {{ banner.title }}
                 </h3>
                 
                 <!-- Description -->
-                <p class="text-sm text-white/90 line-clamp-2 mb-3 transform translate-y-0 group-hover:-translate-y-1 transition-transform duration-300 delay-75">
+                <p class="text-xs text-white/90 line-clamp-2 mb-3">
                   {{ banner.description }}
                 </p>
                 
-                <!-- CTA Button -->
-                <button class="inline-flex items-center px-4 py-1.5 bg-white/10 hover:bg-white/20 backdrop-blur-sm rounded-full text-sm text-white font-medium transition-all duration-300 group-hover:shadow-lg">
-                  <span>Learn More</span>
-                  <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 ml-1 transform group-hover:translate-x-1 transition-transform duration-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <!-- Button -->
+                <button class="inline-flex items-center px-3 py-1.5 bg-white/90 hover:bg-white rounded text-xs font-medium text-gray-900 transition-colors">
+                  <span>Batafsil</span>
+                  <svg xmlns="http://www.w3.org/2000/svg" class="h-3.5 w-3.5 ml-1" fill="none" viewBox="0 0 24 24" stroke="currentColor">
                     <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
                   </svg>
                 </button>
@@ -83,11 +72,9 @@
 import { Swiper, SwiperSlide } from "swiper/vue";
 import {
   Autoplay as SwiperAutoplay,
-  EffectFade as SwiperEffectFade,
   Pagination as SwiperPagination,
 } from "swiper/modules";
 import "swiper/css";
-import "swiper/css/effect-fade";
 import "swiper/css/pagination";
 
 const props = defineProps({
@@ -103,50 +90,37 @@ const props = defineProps({
 :deep(.swiper) {
   width: 100%;
   height: 100%;
+  padding-bottom: 24px !important;
+}
+
+:deep(.swiper-pagination) {
+  bottom: 0 !important;
 }
 
 :deep(.swiper-pagination-bullet) {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.3);
+  width: 6px;
+  height: 6px;
+  background: #e5e7eb;
   opacity: 1;
   transition: all 0.3s ease;
 }
 
 :deep(.swiper-pagination-bullet-active) {
-  background: #fff;
-  transform: scale(1.3);
+  background: #3b82f6;
+  transform: scale(1.2);
 }
 
-:deep(.swiper-pagination) {
-  bottom: 12px !important;
+/* Custom styles for banner swiper */
+.banner-swiper :deep(.swiper-slide) {
+  transition: transform 0.3s ease;
 }
 
-:deep(.swiper-pagination-bullet-active-main) {
-  background: #fff;
+.banner-swiper :deep(.swiper-slide-active) {
+  transform: scale(1);
 }
 
-:deep(.swiper-pagination-bullet-active-prev),
-:deep(.swiper-pagination-bullet-active-next) {
-  transform: scale(0.9);
-}
-
-@keyframes float {
-  0%, 100% {
-    transform: translateY(0);
-  }
-  50% {
-    transform: translateY(-8px);
-  }
-}
-
-.animate-float {
-  animation: float 3s ease-in-out infinite;
-}
-
-/* Glass effect for buttons and badges */
-.backdrop-blur-sm {
-  backdrop-filter: blur(8px);
-  -webkit-backdrop-filter: blur(8px);
+.banner-swiper :deep(.swiper-slide-prev),
+.banner-swiper :deep(.swiper-slide-next) {
+  transform: scale(0.95);
 }
 </style>
