@@ -1,6 +1,6 @@
 <template>
   <main>    
-    <div class="py-4 pb-[60px] md:pb-4">
+    <div class="pb-[20px] md:pb-2">
       <!-- Banner Section -->
       <div class="mb-4">
         <Banner v-if="!isMobile" :banners="banners" />
