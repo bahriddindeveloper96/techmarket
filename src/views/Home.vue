@@ -2,7 +2,8 @@
   <main class="py-4 pb-[60px] md:pb-4">
     <!-- Banner Section -->
     <div class="mb-4">
-      <Banner :banners="banners" />
+      <Banner v-if="!isMobile" :banners="banners" />
+      <BannerMobi v-else :banners="banners" />
     </div>
 
     <!-- Featured Products -->
@@ -50,9 +51,10 @@
 </template>
 
 <script setup>
-import { ref, onMounted } from "vue";
+import { ref, onMounted, computed, onUnmounted } from "vue";
 import { useI18n } from "vue-i18n";
 import Banner from "./../components/Banner.vue";
+import BannerMobi from "./../components/BannerMobi.vue";
 import ProductCard from "./../components/ProductCard.vue";
 import axios from "axios";
 
@@ -65,6 +67,22 @@ const popularProducts = ref([]);
 const newProducts = ref([]);
 const featuredProducts = ref([]);
 const banners = ref([]);
+const windowWidth = ref(window.innerWidth);
+
+const isMobile = computed(() => windowWidth.value < 768);
+
+const handleResize = () => {
+  windowWidth.value = window.innerWidth;
+};
+
+onMounted(() => {
+  window.addEventListener('resize', handleResize);
+  fetchHomeData();
+});
+
+onUnmounted(() => {
+  window.removeEventListener('resize', handleResize);
+});
 
 const fetchHomeData = async () => {
   try {
@@ -126,10 +144,6 @@ const fetchHomeData = async () => {
     banners.value = [];
   }
 };
-
-onMounted(() => {
-  fetchHomeData();
-});
 
 // Methods
 const addToCart = (product) => {
