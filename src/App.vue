@@ -1,5 +1,6 @@
 <template>
   <div id="app-main" class="min-h-screen flex flex-col bg-white dark:bg-gray-900 text-gray-900 dark:text-white transition-colors duration-300">    
+    <AppDownload />
     <div class="w-full md:container md:mx-auto">
       <Navbar class="w-full" />    
       <router-view></router-view>      
@@ -23,6 +24,7 @@ import { RouterLink, RouterView } from 'vue-router'
 import Navbar from './components/Navbar.vue'
 import Footer from './components/Footer.vue'
 import ProductDetailModal from './components/ProductDetailModal.vue'
+import AppDownload from './components/AppDownload.vue'
 
 // Sample data
 const categories = ref([

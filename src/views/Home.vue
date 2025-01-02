@@ -1,50 +1,52 @@
 <template>
-  <main class="py-4 pb-[60px] md:pb-4">
-    <!-- Banner Section -->
-    <div class="mb-4">
-      <Banner v-if="!isMobile" :banners="banners" />
-      <BannerMobi v-else :banners="banners" />
-    </div>
+  <main>    
+    <div class="py-4 pb-[60px] md:pb-4">
+      <!-- Banner Section -->
+      <div class="mb-4">
+        <Banner v-if="!isMobile" :banners="banners" />
+        <BannerMobi v-else :banners="banners" />
+      </div>
 
-    <!-- Featured Products -->
-    <div class="mb-4">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold">{{ $t("home.featured_products") }}</h2>
+      <!-- Featured Products -->
+      <div class="mb-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">{{ $t("home.featured_products") }}</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+          <ProductCard
+            v-for="product in featuredProducts"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-        <ProductCard
-          v-for="product in featuredProducts"
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-    </div>
 
-    <!-- Popular Products -->
-    <div class="mb-4">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold">{{ $t("home.popular_products") }}</h2>
+      <!-- Popular Products -->
+      <div class="mb-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">{{ $t("home.popular_products") }}</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+          <ProductCard
+            v-for="product in popularProducts"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-        <ProductCard
-          v-for="product in popularProducts"
-          :key="product.id"
-          :product="product"
-        />
-      </div>
-    </div>
 
-    <!-- New Products -->
-    <div class="mb-4">
-      <div class="flex justify-between items-center mb-4">
-        <h2 class="text-2xl font-bold">{{ $t("home.new_products") }}</h2>
-      </div>
-      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
-        <ProductCard
-          v-for="product in newProducts"
-          :key="product.id"
-          :product="product"
-        />
+      <!-- New Products -->
+      <div class="mb-4">
+        <div class="flex justify-between items-center mb-4">
+          <h2 class="text-2xl font-bold">{{ $t("home.new_products") }}</h2>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 gap-2">
+          <ProductCard
+            v-for="product in newProducts"
+            :key="product.id"
+            :product="product"
+          />
+        </div>
       </div>
     </div>
   </main>
@@ -56,6 +58,7 @@ import { useI18n } from "vue-i18n";
 import Banner from "./../components/Banner.vue";
 import BannerMobi from "./../components/BannerMobi.vue";
 import ProductCard from "./../components/ProductCard.vue";
+import AppDownload from "./../components/AppDownload.vue";
 import axios from "axios";
 
 const { t } = useI18n();
