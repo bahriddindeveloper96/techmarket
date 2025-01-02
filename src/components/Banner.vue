@@ -20,7 +20,7 @@
       }"
       class="banner-swiper rounded-xl overflow-hidden relative group"
     >
-      <SwiperSlide v-for="banner in banners" :key="banner.id" class="banner-slide relative h-full">
+      <SwiperSlide v-for="banner in banners" :key="banner.id" class="banner-slide">
         <!-- Banner Image Container -->
         <div class="banner-image-container">
           <img
@@ -30,40 +30,16 @@
             loading="lazy"
           />
         </div>
-
-        <!-- Content Overlay -->
-        <div class="relative h-full flex items-center z-10">
-          <div class="container mx-auto px-4 md:px-8">
-            <div class="max-w-lg space-y-3 md:space-y-4">
-              <!-- Title -->
-              <h2 class="text-2xl md:text-4xl font-bold text-gray-800 leading-tight">
-                <!-- {{ banner.title }} -->
-              </h2>
-              
-              <!-- Description -->
-              <p class="text-base md:text-lg text-gray-600">
-                <!-- {{ banner.description }} -->
-              </p>
-              
-              <!-- CTA Button -->
-              <!-- <button class="px-4 md:px-6 py-2.5 md:py-3 bg-primary-500 hover:bg-primary-600 text-white font-medium rounded-lg transition-colors duration-200">
-                {{ banner.buttonText || "Batafsil" }}
-              </button> -->
-            </div>
-          </div>
-        </div>
       </SwiperSlide>
 
       <!-- Custom Navigation Buttons -->
-      <div class="swiper-button-prev !w-12 !h-12 !bg-white/80 !backdrop-blur-sm rounded-full shadow-lg !text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 after:!text-xl">
+      <div class="swiper-button-prev !w-10 !h-10 !bg-white/80 !backdrop-blur-sm rounded-full shadow-lg !text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 after:!text-lg">
       </div>
-      <div class="swiper-button-next !w-12 !h-12 !bg-white/80 !backdrop-blur-sm rounded-full shadow-lg !text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 after:!text-xl">
+      <div class="swiper-button-next !w-10 !h-10 !bg-white/80 !backdrop-blur-sm rounded-full shadow-lg !text-gray-800 opacity-0 group-hover:opacity-100 transition-opacity duration-200 after:!text-lg">
       </div>
 
       <!-- Custom Pagination -->
-      <div class="swiper-pagination !bottom-4 !z-20">
-        <span class="swiper-pagination-bullet !w-2 !h-2 !bg-white/60"></span>
-      </div>
+      <div class="swiper-pagination !bottom-3 !z-20"></div>
     </Swiper>
   </div>
 </template>
@@ -100,7 +76,7 @@ defineProps({
 
 @media (min-width: 768px) {
   .banner-swiper {
-    height: 400px;
+    height: 420px;
   }
 }
 
@@ -113,8 +89,7 @@ defineProps({
 
 .banner-image-container {
   position: absolute;
-  top: 0;
-  left: 0;
+  inset: 0;
   width: 100%;
   height: 100%;
 }
@@ -123,20 +98,22 @@ defineProps({
   width: 100%;
   height: 100%;
   object-fit: cover;
-  object-position: center 25%; /* Rasmni yuqoriroqdan boshlab kesish */
+  object-position: center 30%;
+  transform: scale(1.02);
 }
 
 /* Pagination styles */
 .banner-wrapper :deep(.swiper-pagination-bullet) {
-  width: 8px;
-  height: 8px;
-  background: rgba(255, 255, 255, 0.6);
-  opacity: 0.6;
+  width: 6px;
+  height: 6px;
+  background: rgba(255, 255, 255, 0.7);
+  opacity: 0.7;
+  margin: 0 4px !important;
   transition: all 0.3s ease;
 }
 
 .banner-wrapper :deep(.swiper-pagination-bullet-active) {
-  width: 24px;
+  width: 20px;
   border-radius: 4px;
   background: white;
   opacity: 1;
@@ -145,8 +122,9 @@ defineProps({
 /* Navigation button styles */
 .banner-wrapper :deep(.swiper-button-prev),
 .banner-wrapper :deep(.swiper-button-next) {
-  width: 48px;
-  height: 48px;
+  width: 40px;
+  height: 40px;
+  margin-top: -20px;
   background: rgba(255, 255, 255, 0.8);
   backdrop-filter: blur(4px);
   border-radius: 50%;
@@ -155,7 +133,7 @@ defineProps({
 
 .banner-wrapper :deep(.swiper-button-prev:after),
 .banner-wrapper :deep(.swiper-button-next:after) {
-  font-size: 20px;
+  font-size: 16px;
   font-weight: bold;
 }
 
@@ -166,5 +144,6 @@ defineProps({
 
 .banner-wrapper :deep(.swiper-button-disabled) {
   opacity: 0 !important;
+  cursor: default;
 }
 </style>
